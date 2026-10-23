@@ -1,0 +1,1602 @@
+{
+ "type": "FeatureCollection",
+ "note": "Roads missing from roads.geojson, fetched from OpenStreetMap (Overpass mirror maps.mail.ru) on 20 Oct 2026 for the 3D model. AR1's original query left out highway=construction and *_link ways. Includes the West Coast Expressway (Lebuhraya Pesisiran Pantai Barat), which OSM still tags as under construction; Esri imagery (Dec 2025 - Sep 2026) shows it built with traffic. Data (c) OpenStreetMap contributors, ODbL.",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 478097782,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.448787,
+      3.087182
+     ],
+     [
+      101.4485952,
+      3.0876383
+     ],
+     [
+      101.4483803,
+      3.0880753
+     ],
+     [
+      101.4482119,
+      3.0883486
+     ],
+     [
+      101.4480318,
+      3.0886218
+     ],
+     [
+      101.4477605,
+      3.0889584
+     ],
+     [
+      101.4474508,
+      3.089295
+     ],
+     [
+      101.4472089,
+      3.0895216
+     ],
+     [
+      101.4469517,
+      3.0897367
+     ],
+     [
+      101.4464788,
+      3.0900784
+     ],
+     [
+      101.446253,
+      3.0902205
+     ],
+     [
+      101.4460156,
+      3.090351
+     ],
+     [
+      101.4456821,
+      3.0905199
+     ],
+     [
+      101.4453409,
+      3.0906658
+     ],
+     [
+      101.4446584,
+      3.0909575
+     ],
+     [
+      101.4432859,
+      3.0915525
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 556206189,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4445109,
+      3.0902961
+     ],
+     [
+      101.4446053,
+      3.0902311
+     ],
+     [
+      101.444664,
+      3.090149
+     ],
+     [
+      101.4448813,
+      3.0895317
+     ],
+     [
+      101.4450543,
+      3.0890804
+     ],
+     [
+      101.445183,
+      3.0888594
+     ],
+     [
+      101.4453332,
+      3.0887121
+     ],
+     [
+      101.4454566,
+      3.0886465
+     ],
+     [
+      101.4455827,
+      3.0886036
+     ],
+     [
+      101.4457101,
+      3.0885876
+     ],
+     [
+      101.4458486,
+      3.0885802
+     ],
+     [
+      101.4460237,
+      3.0886066
+     ],
+     [
+      101.4462184,
+      3.0886855
+     ],
+     [
+      101.446376,
+      3.088823
+     ],
+     [
+      101.446524,
+      3.0890308
+     ],
+     [
+      101.4465609,
+      3.0892119
+     ],
+     [
+      101.4465555,
+      3.0894353
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 556206206,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4464149,
+      3.0916318
+     ],
+     [
+      101.4463994,
+      3.0917935
+     ],
+     [
+      101.4463581,
+      3.0919392
+     ],
+     [
+      101.4463015,
+      3.0920433
+     ],
+     [
+      101.4462385,
+      3.092131
+     ],
+     [
+      101.4461546,
+      3.0922127
+     ],
+     [
+      101.4460643,
+      3.0922777
+     ],
+     [
+      101.4459079,
+      3.0923633
+     ],
+     [
+      101.4457546,
+      3.0924319
+     ],
+     [
+      101.4454137,
+      3.0925678
+     ],
+     [
+      101.4452742,
+      3.0925979
+     ],
+     [
+      101.4451052,
+      3.0926025
+     ],
+     [
+      101.4449767,
+      3.0925884
+     ],
+     [
+      101.4448548,
+      3.0925547
+     ],
+     [
+      101.4447136,
+      3.0924966
+     ],
+     [
+      101.4445862,
+      3.0924109
+     ],
+     [
+      101.4444642,
+      3.092301
+     ],
+     [
+      101.4443716,
+      3.0921658
+     ],
+     [
+      101.4442965,
+      3.091985
+     ],
+     [
+      101.444267,
+      3.0917788
+     ],
+     [
+      101.4442747,
+      3.0915502
+     ],
+     [
+      101.444234,
+      3.0913005
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 556206207,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4411764,
+      3.0926946
+     ],
+     [
+      101.441546,
+      3.0926037
+     ],
+     [
+      101.4418289,
+      3.0925193
+     ],
+     [
+      101.4421239,
+      3.0924256
+     ],
+     [
+      101.4423149,
+      3.092401
+     ],
+     [
+      101.4425155,
+      3.0924084
+     ],
+     [
+      101.4427307,
+      3.0924683
+     ],
+     [
+      101.4429686,
+      3.0925838
+     ],
+     [
+      101.4431352,
+      3.0927191
+     ],
+     [
+      101.4432566,
+      3.0928677
+     ],
+     [
+      101.4433843,
+      3.0930698
+     ],
+     [
+      101.4434541,
+      3.0932679
+     ],
+     [
+      101.443483,
+      3.0934082
+     ],
+     [
+      101.4434847,
+      3.0935525
+     ],
+     [
+      101.4434407,
+      3.0939127
+     ],
+     [
+      101.4432988,
+      3.0947664
+     ],
+     [
+      101.4433092,
+      3.0949311
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 604831836,
+    "osm_highway": "tertiary_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4336927,
+      3.0873496
+     ],
+     [
+      101.4335202,
+      3.0872218
+     ],
+     [
+      101.4334382,
+      3.0871187
+     ],
+     [
+      101.4333578,
+      3.0869854
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 604843713,
+    "osm_highway": "trunk_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4456192,
+      3.0878184
+     ],
+     [
+      101.4454878,
+      3.0877462
+     ],
+     [
+      101.4454168,
+      3.0876076
+     ],
+     [
+      101.445357,
+      3.087418
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 604843714,
+    "osm_highway": "trunk_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4451077,
+      3.0882971
+     ],
+     [
+      101.4452581,
+      3.0881229
+     ],
+     [
+      101.4453596,
+      3.0880413
+     ],
+     [
+      101.4455322,
+      3.088026
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 754641288,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4376046,
+      3.0942805
+     ],
+     [
+      101.4380328,
+      3.0940823
+     ],
+     [
+      101.4385921,
+      3.0938215
+     ],
+     [
+      101.4389724,
+      3.0936472
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 754641289,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4433262,
+      3.0916662
+     ],
+     [
+      101.4446961,
+      3.0910622
+     ],
+     [
+      101.4453733,
+      3.0907756
+     ],
+     [
+      101.4457187,
+      3.0906294
+     ],
+     [
+      101.4460564,
+      3.0904602
+     ],
+     [
+      101.4465562,
+      3.0901641
+     ],
+     [
+      101.4467975,
+      3.0900016
+     ],
+     [
+      101.4470273,
+      3.0898238
+     ],
+     [
+      101.4472883,
+      3.0896004
+     ],
+     [
+      101.447557,
+      3.0893558
+     ],
+     [
+      101.4478766,
+      3.0889932
+     ],
+     [
+      101.4481577,
+      3.0886228
+     ],
+     [
+      101.4483303,
+      3.0883742
+     ],
+     [
+      101.4484915,
+      3.0881141
+     ],
+     [
+      101.4487149,
+      3.0876738
+     ],
+     [
+      101.4489057,
+      3.0872162
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 754641290,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4433614,
+      3.0917652
+     ],
+     [
+      101.4439693,
+      3.0915001
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 754641298,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4432636,
+      3.0914443
+     ],
+     [
+      101.4430746,
+      3.0915264
+     ],
+     [
+      101.4424138,
+      3.0918004
+     ],
+     [
+      101.4417457,
+      3.0920901
+     ],
+     [
+      101.4401215,
+      3.0927642
+     ],
+     [
+      101.4386157,
+      3.0933837
+     ],
+     [
+      101.4374156,
+      3.0938774
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 754641299,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4487026,
+      3.0871374
+     ],
+     [
+      101.448506,
+      3.0876208
+     ],
+     [
+      101.448254,
+      3.0880961
+     ],
+     [
+      101.4481058,
+      3.0883416
+     ],
+     [
+      101.4479498,
+      3.0885525
+     ],
+     [
+      101.4478103,
+      3.0887494
+     ],
+     [
+      101.4476401,
+      3.0889425
+     ],
+     [
+      101.4474932,
+      3.0891135
+     ],
+     [
+      101.4473156,
+      3.0892844
+     ],
+     [
+      101.4469214,
+      3.0896594
+     ],
+     [
+      101.4459795,
+      3.0902759
+     ],
+     [
+      101.4451506,
+      3.09065
+     ],
+     [
+      101.4447025,
+      3.0908244
+     ],
+     [
+      101.4432636,
+      3.0914443
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 754641300,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.444789,
+      3.0886966
+     ],
+     [
+      101.4446785,
+      3.0889818
+     ],
+     [
+      101.4446637,
+      3.0890204
+     ],
+     [
+      101.4443713,
+      3.0896599
+     ],
+     [
+      101.44409,
+      3.0904021
+     ],
+     [
+      101.4440283,
+      3.090534
+     ],
+     [
+      101.4439512,
+      3.0906639
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 772603865,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4432859,
+      3.0915525
+     ],
+     [
+      101.4417984,
+      3.0922023
+     ],
+     [
+      101.4374869,
+      3.0940274
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 772603866,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4345228,
+      3.0954248
+     ],
+     [
+      101.4372598,
+      3.0942527
+     ],
+     [
+      101.4374635,
+      3.0941648
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 773830955,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4439693,
+      3.0915001
+     ],
+     [
+      101.4445087,
+      3.0912977
+     ],
+     [
+      101.4452687,
+      3.0910125
+     ],
+     [
+      101.4455855,
+      3.0909398
+     ],
+     [
+      101.4458176,
+      3.0909419
+     ],
+     [
+      101.4460113,
+      3.09101
+     ],
+     [
+      101.4461987,
+      3.0911439
+     ],
+     [
+      101.446338,
+      3.0913359
+     ],
+     [
+      101.4463926,
+      3.0914763
+     ],
+     [
+      101.4464149,
+      3.0916318
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 773830956,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4465555,
+      3.0894353
+     ],
+     [
+      101.4465265,
+      3.0895991
+     ],
+     [
+      101.4464092,
+      3.089805
+     ],
+     [
+      101.4462752,
+      3.0899485
+     ],
+     [
+      101.4461147,
+      3.090065
+     ],
+     [
+      101.44577,
+      3.0902641
+     ],
+     [
+      101.4451255,
+      3.0906045
+     ],
+     [
+      101.4447025,
+      3.0908244
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 827914751,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4445087,
+      3.0912977
+     ],
+     [
+      101.444886,
+      3.0910811
+     ],
+     [
+      101.4453678,
+      3.0908791
+     ],
+     [
+      101.4457482,
+      3.0907109
+     ],
+     [
+      101.446119,
+      3.0905258
+     ],
+     [
+      101.446384,
+      3.0903831
+     ],
+     [
+      101.4466322,
+      3.0902284
+     ],
+     [
+      101.4468586,
+      3.09007
+     ],
+     [
+      101.4470802,
+      3.089902
+     ],
+     [
+      101.4473615,
+      3.089665
+     ],
+     [
+      101.4476259,
+      3.0894135
+     ],
+     [
+      101.4479612,
+      3.0890477
+     ],
+     [
+      101.4482724,
+      3.0886336
+     ],
+     [
+      101.4484222,
+      3.0884067
+     ],
+     [
+      101.4485672,
+      3.0881654
+     ],
+     [
+      101.448782,
+      3.0877417
+     ],
+     [
+      101.4488953,
+      3.0874946
+     ],
+     [
+      101.4489869,
+      3.0872403
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 848109606,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4375373,
+      3.0943171
+     ],
+     [
+      101.4375711,
+      3.0942987
+     ],
+     [
+      101.4376046,
+      3.0942805
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 848109607,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4345228,
+      3.0954248
+     ],
+     [
+      101.4373196,
+      3.0944132
+     ],
+     [
+      101.4375373,
+      3.0943171
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 848109608,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4375369,
+      3.094138
+     ],
+     [
+      101.4418383,
+      3.0922908
+     ],
+     [
+      101.4433262,
+      3.0916662
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 848109609,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4374635,
+      3.0941648
+     ],
+     [
+      101.4375369,
+      3.094138
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 848109610,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4373461,
+      3.0939071
+     ],
+     [
+      101.4371352,
+      3.0939927
+     ],
+     [
+      101.4364618,
+      3.0942778
+     ],
+     [
+      101.4358072,
+      3.0946038
+     ],
+     [
+      101.4344224,
+      3.0953296
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 848109611,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4374156,
+      3.0938774
+     ],
+     [
+      101.4373778,
+      3.0938953
+     ],
+     [
+      101.4373461,
+      3.0939071
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 848109612,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4374177,
+      3.0940609
+     ],
+     [
+      101.437213,
+      3.094148
+     ],
+     [
+      101.4358508,
+      3.0947247
+     ],
+     [
+      101.4344224,
+      3.0953296
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "motorway_oneway",
+    "n": "Lebuhraya Pesisiran Pantai Barat",
+    "osm_id": 848109613,
+    "osm_highway": "construction",
+    "osm_construction": "motorway",
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4374869,
+      3.0940274
+     ],
+     [
+      101.4374177,
+      3.0940609
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": "Persiaran Setia Prima",
+    "osm_id": 868589665,
+    "osm_highway": "tertiary_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4435397,
+      3.0941466
+     ],
+     [
+      101.44368,
+      3.0940447
+     ],
+     [
+      101.4437775,
+      3.0939924
+     ],
+     [
+      101.4438795,
+      3.0939733
+     ],
+     [
+      101.4444648,
+      3.0941026
+     ],
+     [
+      101.4445384,
+      3.0941204
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1026646575,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4411764,
+      3.0926946
+     ],
+     [
+      101.4418299,
+      3.0924084
+     ],
+     [
+      101.4425908,
+      3.0920783
+     ],
+     [
+      101.4433614,
+      3.0917652
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1071076448,
+    "osm_highway": "tertiary_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4417085,
+      3.0870974
+     ],
+     [
+      101.4416364,
+      3.0872324
+     ],
+     [
+      101.4415704,
+      3.0872926
+     ],
+     [
+      101.4414357,
+      3.0873827
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1071076449,
+    "osm_highway": "tertiary_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4419971,
+      3.0873823
+     ],
+     [
+      101.4418755,
+      3.0872962
+     ],
+     [
+      101.4417997,
+      3.0872264
+     ],
+     [
+      101.4417085,
+      3.0870974
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1071076478,
+    "osm_highway": "construction",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.433236,
+      3.0929349
+     ],
+     [
+      101.4332449,
+      3.0945041
+     ],
+     [
+      101.4332737,
+      3.095207
+     ],
+     [
+      101.4333871,
+      3.0955828
+     ],
+     [
+      101.4336292,
+      3.0960809
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1071076479,
+    "osm_highway": "construction",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4337288,
+      3.096022
+     ],
+     [
+      101.4334791,
+      3.0955411
+     ],
+     [
+      101.43337,
+      3.0951653
+     ],
+     [
+      101.4333486,
+      3.0945315
+     ],
+     [
+      101.4333735,
+      3.0929357
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1165348790,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4436018,
+      3.0910047
+     ],
+     [
+      101.4433098,
+      3.0911864
+     ],
+     [
+      101.4420303,
+      3.0918263
+     ],
+     [
+      101.4409595,
+      3.092362
+     ],
+     [
+      101.4401215,
+      3.0927642
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1165348791,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4439512,
+      3.0906639
+     ],
+     [
+      101.443862,
+      3.0907731
+     ],
+     [
+      101.4437413,
+      3.0908963
+     ],
+     [
+      101.4436018,
+      3.0910047
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1165349849,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4402048,
+      3.0931132
+     ],
+     [
+      101.4411764,
+      3.0926946
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1165349850,
+    "osm_highway": "motorway_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4389724,
+      3.0936472
+     ],
+     [
+      101.4402048,
+      3.0931132
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1174229699,
+    "osm_highway": "trunk_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4451581,
+      3.087055
+     ],
+     [
+      101.4451035,
+      3.0871946
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "c": "link",
+    "n": null,
+    "osm_id": 1174229700,
+    "osm_highway": "trunk_link",
+    "osm_construction": null,
+    "oneway": "yes"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      101.4455246,
+      3.0862504
+     ],
+     [
+      101.4453419,
+      3.0865852
+     ],
+     [
+      101.4451581,
+      3.087055
+     ]
+    ]
+   }
+  }
+ ]
+}

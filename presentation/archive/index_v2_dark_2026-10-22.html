@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RainReady · Story deck</title>
+<meta name="description" content="RainReady story deck for the 5-minute video of the SDP University Hackathon 2026. Documentary pacing: each slide plays timed beats." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+/* RainReady story deck (v2, 22 Oct 2026). Same visual system as the website: night-water ground, IBM Plex,
+   cyan for water, gold for "look here". Documentary pacing: every element with data-at="s" arrives s seconds after
+   the slide opens; data-dim / data-lit dim and restore it (a spotlight); data-fx picks the entrance.
+   Keys: → / Space next (finishes the beats first) · ← back · R replay beats · F fullscreen · N notes · number + Enter jump */
+:root {
+  --bg: #060b11; --panel: rgba(9, 16, 23, 0.72); --line: rgba(130, 170, 200, 0.16); --line-2: rgba(130, 170, 200, 0.32);
+  --text: #d6e1eb; --text-2: #9aabbb; --text-3: #6b7d8e; --gold: #e3b341; --gold-mark: rgba(227, 179, 65, 0.42);
+  --cyan: #35d0e6; --water: #3aa0ff; --green: #1fbf75; --amber: #f2a516; --red: #ff6a5c;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(.16, 1, .3, 1); --tempo: .8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); overflow: hidden; }
+canvas#water, canvas#rain { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+canvas#rain { pointer-events: none; z-index: 2; }
+.veil { position: fixed; inset: 0; background: radial-gradient(1200px 800px at 50% 45%, rgba(6, 11, 17, .3), rgba(6, 11, 17, .82)); pointer-events: none; }
+
+/* 1920 x 1080 stage, scaled to the window */
+.deck { position: fixed; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; z-index: 1; }
+.slide { position: absolute; inset: 0; padding: 150px 160px 130px; opacity: 0; visibility: hidden; pointer-events: none;
+  transform: scale(1.06); will-change: transform, opacity; transition: opacity .6s var(--ease), transform 1s var(--ease), visibility 0s 1s; }
+.slide.active { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity .8s var(--ease) .12s, transform 1.8s var(--ease) .12s;
+  animation: drift 40s linear 1.9s forwards; }
+.slide.leaving { opacity: 0; visibility: visible; transform: scale(.94); }
+.slide[data-still].active { animation: none; }
+@keyframes drift { from { scale: 1; } to { scale: 1.03; } }
+
+/* beats */
+[data-at] { opacity: 0; transition: opacity .55s var(--ease), transform .9s var(--ease); }
+[data-at].in { opacity: 1; transform: none; }
+[data-fx="rise"] { transform: translateY(48px); }
+[data-fx="left"] { transform: translateX(-60px); }
+[data-fx="right"] { transform: translateX(60px); }
+[data-fx="zoom"] { transform: scale(.9); }
+[data-fx="blur"] { transform: scale(1.14); }
+/* title-sequence reveal: each word rises out of its own clipped line */
+[data-fx="words"] { opacity: 1; }
+[data-fx="words"] .w { display: inline-block; overflow: hidden; vertical-align: top; padding: .04em 0 .16em; margin: -.04em 0 -.16em; }
+[data-fx="words"] .wi { display: inline-block; transform: translateY(115%) rotate(4deg); transform-origin: 0 100%;
+  transition: transform .8s var(--ease); transition-delay: calc(var(--k) * 42ms); }
+[data-fx="words"].in .wi { transform: none; }
+.dim { opacity: .18 !important; transform: scale(.97) !important; transition: opacity .6s var(--ease), transform .8s var(--ease) !important; }
+
+/* the highlighter: a gold band sweeps in behind the words */
+mark { color: inherit; background: linear-gradient(transparent 10%, var(--gold-mark) 10%, var(--gold-mark) 96%, transparent 96%) no-repeat 0 0 / 0 100%;
+  transition: background-size .75s var(--ease), color .5s; padding: 0 .06em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+mark.in { background-size: 100% 100%; color: #fff; }
+mark[data-at] { opacity: 1; }
+
+/* chrome */
+.chrome { position: absolute; inset: 0; pointer-events: none; transition: opacity .6s; }
+.chrome.bare { opacity: 0; }
+.brand { position: absolute; left: 160px; top: 58px; display: flex; align-items: center; gap: 12px; color: var(--gold); }
+.brand b { font: 600 21px/1 var(--cond); letter-spacing: .02em; }
+.chapter { position: absolute; right: 160px; top: 60px; font: 500 19px/1 var(--cond); color: var(--text-3); }
+.chapter b { color: var(--text-2); font-weight: 500; margin-left: 10px; }
+.progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(130, 170, 200, .1); }
+.progress i { display: block; height: 100%; background: var(--gold); transition: width .9s var(--ease); }
+.foot { position: absolute; left: 160px; bottom: 50px; font: 400 15px/1 var(--mono); color: var(--text-3); }
+
+/* letterbox for the cinematic slides */
+.bars::before, .bars::after { content: ""; position: absolute; left: -2000px; right: -2000px; height: 1086px; background: #000; z-index: 5; transition: transform 1.6s var(--ease); }
+.bars::before { top: -1000px; transform: translateY(-86px); } .bars::after { bottom: -1000px; transform: translateY(86px); }
+.slide.active.bars::before, .slide.active.bars::after { transform: none; }
+
+/* type */
+h1, h2, h3 { margin: 0; font-family: var(--cond); font-weight: 600; color: #fff; }
+h2 { font-size: 76px; line-height: 1.04; letter-spacing: -.012em; max-width: 1400px; }
+.lede { font-size: 30px; line-height: 1.45; color: var(--text-2); max-width: 1100px; margin: 24px 0 0; }
+.src { font: 400 15px/1.45 var(--mono); color: var(--text-3); }
+.gold { color: var(--gold); } .cyan { color: var(--cyan); }
+.big-line { font: 600 46px/1.2 var(--cond); color: #fff; }
+
+/* ---------- 1. cold open ---------- */
+.bleed { position: absolute; inset: -60px -520px; overflow: hidden; }
+.bleed img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.5) brightness(.55) contrast(1.12); transform: scale(1.14); }
+.slide.active .bleed img { animation: kenburns 26s ease-out forwards; }
+@keyframes kenburns { from { transform: scale(1.14) translate(1.5%, 1%); } to { transform: scale(1.02) translate(0, 0); } }
+.shade { position: absolute; inset: -60px -520px; background: linear-gradient(90deg, rgba(4, 8, 12, .95) 0%, rgba(4, 8, 12, .92) 22%, rgba(4, 8, 12, .62) 50%, rgba(4, 8, 12, .2) 100%); }
+.flood { position: absolute; left: -2000px; right: -2000px; bottom: 0; height: 0; z-index: 1; opacity: 1;
+  background: linear-gradient(to top, rgba(14, 40, 52, .94), rgba(32, 92, 116, .5) 70%, rgba(53, 160, 200, .28));
+  transition: height 4.8s cubic-bezier(.45, .05, .25, 1); }
+.flood.in { height: 660px; }
+.flood svg { position: absolute; left: 0; top: -14px; width: 200%; height: 28px; animation: wave 7s linear infinite; }
+@keyframes wave { to { transform: translateX(-50%); } }
+.gauge { position: absolute; right: 190px; bottom: 120px; height: 540px; width: 210px; z-index: 2; }
+.gauge .ruler { position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: rgba(214, 225, 235, .5); }
+.gauge .tick { position: absolute; right: 0; width: 26px; border-top: 2px solid rgba(214, 225, 235, .6); font: 500 18px/1 var(--mono); color: rgba(214, 225, 235, .8); }
+.gauge .tick span { position: absolute; right: 36px; top: -10px; white-space: nowrap; }
+.gauge .read { position: absolute; right: 120px; bottom: -30px; width: 260px; text-align: right; transition: bottom 4.8s cubic-bezier(.45, .05, .25, 1); }
+.gauge.in .read { bottom: 510px; }
+.gauge .read b { display: block; font: 600 64px/1 var(--cond); color: #fff; white-space: nowrap; }
+.gauge .read > span { display: block; font: 400 16px/1.35 var(--sans); color: var(--text-2); margin-top: 6px; }
+.open { position: absolute; left: 160px; top: 170px; width: 1180px; z-index: 3; text-shadow: 0 2px 24px rgba(0, 0, 0, .7); }
+.open .when { font: 500 26px/1 var(--cond); color: var(--cyan); }
+.open h2 { font-size: 92px; margin-top: 20px; }
+.open h2.second { margin-top: 56px; font-size: 80px; }
+.open .src { margin-top: 18px; color: #93a5b6; }
+.credit { position: absolute; left: 160px; bottom: 100px; z-index: 6; font: 400 13px/1 var(--mono); color: rgba(220, 230, 240, .7); }
+
+/* ---------- 2. title ---------- */
+.title { position: absolute; left: 160px; top: 300px; }
+.title .mark { display: flex; align-items: center; gap: 28px; }
+.title h1 { font-size: 190px; line-height: .9; letter-spacing: -.02em; }
+.title h1 span { color: var(--gold); }
+.title .tag { font: 400 54px/1.2 var(--cond); color: #fff; margin-top: 56px; }
+.title .what { font-size: 28px; line-height: 1.5; color: var(--text-2); margin-top: 26px; max-width: 980px; }
+
+/* ---------- 3. it keeps happening ---------- */
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 70px; margin-top: 80px; }
+.fact b { display: block; font: 600 150px/.9 var(--cond); color: #fff; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.fact b small { font-size: .4em; letter-spacing: 0; color: var(--text-2); margin-left: 10px; }
+.fact p { font-size: 27px; line-height: 1.4; color: var(--text); margin: 24px 0 14px; max-width: 470px; }
+.fact { border-top: 2px solid var(--gold); padding-top: 34px; }
+.mdq { margin-top: 80px; display: flex; gap: 30px; align-items: flex-start; }
+.mdq q { font: italic 400 46px/1.3 var(--sans); color: #fff; quotes: "\201C" "\201D"; }
+.mdq .src { margin-top: 16px; }
+
+/* ---------- 4. persona ---------- */
+.persona { display: grid; grid-template-columns: 470px 1fr; gap: 100px; align-items: center; height: 100%; }
+.portrait { position: relative; width: 470px; height: 560px; border-radius: 8px; overflow: hidden;
+  background: radial-gradient(circle at 50% 38%, rgba(53, 208, 230, .18), rgba(9, 16, 23, .9) 68%); border: 1px solid var(--line-2); }
+.portrait svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.portrait .tagline { position: absolute; left: 24px; right: 24px; bottom: 20px; font: 400 15px/1.45 var(--sans); color: var(--text-2); }
+.who h2 { font-size: 100px; }
+.who .role { font: 500 32px/1.3 var(--cond); color: var(--cyan); margin-top: 14px; }
+.who blockquote { margin: 44px 0 0; font: italic 400 38px/1.42 var(--sans); color: #fff; max-width: 1050px; }
+.pains { display: grid; gap: 14px; margin-top: 46px; }
+.pain { display: grid; grid-template-columns: 14px 1fr; gap: 20px; align-items: baseline; font-size: 24px; line-height: 1.4; color: var(--text-2); }
+.pain i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); }
+.pain .src { display: block; font-size: 14px; margin-top: 2px; }
+
+/* ---------- 5. the crossing ---------- */
+.xmap { position: absolute; left: 140px; top: 330px; width: 1640px; height: 640px; }
+.xmap svg { position: absolute; inset: 0; width: 1640px; height: 640px; overflow: visible; }
+.xmap .region { font: 600 40px/1 var(--cond); fill: rgba(214, 225, 235, .12); }
+.xmap .bld { fill: rgba(154, 171, 187, .14); stroke: rgba(154, 171, 187, .32); stroke-width: 1.5; }
+.xmap .bld.new { fill: rgba(242, 165, 22, .12); stroke: rgba(242, 165, 22, .45); }
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s var(--ease); opacity: 1; }
+.draw.in { stroke-dashoffset: 0; }
+.xmap .council { fill: none; stroke: var(--gold); stroke-width: 3; }
+.xmap .council-dash { fill: none; stroke: #060b11; stroke-width: 4; stroke-dasharray: 10 12; }
+.xmap .drain { fill: none; stroke: var(--cyan); stroke-width: 7; stroke-linecap: round; opacity: .85; }
+.xmap .channel { stroke: var(--cyan); stroke-width: 5; opacity: .7; }
+.xmap .pond { fill: rgba(9, 16, 23, .8); stroke: var(--cyan); stroke-width: 2.5; }
+.xmap .fill { fill: rgba(58, 160, 255, .55); transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform 5s cubic-bezier(.35, .05, .25, 1); }
+.xmap .fill.in { transform: scaleY(1); }
+.xmap .rainline { stroke: rgba(150, 210, 255, .5); stroke-width: 2; stroke-linecap: round; }
+.xmap .rainfall.in .rainline { animation: fall 1s linear infinite; }
+@keyframes fall { from { transform: translate(0, -40px); opacity: 0; } 30% { opacity: 1; } to { transform: translate(-8px, 50px); opacity: 0; } }
+.xmap .ring { fill: none; stroke: var(--gold); stroke-width: 3; transform-box: fill-box; transform-origin: center; }
+.xmap .ring.in { animation: ring 2s var(--ease) infinite; }
+@keyframes ring { from { transform: scale(.4); opacity: 1; } to { transform: scale(2.4); opacity: 0; } }
+.drop { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; background: #9ee8ff; box-shadow: 0 0 14px 3px rgba(53, 208, 230, .7);
+  offset-path: path("M 1560 110 C 1420 140 1300 196 1180 236 C 1100 262 1050 284 1000 298 C 880 330 760 342 640 345 C 520 348 420 351 300 350 C 200 349 120 343 20 334");
+  offset-rotate: 0deg; opacity: 0; }
+.drops.in .drop { animation: travel 7s linear infinite; animation-delay: calc(var(--n) * -0.5s); }
+@keyframes travel { 0% { offset-distance: 0%; opacity: 0; } 4% { opacity: 1; } 96% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.lbl { position: absolute; font: 500 23px/1.25 var(--cond); color: #fff; text-shadow: 0 2px 12px #000; }
+.lbl small { display: block; font: 400 17px/1.35 var(--sans); color: var(--text-2); margin-top: 4px; }
+.lbl.g { color: var(--gold); }
+.xfoot { position: absolute; left: 160px; bottom: 96px; font: 500 34px/1.3 var(--cond); color: var(--text); }
+
+/* ---------- 6. the gap ---------- */
+.silos { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px; margin-top: 76px; }
+.silo { position: relative; z-index: 1; padding: 30px 28px; min-height: 330px; border: 1px solid var(--line-2); border-radius: 6px; background: #09111a;
+  display: flex; flex-direction: column; transition: border-color 1s, box-shadow 1s, opacity .9s var(--ease), transform 1.1s var(--ease); }
+.silo .who { font: 500 20px/1.25 var(--cond); color: var(--text-2); }
+.silo .what { font: 600 36px/1.12 var(--cond); color: #fff; margin: 16px 0 14px; }
+.silo p { font-size: 20px; line-height: 1.45; color: var(--text-2); margin: 0; flex: 1; }
+.silo .src { margin-top: 16px; font-size: 13px; }
+.silos.linked .silo { border-color: rgba(53, 208, 230, .6); }
+.thread { position: absolute; left: -40px; right: -40px; top: 50%; height: 120px; margin-top: -60px; width: calc(100% + 80px); overflow: visible; z-index: 0; }
+.thread path { fill: none; stroke: var(--cyan); stroke-width: 4; filter: drop-shadow(0 0 8px rgba(53, 208, 230, .8)); }
+.gap2 { margin-top: 70px; }
+
+/* ---------- 7. demo hand-off ---------- */
+.hand { position: absolute; left: 160px; top: 170px; transition: opacity .8s; }
+.hand h2 { font-size: 92px; }
+.hand .sub { font: 400 34px/1.3 var(--cond); color: var(--text-2); margin-top: 14px; }
+.hand.gone { opacity: 0; }
+.browser { position: absolute; left: 520px; top: 400px; width: 1240px; height: 600px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-2);
+  box-shadow: 0 50px 120px rgba(0, 0, 0, .6); background: #000; z-index: 3;
+  transition: left 1.6s var(--ease), top 1.6s var(--ease), width 1.6s var(--ease), height 1.6s var(--ease), border-radius 1.6s var(--ease), opacity .9s var(--ease), transform 1.1s var(--ease); }
+.browser .bar { height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 18px; background: #0d1620; border-bottom: 1px solid var(--line); transition: height 1.2s var(--ease), opacity .8s; }
+.browser .bar i { width: 13px; height: 13px; border-radius: 50%; background: #2a3a4a; }
+.browser .url { margin-left: 18px; flex: 1; height: 32px; border-radius: 16px; background: #060b11; display: flex; align-items: center; padding: 0 18px; font: 400 18px/1 var(--mono); color: var(--text-2); overflow: hidden; }
+.browser .url span { display: inline-block; overflow: hidden; white-space: nowrap; width: 0; }
+.browser.in .url span { animation: type 1.6s steps(26) .7s forwards; }
+@keyframes type { to { width: 26ch; } }
+.browser img { display: block; width: 100%; height: calc(100% - 50px); object-fit: cover; object-position: center 40%; transition: height 1.2s var(--ease); }
+
+/* ---------- 8. what's new ---------- */
+.vs { margin-top: 64px; display: grid; grid-template-columns: 1fr 70px 1fr; row-gap: 0; }
+.vs .head { font: 500 24px/1 var(--cond); padding-bottom: 20px; border-bottom: 1px solid var(--line-2); }
+.vs .head.us { color: var(--gold); }
+.vs .head.them { color: var(--text-3); }
+.vs .cell { padding: 20px 0; border-bottom: 1px solid var(--line); font-size: 27px; line-height: 1.35; }
+.vs .cell.them { color: var(--text-3); }
+.vs .cell.us { color: #fff; }
+.vs .arrow { display: grid; place-items: center; border-bottom: 1px solid var(--line); color: var(--gold); font: 400 30px/1 var(--sans); }
+.claim { margin-top: 44px; font-size: 25px; line-height: 1.5; color: var(--text-2); max-width: 1500px; }
+.claim b { color: #fff; font-weight: 500; }
+
+/* ---------- 9. who it helps ---------- */
+.helps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; margin-top: 76px; }
+.help { border-top: 2px solid var(--cyan); padding-top: 28px; }
+.help.sdp { border-color: var(--gold); }
+.help h3 { font-size: 40px; line-height: 1.1; }
+.help .org { font: 400 20px/1.3 var(--cond); color: var(--text-3); margin-top: 8px; }
+.help ul { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.help li { font-size: 23px; line-height: 1.4; color: var(--text); padding-left: 22px; position: relative; }
+.help li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 2px; background: var(--text-3); }
+
+/* ---------- 10. can it work ---------- */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; margin-top: 64px; }
+.two h3 { font: 500 26px/1 var(--cond); color: var(--green); margin-bottom: 26px; }
+.two h3.lim { color: var(--gold); }
+.pt { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.pt b { display: block; font: 600 30px/1.2 var(--cond); color: #fff; }
+.pt span { display: block; font-size: 21px; line-height: 1.45; color: var(--text-2); margin-top: 6px; }
+.verdict { margin-top: 50px; }
+
+/* ---------- 11. pilot and next ---------- */
+.road { position: relative; margin-top: 70px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.road .rail { position: absolute; left: 0; right: 0; top: 11px; height: 3px; background: var(--line); }
+.road .rail i { position: absolute; inset: 0; background: linear-gradient(90deg, var(--cyan), var(--gold)); transform-origin: left; transform: scaleX(0); transition: transform 4s var(--ease); }
+.road .rail.in i { transform: scaleX(1); }
+.stop { position: relative; padding-top: 50px; }
+.stop::before { content: ""; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); border: 3px solid var(--gold); }
+.stop .when { font: 500 22px/1 var(--cond); color: var(--gold); }
+.stop h3 { font-size: 38px; margin: 12px 0 10px; }
+.stop p { font-size: 22px; line-height: 1.45; color: var(--text-2); margin: 0; }
+.next { margin-top: 64px; display: grid; grid-template-columns: 220px repeat(4, 1fr); gap: 30px; align-items: start; }
+.next .h { font: 600 30px/1.2 var(--cond); color: #fff; }
+.next .it b { display: block; font: 600 24px/1.2 var(--cond); color: var(--cyan); }
+.next .it span { display: block; font-size: 19px; line-height: 1.45; color: var(--text-2); margin-top: 6px; }
+.ask { margin-top: 56px; display: flex; gap: 26px; align-items: baseline; }
+.ask b { font: 600 24px/1 var(--cond); color: var(--bg); background: var(--gold); padding: 9px 14px; border-radius: 3px; }
+.ask p { margin: 0; font: 500 34px/1.3 var(--cond); color: #fff; }
+
+/* ---------- 12. value ---------- */
+.value { display: grid; grid-template-columns: 560px 1fr; gap: 90px; align-items: center; height: 100%; }
+.value .n { font: 600 380px/.8 var(--cond); color: var(--gold); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.value .nlab { font: 500 32px/1.3 var(--cond); color: #fff; margin-top: 26px; }
+.value .nlab span { display: block; color: var(--text-3); font-size: 22px; font-weight: 400; margin-top: 6px; }
+.value h2 { font-size: 66px; }
+.vpts { display: grid; gap: 0; margin-top: 40px; }
+
+/* ---------- 13. close ---------- */
+.close { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 200px; }
+.close h1 { font-size: 112px; line-height: 1.04; letter-spacing: -.015em; }
+.close .three { margin-top: 56px; display: grid; gap: 10px; font: 400 36px/1.3 var(--cond); color: var(--text-2); }
+.close .link { margin-top: 60px; font: 500 30px/1 var(--mono); color: var(--cyan); }
+
+/* presenter notes */
+.notes { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: min(1100px, calc(100% - 40px)); z-index: 10;
+  background: rgba(6, 11, 17, .95); border: 1px solid var(--line-2); border-top: 2px solid var(--gold); border-radius: 0; padding: 18px 22px;
+  font-size: 18px; line-height: 1.6; color: var(--text); display: none; }
+.notes.on { display: block; }
+.notes b { font: 600 14px/1 var(--cond); color: var(--gold); display: block; margin-bottom: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  [data-at], [data-fx="words"] .wi, mark, .slide, .flood, .gauge .read, .draw, .xmap .fill, .road .rail i, .browser { transition-duration: .01s !important; transition-delay: 0s !important; }
+  .slide.active .bleed img, .drops.in .drop, .xmap .rainfall.in .rainline, .xmap .ring.in, .flood svg { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<canvas id="water" aria-hidden="true"></canvas>
+<div class="veil"></div>
+<canvas id="rain" aria-hidden="true"></canvas>
+
+<main class="deck" id="deck">
+
+<!-- 1 · Cold open -->
+<section class="slide bars" data-bare data-rain="1" data-chapter="The problem"
+  data-notes="December 2021. In the Klang Valley, one month's rain fell in a single day: 363 millimetres in 24 hours at Sentul. [pause] In Bandar Bukit Raja, in Klang, residents say the water reached three metres.">
+  <div class="bleed"><img src="assets/photos/klang_aerial_2021.jpg" alt="Aerial view of a flooded neighbourhood in Klang, December 2021" /></div>
+  <div class="shade"></div>
+  <div class="flood" data-at="5.4"><svg viewBox="0 0 400 28" preserveAspectRatio="none"><path d="M0 14 Q 25 4 50 14 T 100 14 T 150 14 T 200 14 T 250 14 T 300 14 T 350 14 T 400 14 V28 H0z" fill="rgba(120,200,230,.35)"/></svg></div>
+  <div class="gauge" data-at="5.2" data-fx="fade">
+    <div class="ruler"></div>
+    <div class="tick" style="bottom:0"><span>0</span></div><div class="tick" style="bottom:180px"><span>1 m</span></div>
+    <div class="tick" style="bottom:360px"><span>2 m</span></div><div class="tick" style="bottom:540px"><span>3 m</span></div>
+    <div class="read"><b><span class="count" data-to="3" data-dec="1" data-dur="4800">0</span> m</b><span>as residents describe December 2021, not a model result</span></div>
+  </div>
+  <div class="open">
+    <div class="when" data-at="0.8" data-fx="fade">17–18 December 2021, Klang Valley</div>
+    <h2 data-at="1.5" data-fx="words">One month's rain fell in a single day.</h2>
+    <div class="src" data-at="3.6" data-fx="fade">363 mm in 24 hours at Sentul. Environment and Water Ministry, via FMT, 19 Dec 2021</div>
+    <h2 class="second" data-at="5.6" data-fx="words">In Bandar Bukit Raja, residents say the water reached <mark data-at="8.8">three metres.</mark></h2>
+    <div class="src" data-at="8.2" data-fx="fade">Residents' account. FMT, 24 May 2024</div>
+  </div>
+  <div class="credit" data-at="2" data-fx="fade">Klang, 21 Dec 2021. Photo AiMediaMY, CC BY 3.0, via Wikimedia Commons</div>
+</section>
+
+<!-- 2 · Title -->
+<section class="slide" data-bare data-rain="0.35" data-chapter="RainReady"
+  data-notes="We are RainReady. Property lines stop at the fence. Water doesn't.">
+  <div class="title">
+    <div class="mark" data-at="0.3" data-fx="blur">
+      <svg width="150" height="150" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5 28 9.25v13.5L16 29.5 4 22.75V9.25z" fill="none" stroke="#e3b341" stroke-width="1"/><path d="M16 8c3.4 4.6 6 7.6 6 10.8a6 6 0 0 1-12 0C10 15.6 12.6 12.6 16 8z" fill="#e3b341"/></svg>
+      <h1>Rain<span>Ready</span></h1>
+    </div>
+    <div class="tag" data-at="1.4" data-fx="words">Property lines stop at the fence. <mark data-at="3.4">Water doesn't.</mark></div>
+    <div class="what" data-at="3.0" data-fx="fade">One shared picture of how water moves across council and developer boundaries.</div>
+  </div>
+</section>
+
+<!-- 3 · It keeps happening -->
+<section class="slide" data-chapter="The problem"
+  data-notes="And in Bandar Bukit Raja, it keeps happening. Residents say Jalan Makyong floods three times a year. JPS logged ponding there two years running. 583 residents petitioned the Menteri Besar. [pause] And Sime Darby Property's managing director called it a top priority.">
+  <h2 data-at="0.3" data-fx="words">In Bandar Bukit Raja, it keeps <mark data-at="1.8">happening.</mark></h2>
+  <div class="facts">
+    <div class="fact" data-at="2.2" data-fx="rise" data-dim="6.2" data-lit="13.4">
+      <b>3×<small>a year</small></b>
+      <p>Jalan Makyong floods at least three times a year, residents say</p>
+      <div class="src">Sinar Harian, 25 May 2024</div>
+    </div>
+    <div class="fact" data-at="6.2" data-fx="rise" data-dim="9.8" data-lit="13.4">
+      <b>2<small>years running</small></b>
+      <p>JPS Selangor logged ponding at Bandar Bukit Raja in 2023, and again in 2024</p>
+      <div class="src">JPS Selangor GIS flood records</div>
+    </div>
+    <div class="fact" data-at="9.8" data-fx="rise">
+      <b><span class="count" data-to="583">0</span></b>
+      <p>residents from 48 associations petitioned the Menteri Besar in 2024</p>
+      <div class="src">FMT, 24 May 2024</div>
+    </div>
+  </div>
+  <div class="mdq" data-at="14" data-fx="rise">
+    <div>
+      <q>It is quite urgent, and this is a <mark data-at="16.4">top priority for us.</mark></q>
+      <div class="src">Sime Darby Property's managing director. The Edge, 21 Nov 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Meet Aiman -->
+<section class="slide" data-chapter="Who we built it for"
+  data-notes="Meet Aiman, a drainage engineer at a township developer. [read the quote on screen, slowly] (Aiman is an illustrative persona built from public reports; the three points underneath are on screen, no need to read them.)">
+  <div class="persona">
+    <div class="portrait" data-at="0.3" data-fx="zoom">
+      <svg viewBox="0 0 470 560" aria-hidden="true"><g transform="translate(35 -30) scale(.85)">
+        <g fill="none" stroke="#9aabbb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="235" cy="232" r="70" />
+          <path d="M98 520 C104 405 160 352 235 352 C310 352 366 405 372 520" />
+          <path d="M235 352 V 410" opacity=".5" />
+        </g>
+        <path d="M160 214 C164 148 306 148 310 214 Z" fill="#e3b341" />
+        <path d="M144 216 H 326" stroke="#e3b341" stroke-width="7" stroke-linecap="round" />
+        <g transform="translate(262 400) rotate(-8)">
+          <rect width="120" height="84" rx="6" fill="#0d1620" stroke="#35d0e6" stroke-width="2.5" />
+          <path d="M12 60 C 40 44, 64 56, 108 26" stroke="#35d0e6" stroke-width="3" fill="none" />
+          <circle cx="40" cy="58" r="6" fill="rgba(53,208,230,.5)" /><circle cx="76" cy="44" r="6" fill="rgba(53,208,230,.5)" />
+        </g>
+      </g></svg>
+      <div class="tagline">Illustrative persona, built from public reports. Not a real person.</div>
+    </div>
+    <div class="who">
+      <h2 data-at="0.6" data-fx="words">Meet Aiman.</h2>
+      <div class="role" data-at="1.4" data-fx="fade">Drainage engineer at a township developer</div>
+      <blockquote data-at="2.6" data-fx="words">“Residents ask me why their street floods. I can show them our ponds. But the water also comes from upstream, <mark data-at="7.4">under another council.</mark> How do I show <mark data-at="9">everyone their part,</mark> before the next storm?”</blockquote>
+      <div class="pains">
+        <div class="pain" data-at="11" data-fx="left"><i></i><div>Water from Setia Alam, in Shah Alam, drains into Bandar Bukit Raja, in Klang <span class="src">Residents' petition, 2024</span></div></div>
+        <div class="pain" data-at="12.6" data-fx="left"><i></i><div>The shared drain's size and the ponds' capacities are not on public record <span class="src">Our public-data search</span></div></div>
+        <div class="pain" data-at="14.2" data-fx="left"><i></i><div>Residents say councils and developers shift the blame <span class="src">FMT, 24 May 2024</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · The crossing -->
+<section class="slide" data-chapter="Who we built it for"
+  data-notes="Here is Aiman's problem on one map. Rain on Setia Alam, in Shah Alam, crosses the council line in one drain, and fills a shared drain and ponds A and B in Klang. One system, four holders.">
+  <h2 style="font-size:70px; max-width:none" data-at="0.3" data-fx="words">Property lines stop at the fence. <mark data-at="2.2">Water doesn't.</mark></h2>
+  <div class="xmap">
+    <svg viewBox="0 0 1640 640" aria-hidden="true">
+      <defs><clipPath id="cA"><ellipse cx="700" cy="440" rx="96" ry="46" /></clipPath><clipPath id="cB"><ellipse cx="430" cy="440" rx="84" ry="42" /></clipPath></defs>
+      <g data-at="0.6" data-fx="fade">
+        <text class="region" x="1600" y="560" text-anchor="end">Shah Alam council</text>
+        <text class="region" x="20" y="110">Klang council</text>
+        <rect class="bld" x="1220" y="40" width="90" height="56" /><rect class="bld" x="1330" y="30" width="70" height="70" /><rect class="bld" x="1420" y="40" width="110" height="46" />
+        <rect class="bld new" x="1300" y="250" width="100" height="60" /><rect class="bld new" x="1420" y="200" width="80" height="80" /><rect class="bld" x="1460" y="330" width="100" height="60" />
+        <rect class="bld" x="160" y="170" width="80" height="60" /><rect class="bld" x="260" y="160" width="70" height="70" /><rect class="bld" x="520" y="170" width="90" height="56" /><rect class="bld" x="760" y="160" width="80" height="66" />
+        <rect class="bld" x="200" y="470" width="90" height="50" /><rect class="bld" x="560" y="520" width="80" height="50" /><rect class="bld" x="830" y="460" width="70" height="70" />
+      </g>
+      <g class="rainfall" data-at="1.2" data-fx="fade">
+        <line class="rainline" x1="1240" y1="20" x2="1234" y2="44" style="animation-delay:-.1s"/><line class="rainline" x1="1300" y1="120" x2="1294" y2="144" style="animation-delay:-.5s"/>
+        <line class="rainline" x1="1380" y1="60" x2="1374" y2="84" style="animation-delay:-.8s"/><line class="rainline" x1="1450" y1="130" x2="1444" y2="154" style="animation-delay:-.3s"/>
+        <line class="rainline" x1="1520" y1="20" x2="1514" y2="44" style="animation-delay:-.7s"/><line class="rainline" x1="1560" y1="170" x2="1554" y2="194" style="animation-delay:-.2s"/>
+        <line class="rainline" x1="1200" y1="200" x2="1194" y2="224" style="animation-delay:-.9s"/><line class="rainline" x1="1480" y1="290" x2="1474" y2="314" style="animation-delay:-.4s"/>
+        <line class="rainline" x1="1350" y1="330" x2="1344" y2="354" style="animation-delay:-.6s"/><line class="rainline" x1="1590" y1="80" x2="1584" y2="104" style="animation-delay:-.15s"/>
+      </g>
+      <path class="council draw" data-at="2.4" pathLength="1" d="M 1030 -10 C 1010 120 1020 220 1000 300 C 985 380 990 480 982 590" />
+      <path class="council-dash" data-at="2.4" data-fx="fade" d="M 1030 -10 C 1010 120 1020 220 1000 300 C 985 380 990 480 982 590" />
+      <path class="drain draw" data-at="3.4" pathLength="1" d="M 1560 110 C 1420 140 1300 196 1180 236 C 1100 262 1050 284 1000 298 C 880 330 760 342 640 345 C 520 348 420 351 300 350 C 200 349 120 343 20 334" />
+      <line class="channel" data-at="5.6" data-fx="fade" x1="700" y1="345" x2="700" y2="396" /><line class="channel" data-at="5.6" data-fx="fade" x1="430" y1="350" x2="430" y2="400" />
+      <ellipse class="pond" data-at="5.6" data-fx="fade" cx="700" cy="440" rx="96" ry="46" /><ellipse class="pond" data-at="5.6" data-fx="fade" cx="430" cy="440" rx="84" ry="42" />
+      <rect class="fill" data-at="6.6" clip-path="url(#cA)" x="600" y="390" width="200" height="100" />
+      <rect class="fill" data-at="7.2" clip-path="url(#cB)" x="340" y="395" width="180" height="90" />
+      <circle class="ring" data-at="4.8" cx="1000" cy="298" r="18" />
+    </svg>
+    <div class="drops" data-at="4.4" data-fx="fade">
+      <i class="drop" style="--n:0"></i><i class="drop" style="--n:1"></i><i class="drop" style="--n:2"></i><i class="drop" style="--n:3"></i><i class="drop" style="--n:4"></i>
+      <i class="drop" style="--n:5"></i><i class="drop" style="--n:6"></i><i class="drop" style="--n:7"></i><i class="drop" style="--n:8"></i><i class="drop" style="--n:9"></i>
+      <i class="drop" style="--n:10"></i><i class="drop" style="--n:11"></i><i class="drop" style="--n:12"></i><i class="drop" style="--n:13"></i>
+    </div>
+    <div class="lbl" style="left:1190px; top:400px" data-at="1.6" data-fx="fade">Rain on Setia Alam<small>upstream, Shah Alam side</small></div>
+    <div class="lbl g" style="left:1050px; top:-6px" data-at="2.8" data-fx="fade">Council boundary</div>
+    <div class="lbl g" style="left:1030px; top:300px" data-at="4.8" data-fx="fade">One drain crosses the line<small>mapped, at the council corner</small></div>
+    <div class="lbl" style="left:540px; top:268px" data-at="5.2" data-fx="fade">Shared trunk drain<small>Klang side, size not public</small></div>
+    <div class="lbl" style="left:640px; top:496px" data-at="6.8" data-fx="fade">Pond A</div>
+    <div class="lbl" style="left:390px; top:496px" data-at="6.8" data-fx="fade">Pond B</div>
+    <div class="lbl" style="left:20px; top:250px" data-at="8" data-fx="fade">Main ditch<small>towards Sungai Puloh</small></div>
+  </div>
+  <div class="xfoot" data-at="9.4" data-fx="rise">One system. Two councils, a developer and JPS each hold <mark data-at="11">one piece of it.</mark></div>
+</section>
+
+<!-- 6 · The gap -->
+<section class="slide" data-chapter="The gap"
+  data-notes="And it's not that nobody is acting. Both councils, JPS and Sime Darby Property all have real programmes. But they run separately, with separate records. [pause] What's missing is a shared picture.">
+  <h2 data-at="0.3" data-fx="words">Effort is not what's missing.</h2>
+  <div class="silos" id="silos">
+    <svg class="thread" viewBox="0 0 1680 120" preserveAspectRatio="none" aria-hidden="true"><path class="draw" data-at="7" pathLength="1" d="M0 60 C 120 10, 220 110, 340 60 S 560 10, 680 60 S 900 110, 1020 60 S 1240 10, 1360 60 S 1560 110, 1680 60" /></svg>
+    <div class="silo" data-at="1.6" data-fx="rise"><div class="who">Shah Alam council</div><div class="what">RM150m flood plan</div><p>For Setia Alam, upstream of Bandar Bukit Raja</p><div class="src">FMT, 5 Feb 2025</div></div>
+    <div class="silo" data-at="2.2" data-fx="rise"><div class="who">Klang council</div><div class="what">17 urgent projects</div><p>Across 13 flood hotspots in Klang</p><div class="src">Bernama, 5 May 2025</div></div>
+    <div class="silo" data-at="2.8" data-fx="rise"><div class="who">JPS Selangor</div><div class="what">300+ unowned ponds</div><p>Identified across the state; about 55 taken over</p><div class="src">Sinar Harian, 5 May 2025</div></div>
+    <div class="silo" data-at="3.4" data-fx="rise"><div class="who">Sime Darby Property</div><div class="what">60-acre wetland park</div><p>Wetland Townpark, designed to hold up to 50,000 m³</p><div class="src">SDP BBR booklet; The Edge</div></div>
+    <div class="silo" data-at="4.0" data-fx="rise"><div class="who">JPS, Taman Mutiara</div><div class="what">A new pond, delayed</div><p>25 % built in Nov 2024; completion moved to Mar 2025</p><div class="src">Utusan, 13 Nov 2024</div></div>
+  </div>
+  <h2 class="gap2" data-at="8.6" data-fx="words"><mark data-at="10">A shared picture is.</mark></h2>
+</section>
+
+<!-- 7 · Demo hand-off -->
+<section class="slide" data-still data-chapter="Demo"
+  data-notes="So we built one. Meet RainReady. [cut to the guided demo recording once the address has typed]">
+  <div class="hand" id="hand" data-at="0.3" data-fx="rise">
+    <h2>Meet RainReady.</h2>
+    <div class="sub">The working prototype, live in a browser</div>
+  </div>
+  <div class="browser" id="browser" data-at="1.0" data-fx="rise">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><span>rainready-wheat.vercel.app</span></div></div>
+    <img src="assets/planner.jpg" alt="RainReady planner view: the simulated township on dark water" />
+  </div>
+</section>
+
+<!-- 8 · What's new -->
+<section class="slide" data-chapter="What's new"
+  data-notes="What's new? Today, each body keeps its own records. RainReady puts both councils, the developer and JPS in one picture: storage screened live, residents' reports on the same model, who maintains what, and every assumption sourced. Each part exists somewhere. The combination is new.">
+  <h2 data-at="0.3" data-fx="words">One picture, where today there are <mark data-at="2">many.</mark></h2>
+  <div class="vs">
+    <div class="head them" data-at="2.4" data-fx="fade">Today</div><div data-at="2.4" data-fx="fade"></div><div class="head us" data-at="2.4" data-fx="fade">With RainReady</div>
+    <div class="cell them" data-at="3.2" data-fx="fade">Each council and agency keeps its own records</div><div class="arrow" data-at="3.6" data-fx="fade">›</div><div class="cell us" data-at="3.8" data-fx="left">Both councils, the developer and JPS in one picture, with the council line on it</div>
+    <div class="cell them" data-at="6" data-fx="fade">Pond storage is studied one project at a time, by specialists</div><div class="arrow" data-at="6.4" data-fx="fade">›</div><div class="cell us" data-at="6.6" data-fx="left">The storage each pond must hold, screened live in a browser (MSMA 2)</div>
+    <div class="cell them" data-at="8.8" data-fx="fade">Residents' reports go to separate lines</div><div class="arrow" data-at="9.2" data-fx="fade">›</div><div class="cell us" data-at="9.4" data-fx="left">Reports checked by residents' associations, pinned on the same model</div>
+    <div class="cell them" data-at="11.2" data-fx="fade">Who maintains each pond and drain is unclear</div><div class="arrow" data-at="11.6" data-fx="fade">›</div><div class="cell us" data-at="11.8" data-fx="left">A responsibility record, line by line, under Selangor's published rules</div>
+    <div class="cell them" data-at="13.6" data-fx="fade">Assumptions sit inside each study</div><div class="arrow" data-at="14" data-fx="fade">›</div><div class="cell us" data-at="14.2" data-fx="left">Every input on screen, with its source and a confidence label</div>
+  </div>
+  <p class="claim" data-at="16" data-fx="fade">Each part exists somewhere: official warnings, engineering models, resident reporting in Chatham County, Chennai and Jakarta. <b>We claim the combination.</b></p>
+</section>
+
+<!-- 9 · Who it helps -->
+<section class="slide" data-chapter="Who it helps"
+  data-notes="Now Aiman can show everyone their part: the developer, both councils, JPS, and the residents themselves.">
+  <h2 data-at="0.3" data-fx="words">Now Aiman can show <mark data-at="2">everyone their part.</mark></h2>
+  <div class="helps">
+    <div class="help sdp" data-at="3" data-fx="rise"><h3>Sime Darby Property</h3><div class="org">the developer</div><ul><li>Sees each pond's storage gap</li><li>Tests a new pond before paying for it</li><li>Brings one Brief to the joint meeting</li></ul></div>
+    <div class="help" data-at="5" data-fx="rise"><h3>Klang and Shah Alam councils</h3><div class="org">MBDK, MBSA</div><ul><li>See what crosses the council line</li><li>As a difference between scenarios, not blame</li></ul></div>
+    <div class="help" data-at="7" data-fx="rise"><h3>JPS Selangor</h3><div class="org">the drainage department</div><ul><li>Its pond list and drains in one sourced picture</li><li>Reports routed to the right channel</li></ul></div>
+    <div class="help" data-at="9" data-fx="rise"><h3>Residents</h3><div class="org">and their associations</div><ul><li>Report a blocked drain with a photo</li><li>A move-now plan on official warnings</li></ul></div>
+  </div>
+</section>
+
+<!-- 10 · Can it work -->
+<section class="slide" data-chapter="Can it work"
+  data-notes="And it works today, on public data. It agrees with JPS's own flood record and with an independent flood model, and three more townships were set up from open data. We show risk bands, never depths, and unknowns are sliders. Decision support, not prediction.">
+  <h2 data-at="0.3" data-fx="words">It works today, on public data.</h2>
+  <div class="two">
+    <div>
+      <h3 data-at="1.6" data-fx="fade">Already working</h3>
+      <div class="pt" data-at="2.2" data-fx="left"><b>A live prototype</b><span>3D township, MSMA 2 storm method, scenarios and the Brief, in any browser</span></div>
+      <div class="pt" data-at="4" data-fx="left"><b>Checked against the ground</b><span>The JPS flood record falls in the zone that drains to pond A; FastFlood, an independent model, pools water in the same ponds</span></div>
+      <div class="pt" data-at="6" data-fx="left"><b>Three more townships, from open data</b><span>Seri Kembangan, Kota Kemuning and Padang Jawa; the first took about 4 minutes to set up</span></div>
+    </div>
+    <div>
+      <h3 class="lim" data-at="8" data-fx="fade">Honest about limits</h3>
+      <div class="pt" data-at="8.6" data-fx="right"><b>Risk bands, never depths</b><span>Terrain error here is about 1 m, the size of a flood depth</span></div>
+      <div class="pt" data-at="10.4" data-fx="right"><b>Unknowns are sliders, not guesses</b><span>The trunk drain's size and the ponds' capacities are not public</span></div>
+      <div class="pt" data-at="12" data-fx="right"><b>A miss we state</b><span>Three floods a year point to street drains, which we don't model yet</span></div>
+    </div>
+  </div>
+  <div class="big-line verdict" data-at="14" data-fx="rise">Decision support under uncertainty, <mark data-at="15.4">not prediction.</mark></div>
+</section>
+
+<!-- 11 · Pilot and next -->
+<section class="slide" data-chapter="What's next"
+  data-notes="We propose a 12-month pilot in Bandar Bukit Raja: real drain and pond data first, then both doors open, then one Brief at one joint meeting. Our ask: access to the records, and the pilot.">
+  <h2 data-at="0.3" data-fx="words">A 12-month pilot in Bandar Bukit Raja.</h2>
+  <div class="road">
+    <div class="rail" data-at="1.4" data-fx="fade"><i></i></div>
+    <div class="stop" data-at="1.6" data-fx="rise"><div class="when">Months 0–3</div><h3>Real data in</h3><p>The trunk drain's size, the ponds' capacities and handover status</p></div>
+    <div class="stop" data-at="3.2" data-fx="rise"><div class="when">Months 3–9</div><h3>Both doors open</h3><p>SDP, both councils and JPS plan; residents' associations report</p></div>
+    <div class="stop" data-at="4.8" data-fx="rise"><div class="when">Months 9–12</div><h3>One joint meeting</h3><p>One Brief; every line of the responsibility record confirmed by its party</p></div>
+  </div>
+  <div class="next">
+    <div class="h" data-at="7" data-fx="fade">After the pilot</div>
+    <div class="it" data-at="7.4" data-fx="rise"><b>Street drains</b><span>Where residents' reports already point</span></div>
+    <div class="it" data-at="8" data-fx="rise"><b>Live official warnings</b><span>Linked from Public Infobanjir and MetMalaysia</span></div>
+    <div class="it" data-at="8.6" data-fx="rise"><b>Plain-language answers</b><span>An assistant that explains each result</span></div>
+    <div class="it" data-at="9.2" data-fx="rise"><b>More townships</b><span>Any site, as a site pack from open data</span></div>
+  </div>
+  <div class="ask" data-at="11" data-fx="rise"><b>Our ask</b><p>Access to drain and pond records, and a pilot in Bandar Bukit Raja.</p></div>
+</section>
+
+<!-- 12 · Value -->
+<section class="slide" data-chapter="The value"
+  data-notes="And it travels: the same method can screen any of Sime Darby Property's 28 townships.">
+  <div class="value">
+    <div>
+      <div class="n" data-at="0.3" data-fx="blur"><span class="count" data-to="28" data-dur="1800">0</span></div>
+      <div class="nlab" data-at="1.2" data-fx="fade">Sime Darby Property townships in Malaysia<span>SDP hackathon briefing, 2026</span></div>
+    </div>
+    <div>
+      <h2 data-at="1.6" data-fx="words">Built for one township. Ready for <mark data-at="3.4">twenty-eight.</mark></h2>
+      <div class="vpts">
+        <div class="pt" data-at="4" data-fx="left"><b>Only open data to start</b><span>Mapped drains, ponds and land cover; three more townships already set up this way</span></div>
+        <div class="pt" data-at="5.6" data-fx="left"><b>Blue-green assets, measured</b><span>Ponds and the wetland park become storage everyone can see</span></div>
+        <div class="pt" data-at="7.2" data-fx="left"><b>A simple model</b><span>SDP funds the pilot, councils and JPS use it free, a per-township licence later (our assumption)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · Close -->
+<section class="slide" data-bare data-rain="0.25" data-chapter="RainReady"
+  data-notes="Planners see where storage falls short. Residents act in time. And their reports shape the next plan. RainReady. Property lines stop at the fence. Water doesn't.">
+  <div class="close">
+    <div class="three">
+      <div data-at="0.4" data-fx="rise">Planners see where storage falls short.</div>
+      <div data-at="1.8" data-fx="rise">Residents act in time.</div>
+      <div data-at="3.2" data-fx="rise">Their reports shape the next plan.</div>
+    </div>
+    <h1 style="margin-top:70px" data-at="5" data-fx="words">Property lines stop at the fence. <mark data-at="6.8">Water doesn't.</mark></h1>
+    <div class="link" data-at="7.4" data-fx="fade">rainready-wheat.vercel.app</div>
+  </div>
+</section>
+
+<div class="chrome" id="chrome">
+  <div class="brand"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5 28 9.25v13.5L16 29.5 4 22.75V9.25z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M16 8c3.4 4.6 6 7.6 6 10.8a6 6 0 0 1-12 0C10 15.6 12.6 12.6 16 8z" fill="currentColor"/></svg><b>RainReady</b></div>
+  <div class="chapter" id="chapter"></div>
+  <div class="foot" id="count"></div>
+  <div class="progress"><i id="bar"></i></div>
+</div>
+</main>
+
+<div class="notes" id="notes"><b>Voice-over</b><span id="notetext"></span></div>
+
+<script>
+// ---- deck: scale the 1920x1080 stage to the window
+const deck = document.getElementById("deck");
+const slides = [...document.querySelectorAll(".slide")];
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let cur = -1, timers = [], rainTarget = 0;
+function fit() {
+  const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+  deck.style.transform = `scale(${k}) translate(-50%, -50%)`;
+}
+addEventListener("resize", fit); fit();
+
+// split word-reveal lines into per-word spans, keeping <mark> and other inline elements
+document.querySelectorAll('[data-fx="words"]').forEach((el) => {
+  let k = 0;
+  const walk = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const w = document.createElement("span"), wi = document.createElement("span"); w.className = "w"; wi.className = "wi"; wi.style.setProperty("--k", k++); wi.textContent = part; w.appendChild(wi); frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) walk(n);
+    });
+  };
+  walk(el);
+});
+
+function countUp(el) {
+  const to = +el.dataset.to, dec = +(el.dataset.dec || 0), dur = +(el.dataset.dur || 1500), t0 = performance.now();
+  const fmt = (v) => dec ? v.toFixed(dec) : String(Math.round(v));
+  const step = (now) => {
+    const p = Math.min(1, (now - t0) / dur), e = el.dataset.dur ? p * p * (3 - 2 * p) : 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(to * e);
+    if (p < 1) requestAnimationFrame(step);
+  };
+  el.textContent = fmt(0); requestAnimationFrame(step);
+}
+
+// ---- beats: reveal, dim, restore on a timeline; slide-specific moments hook in through reveal()
+function reveal(el) {
+  el.classList.add("in");
+  if (el.classList.contains("count")) countUp(el);
+  el.querySelectorAll(":scope .count").forEach((c) => { if (!c.closest("[data-at]:not(.in)")) countUp(c); });
+  if (el.matches(".thread .draw")) later(0.6, () => document.getElementById("silos").classList.add("linked"));
+}
+const TEMPO = +getComputedStyle(document.documentElement).getPropertyValue("--tempo") || 1;  // every beat time is scaled by --tempo
+function later(s, fn) { timers.push(setTimeout(fn, still ? 0 : s * TEMPO * 1000)); }
+function resetBeats(s) {
+  s.querySelectorAll("[data-at]").forEach((el) => el.classList.remove("in", "dim"));
+  s.querySelectorAll(".full, .gone, .linked").forEach((el) => el.classList.remove("full", "gone", "linked"));
+  s.querySelectorAll(".count").forEach((c) => (c.textContent = c.dataset.dec ? (0).toFixed(+c.dataset.dec) : "0"));
+}
+function playBeats(s) {
+  timers.forEach(clearTimeout); timers = [];
+  resetBeats(s);
+  s.querySelectorAll("[data-at]").forEach((el) => {
+    later(+el.dataset.at, () => reveal(el));
+    if (el.dataset.dim) later(+el.dataset.dim, () => el.classList.add("dim"));
+    if (el.dataset.lit) later(+el.dataset.lit, () => el.classList.remove("dim"));
+  });
+}
+function pending() { return timers.length && timers.some((t) => t._live !== false) && slides[cur].querySelector("[data-at]:not(.in)"); }
+function finishBeats(s) {
+  timers.forEach(clearTimeout); timers = [];
+  s.querySelectorAll("[data-at]").forEach((el) => {
+    if (!el.classList.contains("in")) { el.classList.add("in"); el.querySelectorAll(".count").forEach((c) => (c.textContent = c.dataset.dec ? (+c.dataset.to).toFixed(+c.dataset.dec) : c.dataset.to)); if (el.classList.contains("count")) el.textContent = el.dataset.to; }
+    const dimmed = el.dataset.dim && !(el.dataset.lit && +el.dataset.lit > +el.dataset.dim);
+    el.classList.toggle("dim", !!dimmed);
+  });
+  const si = s.querySelector("#silos"); if (si) si.classList.add("linked");
+}
+
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  if (i === cur) return;
+  const prev = slides[cur];
+  if (prev) { prev.classList.remove("active"); prev.classList.add("leaving"); setTimeout(() => prev.classList.remove("leaving"), 1000); }
+  const s = slides[i];
+  cur = i;
+  s.classList.add("active");
+  playBeats(s);
+  document.getElementById("chrome").classList.toggle("bare", s.hasAttribute("data-bare"));
+  document.getElementById("chapter").textContent = s.dataset.chapter || "";
+  document.getElementById("count").textContent = `${i + 1} / ${slides.length}`;
+  document.getElementById("bar").style.width = `${((i + 1) / slides.length) * 100}%`;
+  document.getElementById("notetext").textContent = s.dataset.notes || "";
+  rainTarget = +(s.dataset.rain || 0);
+  history.replaceState(null, "", `#${i + 1}`);
+}
+function next() { if (pending()) finishBeats(slides[cur]); else go(cur + 1); }
+
+let typed = "";
+addEventListener("keydown", (e) => {
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); next(); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  else if (e.key === "Home") go(0);
+  else if (e.key === "End") go(slides.length - 1);
+  else if (e.key.toLowerCase() === "r") playBeats(slides[cur]);
+  else if (e.key.toLowerCase() === "f") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  else if (e.key.toLowerCase() === "n") document.getElementById("notes").classList.toggle("on");
+  else if (/^[0-9]$/.test(e.key)) typed += e.key;
+  else if (e.key === "Enter" && typed) { go(+typed - 1); typed = ""; }
+});
+addEventListener("click", (e) => { if (e.target.closest("a, .notes")) return; if (e.clientX < innerWidth * 0.25) go(cur - 1); else next(); });
+go((parseInt(location.hash.slice(1), 10) || 1) - 1);
+
+// ---- rain: streaks over the cold open, lighter on the title and the close
+(function rain() {
+  const c = document.getElementById("rain"), g = c.getContext("2d");
+  const drops = Array.from({ length: 420 }, () => ({ x: Math.random(), y: Math.random(), v: .9 + Math.random() * .8, l: .5 + Math.random() }));
+  let level = 0;
+  (function frame() {
+    requestAnimationFrame(frame);
+    level += (rainTarget - level) * 0.03;
+    const w = c.clientWidth, h = c.clientHeight;
+    if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
+    g.clearRect(0, 0, w, h);
+    if (level < 0.01 || still) return;
+    g.strokeStyle = `rgba(170, 210, 240, ${0.28 * level})`; g.lineWidth = 1.2; g.beginPath();
+    const n = Math.round(drops.length * level);
+    for (let i = 0; i < n; i++) {
+      const d = drops[i];
+      d.y += 0.018 * d.v; d.x -= 0.0026 * d.v;
+      if (d.y > 1.05) { d.y = -0.05; d.x = Math.random() * 1.1; }
+      const x = d.x * w, y = d.y * h, len = 26 * d.l * (h / 1080);
+      g.moveTo(x, y); g.lineTo(x - len * 0.14, y + len);
+    }
+    g.stroke();
+  })();
+})();
+
+// ---- moving black water behind the slides: the same shader as the website (website/src/scene/WaterBackdrop.tsx)
+(function water() {
+  const canvas = document.getElementById("water");
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+  if (!gl) return;
+  const frag = `precision highp float;
+uniform vec2 uRes; uniform float uTime;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }
+float height(vec2 p, float t){
+  float h = sin(p.x * 0.55 + t * 0.32 + sin(p.y * 0.30 + t * 0.12) * 1.6) * 0.55;
+  h += sin(p.y * 0.85 - t * 0.27 + p.x * 0.35) * 0.40;
+  h += sin((p.x * 0.7 + p.y) * 1.9 + t * 0.55) * 0.10;
+  h += (noise(p * 1.3 + vec2(t * 0.11, -t * 0.08)) - 0.5) * 0.55;
+  h += (noise(p * 3.7 - vec2(t * 0.20, t * 0.16)) - 0.5) * 0.16;
+  return h;
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes;
+  float aspect = uRes.x / uRes.y;
+  float d = 1.0 / (1.22 - uv.y);
+  vec2 p = vec2((uv.x - 0.5) * aspect * d * 2.6, d * 3.2);
+  float e = 0.03 * d;
+  float h = height(p, uTime);
+  float hx = height(p + vec2(e, 0.0), uTime) - h, hy = height(p + vec2(0.0, e), uTime) - h;
+  vec3 n = normalize(vec3(-hx / e * 0.42, 1.0, -hy / e * 0.42));
+  vec3 v = normalize(vec3((uv.x - 0.5) * 0.4, 0.42, 1.0));
+  vec3 l = normalize(vec3(-0.35, 0.55, -0.9));
+  float spec = pow(max(dot(reflect(-l, n), v), 0.0), 26.0);
+  float swell = 0.5 + 0.5 * sin(p.y * 0.18 - uTime * 0.22 + sin(p.x * 0.12) * 1.5);
+  spec *= 0.55 + 0.75 * swell;
+  float sheen = pow(1.0 - max(dot(n, v), 0.0), 3.0);
+  float far = smoothstep(0.15, 0.95, uv.y);
+  vec3 base = mix(vec3(0.012, 0.022, 0.034), vec3(0.030, 0.050, 0.072), far);
+  vec3 col = base + vec3(0.42, 0.58, 0.72) * spec * (0.30 + 0.36 * far) + vec3(0.08, 0.12, 0.16) * sheen * 0.55;
+  col = mix(col, vec3(0.035, 0.055, 0.078), smoothstep(0.82, 1.0, uv.y) * 0.7);
+  vec2 q = uv - 0.5; col *= 1.0 - dot(q, q) * 0.9;
+  gl_FragColor = vec4(col, 1.0);
+}`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }"));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(prog, "uRes"), uTime = gl.getUniformLocation(prog, "uTime");
+  const t0 = performance.now();
+  let last = 0;
+  (function frame(now) {
+    if (!still) requestAnimationFrame(frame);
+    if (now - last < 33) return; last = now;
+    const w = Math.round(canvas.clientWidth * 0.5), h = Math.round(canvas.clientHeight * 0.5);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+    gl.uniform2f(uRes, w, h); gl.uniform1f(uTime, still ? 12 : (now - t0) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  })(performance.now() + 100);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+{
+ "id": "rawang",
+ "name": "Rawang town",
+ "kind": "generated",
+ "view": "2d",
+ "state": "Selangor",
+ "centre": [
+  3.323,
+  101.575
+ ],
+ "bbox": [
+  3.305,
+  101.557,
+  3.341,
+  101.593
+ ],
+ "councils": [
+  "Majlis Perbandaran Selayang"
+ ],
+ "confidence": "L",
+ "label": "SCREENING · GENERATED FROM OPEN DATA · LOWER CONFIDENCE",
+ "summary": "29 zones, 4 drains, 12 ponds (3 on JPS's list), 1 councils",
+ "tests": [
+  {
+   "test": "JPS flood records inside the area",
+   "passed": true,
+   "detail": "15 records, 2017-2024"
+  },
+  {
+   "test": "Drainage crosses a council line",
+   "passed": false,
+   "detail": "0 crossing links between Majlis Perbandaran Selayang"
+  },
+  {
+   "test": "Public pond or drain register",
+   "passed": true,
+   "detail": "3 ponds on JPS Selangor's pond list"
+  }
+ ],
+ "evidence": {
+  "flood_records": [
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Sekitar jalan maxwell pekan rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Sekitar jalan taman garing 2",
+    "district": "Gombak"
+   },
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Sekitar taman new green park",
+    "district": "Gombak"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Sekitar jalan maxwell pekan rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Sekitar jalan maxwell pekan rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2019,
+    "type": "Not stated",
+    "place": "Sekitar Kg Lim Tan Pekan Rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Jalan Lee Kim Sai 9 & 10, Kampung Lee Kim Sai Rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Pekan Rawang, Jalan Maxwell",
+    "district": "Gombak"
+   },
+   {
+    "year": 2023,
+    "type": "Flash flood",
+    "place": "Bumi Hijau",
+    "district": "Gombak"
+   },
+   {
+    "year": 2023,
+    "type": "Flash flood",
+    "place": "Kampung Lee Kim Sai Rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2023,
+    "type": "Flash flood",
+    "place": "Pekan Rawang, Jalan Maxwell",
+    "district": "Gombak"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Bumi Hijau",
+    "district": "Gombak"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Kampung Lee Kim Sai Rawang",
+    "district": "Gombak"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Pekan Rawang, Jalan Maxwell",
+    "district": "Gombak"
+   },
+   {
+    "year": 2024,
+    "type": "Monsoon flood",
+    "place": "Taman Sri Garing",
+    "district": "Gombak"
+   }
+  ],
+  "flash_2017": []
+ },
+ "storm": {
+  "station": "3416002 Kg Kalong Tengah",
+  "distance_km": 15.9
+ },
+ "sources": [
+  "OpenStreetMap contributors (ODbL), via Overpass, 22 Oct 2026",
+  "Copernicus DEM GLO-30 (ESA / EU), AWS open data mirror",
+  "JPS Selangor pond list (Kolam_Fasa_JPS), jpsselgis.selangor.gov.my",
+  "JPS Selangor flood records 2017-2024 and JPS flash-flood list 2017 (website/public/data/national.json)",
+  "MSMA 2nd Edition (DID Malaysia, 2012), Chapter 2, Tables 2.3, 2.5, 2.B1"
+ ],
+ "limits": [
+  "Zones follow mapped roads and drains, not surveyed catchments; outlets are assumed",
+  "Drain sizes are typical values by OSM type, not measured; this is the weakest input",
+  "Pond capacities are assumed from water area x 1.5 m; enter stated capacities to replace them",
+  "OSM misses buildings and drains; terrain is a surface model with ~1 m error or more",
+  "Flash floods and ponding only; rivers are treated as where water leaves"
+ ],
+ "build": {
+  "script": "simulations/platform/build_site.py",
+  "date": "2026-10-22",
+  "fetch_s": 114.7,
+  "build_s": 1.7,
+  "refreshed": true
+ }
+}

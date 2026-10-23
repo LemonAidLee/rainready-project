@@ -1,0 +1,12 @@
+# website is its own repo (LemonAidLee/rainready-website)
+website/
+node_modules/
+__pycache__/
+*.blend1
+*.blend@
+# large outputs / source PDFs kept local
+simulations/township-3d/renders/
+SDP slides/
+FastFlood Simulation Progress/
+.playwright-mcp/
+.claude/settings.local.json

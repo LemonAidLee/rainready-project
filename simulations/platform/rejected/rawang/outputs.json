@@ -1,0 +1,2023 @@
+{
+ "engine": "network/1",
+ "illustrative": false,
+ "placeholder_inputs": [],
+ "outlets_unknown": [],
+ "note": "Screening only (MSMA 2 Rational Method + volume balance over a drain network): storage required, change versus today, load, band. No depths, no times, no verdicts. Not a design.",
+ "scenarios": {
+  "now": {
+   "duration_h": 0.5,
+   "intensity_mm_hr": 176.03280293642302,
+   "intensity_tc_mm_hr": 176.03280293642302,
+   "zones": {
+    "Z01": {
+     "q_m3_s": 11.653723619997077,
+     "v_m3": 20976.702515994737,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 4.088221964988948,
+     "band": "high",
+     "load": 4.088221964988948,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z02": {
+     "q_m3_s": 19.675098367802534,
+     "v_m3": 35415.17706204456,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z03": {
+     "q_m3_s": 24.82853202076754,
+     "v_m3": 44691.357637381574,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z04": {
+     "q_m3_s": 20.096295967228578,
+     "v_m3": 36173.33274101144,
+     "drains_to": "OSM_w1534629883",
+     "band_basis": "capacity",
+     "ratio": 1.6669738590327858,
+     "band": "high",
+     "load": 1.6669738590327858,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z05": {
+     "q_m3_s": 6.367438988615968,
+     "v_m3": 11461.390179508742,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z06": {
+     "q_m3_s": 14.07528953479149,
+     "v_m3": 25335.521162624682,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z07": {
+     "q_m3_s": 11.536133707635546,
+     "v_m3": 20765.040673743984,
+     "drains_to": "OSM_w248955646",
+     "band_basis": "capacity",
+     "ratio": 3.1988278588914363,
+     "band": "high",
+     "load": 3.1988278588914363,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z08": {
+     "q_m3_s": 17.55163911498087,
+     "v_m3": 31592.950406965563,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 4.088221964988948,
+     "band": "high",
+     "load": 4.088221964988948,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z09": {
+     "q_m3_s": 19.091344254464865,
+     "v_m3": 34364.41965803676,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.12851010687448633,
+     "band": "low",
+     "load": 0.12851010687448633,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z10": {
+     "q_m3_s": 8.17091461389995,
+     "v_m3": 14707.646305019909,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 2.5985943807027336,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z11": {
+     "q_m3_s": 30.00809187556836,
+     "v_m3": 54014.56537602305,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 2.5985943807027336,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z12": {
+     "q_m3_s": 22.048372616991387,
+     "v_m3": 39687.07071058449,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 2.5985943807027336,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z13": {
+     "q_m3_s": 7.867003759230377,
+     "v_m3": 14160.606766614677,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z14": {
+     "q_m3_s": 11.840083680705769,
+     "v_m3": 21312.150625270384,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z15": {
+     "q_m3_s": 17.477367941541942,
+     "v_m3": 31459.262294775497,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 2.5985943807027336,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z16": {
+     "q_m3_s": 26.09423721268091,
+     "v_m3": 46969.62698282563,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.12851010687448633,
+     "band": "low",
+     "load": 0.12851010687448633,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z17": {
+     "q_m3_s": 19.565033857766537,
+     "v_m3": 35217.06094397976,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 2.5985943807027336,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z18": {
+     "q_m3_s": 4.563317909721221,
+     "v_m3": 8213.972237498198,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 14.358630945916719,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z19": {
+     "q_m3_s": 20.687590152292024,
+     "v_m3": 37237.66227412564,
+     "drains_to": "D03",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 1.055790319598753,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z20": {
+     "q_m3_s": 38.34984632471811,
+     "v_m3": 69029.7233844926,
+     "drains_to": "OSM_w1136664710",
+     "band_basis": "capacity",
+     "ratio": 6.163368159329696,
+     "band": "high",
+     "load": 6.163368159329696,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z21": {
+     "q_m3_s": 23.710728611921336,
+     "v_m3": 42679.311501458404,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 14.358630945916719,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z22": {
+     "q_m3_s": 26.867006548171563,
+     "v_m3": 48360.61178670881,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 14.358630945916719,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z23": {
+     "q_m3_s": 28.07833227337782,
+     "v_m3": 50540.99809208008,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.2984468523498542,
+     "band": "low",
+     "load": 0.2984468523498542,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z24": {
+     "q_m3_s": 30.497927598739373,
+     "v_m3": 54896.269677730874,
+     "drains_to": "G53",
+     "band_basis": "capacity",
+     "ratio": 1.1681331937098998,
+     "band": "high",
+     "load": 1.1681331937098998,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z25": {
+     "q_m3_s": 19.16410447967859,
+     "v_m3": 34495.38806342146,
+     "drains_to": "OSM_w1144831369",
+     "band_basis": "capacity",
+     "ratio": 2.103377320940333,
+     "band": "high",
+     "load": 2.103377320940333,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z26": {
+     "q_m3_s": 12.63938996123909,
+     "v_m3": 22750.90193023036,
+     "drains_to": "D04",
+     "band_basis": "change_vs_now",
+     "ratio": 1.0,
+     "band": "low",
+     "load": 0.2840273049733036,
+     "load_of": "drain",
+     "band_capacity": "low"
+    },
+    "Z27": {
+     "q_m3_s": 18.789692487432976,
+     "v_m3": 33821.44647737936,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.2984468523498542,
+     "band": "low",
+     "load": 0.2984468523498542,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z28": {
+     "q_m3_s": 10.836021911556903,
+     "v_m3": 19504.839440802425,
+     "drains_to": "OSM_w220214462",
+     "band_basis": "capacity",
+     "ratio": 0.42112456994430697,
+     "band": "low",
+     "load": 0.42112456994430697,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z29": {
+     "q_m3_s": 2.010964512145126,
+     "v_m3": 3619.7361218612264,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    }
+   },
+   "external": {},
+   "ponds": {
+    "OSM_w220214423": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214460": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 4400.0,
+     "gap_m3": -4400.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214462": {
+     "inflow_m3": 19504.839440802425,
+     "allowed_release_m3_s": 5.4315899306049635,
+     "release_m3_s": 5.4315899306049635,
+     "released_m3": 9776.861875088935,
+     "storage_required_m3": 9727.97756571349,
+     "capacity_m3": 23100.0,
+     "gap_m3": -13372.02243428651,
+     "ratio": 0.42112456994430697,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "low"
+    },
+    "OSM_w248955624": {
+     "inflow_m3": 52569.652922960304,
+     "allowed_release_m3_s": 16.48644995501233,
+     "release_m3_s": 16.48644995501233,
+     "released_m3": 29675.609919022194,
+     "storage_required_m3": 22894.04300393811,
+     "capacity_m3": 5600.0,
+     "gap_m3": 17294.04300393811,
+     "ratio": 4.088221964988948,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "OSM_w248955646": {
+     "inflow_m3": 20765.040673743984,
+     "allowed_release_m3_s": 5.316190648679976,
+     "release_m3_s": 5.316190648679976,
+     "released_m3": 9569.143167623957,
+     "storage_required_m3": 11195.897506120027,
+     "capacity_m3": 3500.0,
+     "gap_m3": 7695.897506120027,
+     "ratio": 3.1988278588914363,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "G34": {
+     "inflow_m3": 81334.04664086239,
+     "allowed_release_m3_s": 25.93745555266562,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 81334.04664086239,
+     "capacity_m3": 632900.0,
+     "gap_m3": -551565.9533591376,
+     "ratio": 0.12851010687448633,
+     "drains_to": "D01",
+     "change_vs_now": 1.0,
+     "band_capacity": "low"
+    },
+    "G64": {
+     "inflow_m3": 84362.44456945945,
+     "allowed_release_m3_s": 24.235805124280194,
+     "release_m3_s": 24.235805124280194,
+     "released_m3": 43624.44922370435,
+     "storage_required_m3": 40737.995345755095,
+     "capacity_m3": 136500.0,
+     "gap_m3": -95762.0046542449,
+     "ratio": 0.2984468523498542,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "low"
+    },
+    "OSM_w1136664710": {
+     "inflow_m3": 69029.7233844926,
+     "allowed_release_m3_s": 22.725834859092213,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 69029.7233844926,
+     "capacity_m3": 11200.0,
+     "gap_m3": 57829.723384492594,
+     "ratio": 6.163368159329696,
+     "drains_to": "D03",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "OSM_w1144831369": {
+     "inflow_m3": 34495.38806342146,
+     "allowed_release_m3_s": 9.582052239839294,
+     "release_m3_s": 9.582052239839294,
+     "released_m3": 17247.69403171073,
+     "storage_required_m3": 17247.69403171073,
+     "capacity_m3": 8200.0,
+     "gap_m3": 9047.69403171073,
+     "ratio": 2.103377320940333,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "OSM_w1534629883": {
+     "inflow_m3": 36173.33274101144,
+     "allowed_release_m3_s": 14.354497119448984,
+     "release_m3_s": 14.354497119448984,
+     "released_m3": 25838.09481500817,
+     "storage_required_m3": 10335.237926003272,
+     "capacity_m3": 6200.0,
+     "gap_m3": 4135.237926003272,
+     "ratio": 1.6669738590327858,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "OSM_w1534629884": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "G53": {
+     "inflow_m3": 54896.269677730874,
+     "allowed_release_m3_s": 15.441988657589555,
+     "release_m3_s": 15.441988657589555,
+     "released_m3": 27795.579583661198,
+     "storage_required_m3": 27100.690094069676,
+     "capacity_m3": 23200.0,
+     "gap_m3": 3900.690094069676,
+     "ratio": 1.1681331937098998,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    }
+   },
+   "drains": {
+    "D01": {
+     "capacity_m3_s": 37.431690620166606,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 97.26978090576817,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 2.5985943807027336,
+     "outflow_m3_s": 97.26978090576817,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "D02": {
+     "capacity_m3_s": 3.84027232662422,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 55.14105306981412,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 1.0,
+     "ratio": 14.358630945916719,
+     "outflow_m3_s": 55.14105306981412,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "D03": {
+     "capacity_m3_s": 19.594411663249783,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 20.687590152292024,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 1.055790319598753,
+     "outflow_m3_s": 20.687590152292024,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "D04": {
+     "capacity_m3_s": 44.50061575040152,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 12.63938996123909,
+     "spare_for_ponds_m3_s": 31.861225789162432,
+     "pond_release_share": 1.0,
+     "ratio": 0.2840273049733036,
+     "outflow_m3_s": 12.63938996123909,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "low"
+    }
+   },
+   "what_if_ponds": {},
+   "label": "Today's land cover",
+   "storage_by_duration": [
+    {
+     "duration_h": 0.5,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 9727.97756571349,
+      "OSM_w248955624": 22894.04300393811,
+      "OSM_w248955646": 11195.897506120027,
+      "G34": 81334.04664086239,
+      "G64": 40737.995345755095,
+      "OSM_w1136664710": 69029.7233844926,
+      "OSM_w1144831369": 17247.69403171073,
+      "OSM_w1534629883": 10335.237926003272,
+      "OSM_w1534629884": 0,
+      "G53": 27100.690094069676
+     }
+    },
+    {
+     "duration_h": 1,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 5426.385035703672,
+      "OSM_w248955624": 7975.437878731958,
+      "OSM_w248955646": 7455.779027232198,
+      "G34": 104165.6015293567,
+      "G64": 20795.212819641107,
+      "OSM_w1136664710": 65558.18035217226,
+      "OSM_w1144831369": 9683.31687033306,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 14715.227750179554
+     }
+    },
+    {
+     "duration_h": 2,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 126568.58538313047,
+      "G64": 0.0,
+      "OSM_w1136664710": 24289.02352099931,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 3,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 35992.21693802695,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 6,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 12,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 24,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    }
+   ],
+   "crossings": [],
+   "by_side": {
+    "Majlis Perbandaran Selayang": {
+     "storage_required_m3": 289603.30549866543,
+     "capacity_m3": 862200.0,
+     "ponds": 12,
+     "unstated": 0,
+     "gap_m3": -572596.6945013346
+    }
+   }
+  },
+  "upstream": {
+   "duration_h": 0.5,
+   "intensity_mm_hr": 176.03280293642302,
+   "intensity_tc_mm_hr": 176.03280293642302,
+   "zones": {
+    "Z01": {
+     "q_m3_s": 14.817111325565907,
+     "v_m3": 26670.800386018633,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 6.661052972128064,
+     "band": "high",
+     "load": 6.661052972128064,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z02": {
+     "q_m3_s": 32.105214665150704,
+     "v_m3": 57789.38639727127,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z03": {
+     "q_m3_s": 33.03242833621766,
+     "v_m3": 59458.371005191795,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z04": {
+     "q_m3_s": 32.33350476155884,
+     "v_m3": 58200.308570805915,
+     "drains_to": "OSM_w1534629883",
+     "band_basis": "capacity",
+     "ratio": 5.219711896096411,
+     "band": "high",
+     "load": 5.219711896096411,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z05": {
+     "q_m3_s": 11.415727270427036,
+     "v_m3": 20548.309086768666,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z06": {
+     "q_m3_s": 25.335521162624687,
+     "v_m3": 45603.938092724435,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z07": {
+     "q_m3_s": 11.536133707635546,
+     "v_m3": 20765.040673743984,
+     "drains_to": "OSM_w248955646",
+     "band_basis": "capacity",
+     "ratio": 3.1988278588914363,
+     "band": "high",
+     "load": 3.1988278588914363,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z08": {
+     "q_m3_s": 22.392614542733728,
+     "v_m3": 40306.706176920714,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 6.661052972128064,
+     "band": "high",
+     "load": 6.661052972128064,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z09": {
+     "q_m3_s": 26.279350374368807,
+     "v_m3": 47302.83067386385,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.16866127286149057,
+     "band": "low",
+     "load": 0.16866127286149057,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z10": {
+     "q_m3_s": 13.88441129880743,
+     "v_m3": 24991.940337853375,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z11": {
+     "q_m3_s": 42.923574618812985,
+     "v_m3": 77262.43431386337,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z12": {
+     "q_m3_s": 33.07255892548708,
+     "v_m3": 59530.606065876746,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z13": {
+     "q_m3_s": 13.763437644789455,
+     "v_m3": 24774.18776062102,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z14": {
+     "q_m3_s": 18.53139857772435,
+     "v_m3": 33356.51743990383,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z15": {
+     "q_m3_s": 22.29871082196731,
+     "v_m3": 40137.679479541155,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z16": {
+     "q_m3_s": 33.02382717787419,
+     "v_m3": 59442.888920173544,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.16866127286149057,
+     "band": "low",
+     "load": 0.16866127286149057,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z17": {
+     "q_m3_s": 27.353957289294446,
+     "v_m3": 49237.12312073,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z18": {
+     "q_m3_s": 5.328630300087483,
+     "v_m3": 9591.53454015747,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z19": {
+     "q_m3_s": 24.117794689111655,
+     "v_m3": 43412.03044040098,
+     "drains_to": "D03",
+     "band_basis": "change_vs_now",
+     "ratio": 1.1658097686375322,
+     "band": "medium",
+     "load": 1.2308506682211686,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z20": {
+     "q_m3_s": 49.54231999282102,
+     "v_m3": 89176.17598707783,
+     "drains_to": "OSM_w1136664710",
+     "band_basis": "capacity",
+     "ratio": 7.962158570274807,
+     "band": "high",
+     "load": 7.962158570274807,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z21": {
+     "q_m3_s": 33.21168840720792,
+     "v_m3": 59781.03913297426,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z22": {
+     "q_m3_s": 30.299646205431813,
+     "v_m3": 54539.363169777265,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z23": {
+     "q_m3_s": 36.76071019620955,
+     "v_m3": 66169.27835317719,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.4233436090934907,
+     "band": "low",
+     "load": 0.4233436090934907,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z24": {
+     "q_m3_s": 35.014709281084315,
+     "v_m3": 63026.47670595177,
+     "drains_to": "G53",
+     "band_basis": "capacity",
+     "ratio": 1.5185731518228693,
+     "band": "high",
+     "load": 1.5185731518228693,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z25": {
+     "q_m3_s": 22.350136849425155,
+     "v_m3": 40230.24632896528,
+     "drains_to": "OSM_w1144831369",
+     "band_basis": "capacity",
+     "ratio": 2.802750280152994,
+     "band": "high",
+     "load": 2.802750280152994,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z26": {
+     "q_m3_s": 14.55786879464145,
+     "v_m3": 26204.16383035461,
+     "drains_to": "D04",
+     "band_basis": "change_vs_now",
+     "ratio": 1.1517857142857142,
+     "band": "medium",
+     "load": 0.32713859233532283,
+     "load_of": "drain",
+     "band_capacity": "low"
+    },
+    "Z27": {
+     "q_m3_s": 19.5786519509937,
+     "v_m3": 35241.57351178866,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.4233436090934907,
+     "band": "low",
+     "load": 0.4233436090934907,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z28": {
+     "q_m3_s": 12.11244554524907,
+     "v_m3": 21802.401981448325,
+     "drains_to": "OSM_w220214462",
+     "band_basis": "capacity",
+     "ratio": 0.5205861517904499,
+     "band": "low",
+     "load": 0.5205861517904499,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z29": {
+     "q_m3_s": 3.3727493858612125,
+     "v_m3": 6070.948894550183,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    }
+   },
+   "external": {},
+   "ponds": {
+    "OSM_w220214423": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214460": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 4400.0,
+     "gap_m3": -4400.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214462": {
+     "inflow_m3": 21802.401981448325,
+     "allowed_release_m3_s": 5.4315899306049635,
+     "release_m3_s": 5.4315899306049635,
+     "released_m3": 9776.861875088935,
+     "storage_required_m3": 12025.54010635939,
+     "capacity_m3": 23100.0,
+     "gap_m3": -11074.45989364061,
+     "ratio": 0.5205861517904499,
+     "drains_to": "outfall",
+     "change_vs_now": 1.236180904522613,
+     "band_capacity": "low"
+    },
+    "OSM_w248955624": {
+     "inflow_m3": 66977.50656293935,
+     "allowed_release_m3_s": 16.48644995501233,
+     "release_m3_s": 16.48644995501233,
+     "released_m3": 29675.609919022194,
+     "storage_required_m3": 37301.896643917156,
+     "capacity_m3": 5600.0,
+     "gap_m3": 31701.896643917156,
+     "ratio": 6.661052972128064,
+     "drains_to": "outfall",
+     "change_vs_now": 1.6293276219277077,
+     "band_capacity": "high"
+    },
+    "OSM_w248955646": {
+     "inflow_m3": 20765.040673743984,
+     "allowed_release_m3_s": 5.316190648679976,
+     "release_m3_s": 5.316190648679976,
+     "released_m3": 9569.143167623957,
+     "storage_required_m3": 11195.897506120027,
+     "capacity_m3": 3500.0,
+     "gap_m3": 7695.897506120027,
+     "ratio": 3.1988278588914363,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "G34": {
+     "inflow_m3": 106745.7195940374,
+     "allowed_release_m3_s": 25.93745555266562,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 106745.7195940374,
+     "capacity_m3": 632900.0,
+     "gap_m3": -526154.2804059626,
+     "ratio": 0.16866127286149057,
+     "drains_to": "D01",
+     "change_vs_now": 1.3124358617662597,
+     "band_capacity": "low"
+    },
+    "G64": {
+     "inflow_m3": 101410.85186496584,
+     "allowed_release_m3_s": 24.235805124280194,
+     "release_m3_s": 24.235805124280194,
+     "released_m3": 43624.44922370435,
+     "storage_required_m3": 57786.402641261484,
+     "capacity_m3": 136500.0,
+     "gap_m3": -78713.59735873851,
+     "ratio": 0.4233436090934907,
+     "drains_to": "outfall",
+     "change_vs_now": 1.418489107056242,
+     "band_capacity": "low"
+    },
+    "OSM_w1136664710": {
+     "inflow_m3": 89176.17598707783,
+     "allowed_release_m3_s": 22.725834859092213,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 89176.17598707783,
+     "capacity_m3": 11200.0,
+     "gap_m3": 77976.17598707783,
+     "ratio": 7.962158570274807,
+     "drains_to": "D03",
+     "change_vs_now": 1.2918518518518518,
+     "band_capacity": "high"
+    },
+    "OSM_w1144831369": {
+     "inflow_m3": 40230.24632896528,
+     "allowed_release_m3_s": 9.582052239839294,
+     "release_m3_s": 9.582052239839294,
+     "released_m3": 17247.69403171073,
+     "storage_required_m3": 22982.55229725455,
+     "capacity_m3": 8200.0,
+     "gap_m3": 14782.552297254551,
+     "ratio": 2.802750280152994,
+     "drains_to": "outfall",
+     "change_vs_now": 1.3325000000000002,
+     "band_capacity": "high"
+    },
+    "OSM_w1534629883": {
+     "inflow_m3": 58200.308570805915,
+     "allowed_release_m3_s": 14.354497119448984,
+     "release_m3_s": 14.354497119448984,
+     "released_m3": 25838.09481500817,
+     "storage_required_m3": 32362.213755797744,
+     "capacity_m3": 6200.0,
+     "gap_m3": 26162.213755797744,
+     "ratio": 5.219711896096411,
+     "drains_to": "outfall",
+     "change_vs_now": 3.1312499999999996,
+     "band_capacity": "high"
+    },
+    "OSM_w1534629884": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "G53": {
+     "inflow_m3": 63026.47670595177,
+     "allowed_release_m3_s": 15.441988657589555,
+     "release_m3_s": 15.441988657589555,
+     "released_m3": 27795.579583661198,
+     "storage_required_m3": 35230.89712229057,
+     "capacity_m3": 23200.0,
+     "gap_m3": 12030.897122290567,
+     "ratio": 1.5185731518228693,
+     "drains_to": "outfall",
+     "change_vs_now": 1.2999999999999996,
+     "band_capacity": "high"
+    }
+   },
+   "drains": {
+    "D01": {
+     "capacity_m3_s": 37.431690620166606,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 139.53321295436925,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 3.7276759516492337,
+     "outflow_m3_s": 139.53321295436925,
+     "drains_to": "outfall",
+     "change_vs_now": 1.4344970416818819,
+     "band_capacity": "high"
+    },
+    "D02": {
+     "capacity_m3_s": 3.84027232662422,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 68.83996491272723,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 1.0,
+     "ratio": 17.92580292690878,
+     "outflow_m3_s": 68.83996491272723,
+     "drains_to": "outfall",
+     "change_vs_now": 1.2484339902897557,
+     "band_capacity": "high"
+    },
+    "D03": {
+     "capacity_m3_s": 19.594411663249783,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 24.117794689111655,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 1.2308506682211686,
+     "outflow_m3_s": 24.117794689111655,
+     "drains_to": "outfall",
+     "change_vs_now": 1.1658097686375322,
+     "band_capacity": "high"
+    },
+    "D04": {
+     "capacity_m3_s": 44.50061575040152,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 14.55786879464145,
+     "spare_for_ponds_m3_s": 29.94274695576007,
+     "pond_release_share": 1.0,
+     "ratio": 0.32713859233532283,
+     "outflow_m3_s": 14.55786879464145,
+     "drains_to": "outfall",
+     "change_vs_now": 1.1517857142857142,
+     "band_capacity": "low"
+    }
+   },
+   "what_if_ponds": {},
+   "label": "Open and vacant land built out",
+   "storage_by_duration": [
+    {
+     "duration_h": 0.5,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 12025.54010635939,
+      "OSM_w248955624": 37301.896643917156,
+      "OSM_w248955646": 11195.897506120027,
+      "G34": 106745.7195940374,
+      "G64": 57786.402641261484,
+      "OSM_w1136664710": 89176.17598707783,
+      "OSM_w1144831369": 22982.55229725455,
+      "OSM_w1534629883": 32362.213755797744,
+      "OSM_w1534629884": 0,
+      "G53": 35230.89712229057
+     }
+    },
+    {
+     "duration_h": 1,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 8368.90411574486,
+      "OSM_w248955624": 26427.76876769257,
+      "OSM_w248955646": 7455.779027232198,
+      "G34": 136710.67100958206,
+      "G64": 42629.336097625215,
+      "OSM_w1136664710": 99267.60760151433,
+      "OSM_w1144831369": 17028.026565569744,
+      "OSM_w1534629883": 22861.72409560388,
+      "OSM_w1534629884": 0,
+      "G53": 25127.692648088072
+     }
+    },
+    {
+     "duration_h": 2,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 166113.15042984523,
+      "G64": 0.0,
+      "OSM_w1136664710": 65248.365745143674,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 3,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 183274.87924571967,
+      "G64": 0.0,
+      "OSM_w1136664710": 16024.962315510027,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 6,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 12,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 24,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    }
+   ],
+   "crossings": [],
+   "by_side": {
+    "Majlis Perbandaran Selayang": {
+     "storage_required_m3": 404807.2956541162,
+     "capacity_m3": 862200.0,
+     "ponds": 12,
+     "unstated": 0,
+     "gap_m3": -457392.7043458838
+    }
+   }
+  },
+  "upstream_plus_pond": {
+   "duration_h": 0.5,
+   "intensity_mm_hr": 176.03280293642302,
+   "intensity_tc_mm_hr": 176.03280293642302,
+   "zones": {
+    "Z01": {
+     "q_m3_s": 14.817111325565907,
+     "v_m3": 26670.800386018633,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 6.661052972128064,
+     "band": "high",
+     "load": 6.661052972128064,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z02": {
+     "q_m3_s": 32.105214665150704,
+     "v_m3": 57789.38639727127,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z03": {
+     "q_m3_s": 33.03242833621766,
+     "v_m3": 59458.371005191795,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z04": {
+     "q_m3_s": 32.33350476155884,
+     "v_m3": 58200.308570805915,
+     "drains_to": "OSM_w1534629883",
+     "band_basis": "capacity",
+     "ratio": 0.0,
+     "band": "low",
+     "load": 0.0,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z05": {
+     "q_m3_s": 11.415727270427036,
+     "v_m3": 20548.309086768666,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z06": {
+     "q_m3_s": 25.335521162624687,
+     "v_m3": 45603.938092724435,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z07": {
+     "q_m3_s": 11.536133707635546,
+     "v_m3": 20765.040673743984,
+     "drains_to": "OSM_w248955646",
+     "band_basis": "capacity",
+     "ratio": 3.1988278588914363,
+     "band": "high",
+     "load": 3.1988278588914363,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z08": {
+     "q_m3_s": 22.392614542733728,
+     "v_m3": 40306.706176920714,
+     "drains_to": "OSM_w248955624",
+     "band_basis": "capacity",
+     "ratio": 6.661052972128064,
+     "band": "high",
+     "load": 6.661052972128064,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z09": {
+     "q_m3_s": 26.279350374368807,
+     "v_m3": 47302.83067386385,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.16866127286149057,
+     "band": "low",
+     "load": 0.16866127286149057,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z10": {
+     "q_m3_s": 13.88441129880743,
+     "v_m3": 24991.940337853375,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z11": {
+     "q_m3_s": 42.923574618812985,
+     "v_m3": 77262.43431386337,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z12": {
+     "q_m3_s": 33.07255892548708,
+     "v_m3": 59530.606065876746,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z13": {
+     "q_m3_s": 13.763437644789455,
+     "v_m3": 24774.18776062102,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z14": {
+     "q_m3_s": 18.53139857772435,
+     "v_m3": 33356.51743990383,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    },
+    "Z15": {
+     "q_m3_s": 22.29871082196731,
+     "v_m3": 40137.679479541155,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z16": {
+     "q_m3_s": 33.02382717787419,
+     "v_m3": 59442.888920173544,
+     "drains_to": "G34",
+     "band_basis": "capacity",
+     "ratio": 0.16866127286149057,
+     "band": "low",
+     "load": 0.16866127286149057,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z17": {
+     "q_m3_s": 27.353957289294446,
+     "v_m3": 49237.12312073,
+     "drains_to": "D01",
+     "band_basis": "change_vs_now",
+     "ratio": 1.4344970416818819,
+     "band": "high",
+     "load": 3.7276759516492337,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z18": {
+     "q_m3_s": 5.328630300087483,
+     "v_m3": 9591.53454015747,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z19": {
+     "q_m3_s": 24.117794689111655,
+     "v_m3": 43412.03044040098,
+     "drains_to": "D03",
+     "band_basis": "change_vs_now",
+     "ratio": 1.1658097686375322,
+     "band": "medium",
+     "load": 1.2308506682211686,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z20": {
+     "q_m3_s": 49.54231999282102,
+     "v_m3": 89176.17598707783,
+     "drains_to": "OSM_w1136664710",
+     "band_basis": "capacity",
+     "ratio": 7.962158570274807,
+     "band": "high",
+     "load": 7.962158570274807,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z21": {
+     "q_m3_s": 33.21168840720792,
+     "v_m3": 59781.03913297426,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z22": {
+     "q_m3_s": 30.299646205431813,
+     "v_m3": 54539.363169777265,
+     "drains_to": "D02",
+     "band_basis": "change_vs_now",
+     "ratio": 1.2484339902897557,
+     "band": "high",
+     "load": 17.92580292690878,
+     "load_of": "drain",
+     "band_capacity": "high"
+    },
+    "Z23": {
+     "q_m3_s": 36.76071019620955,
+     "v_m3": 66169.27835317719,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.4233436090934907,
+     "band": "low",
+     "load": 0.4233436090934907,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z24": {
+     "q_m3_s": 35.014709281084315,
+     "v_m3": 63026.47670595177,
+     "drains_to": "G53",
+     "band_basis": "capacity",
+     "ratio": 1.5185731518228693,
+     "band": "high",
+     "load": 1.5185731518228693,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z25": {
+     "q_m3_s": 22.350136849425155,
+     "v_m3": 40230.24632896528,
+     "drains_to": "OSM_w1144831369",
+     "band_basis": "capacity",
+     "ratio": 2.802750280152994,
+     "band": "high",
+     "load": 2.802750280152994,
+     "load_of": "pond",
+     "band_capacity": "high"
+    },
+    "Z26": {
+     "q_m3_s": 14.55786879464145,
+     "v_m3": 26204.16383035461,
+     "drains_to": "D04",
+     "band_basis": "change_vs_now",
+     "ratio": 1.1517857142857142,
+     "band": "medium",
+     "load": 0.32713859233532283,
+     "load_of": "drain",
+     "band_capacity": "low"
+    },
+    "Z27": {
+     "q_m3_s": 19.5786519509937,
+     "v_m3": 35241.57351178866,
+     "drains_to": "G64",
+     "band_basis": "capacity",
+     "ratio": 0.4233436090934907,
+     "band": "low",
+     "load": 0.4233436090934907,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z28": {
+     "q_m3_s": 12.11244554524907,
+     "v_m3": 21802.401981448325,
+     "drains_to": "OSM_w220214462",
+     "band_basis": "capacity",
+     "ratio": 0.5205861517904499,
+     "band": "low",
+     "load": 0.5205861517904499,
+     "load_of": "pond",
+     "band_capacity": "low"
+    },
+    "Z29": {
+     "q_m3_s": 3.3727493858612125,
+     "v_m3": 6070.948894550183,
+     "drains_to": "outfall",
+     "band_basis": "unknown",
+     "ratio": null,
+     "band": "unknown",
+     "load": null,
+     "load_of": null,
+     "band_capacity": "unknown"
+    }
+   },
+   "external": {},
+   "ponds": {
+    "OSM_w220214423": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214460": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 4400.0,
+     "gap_m3": -4400.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "OSM_w220214462": {
+     "inflow_m3": 21802.401981448325,
+     "allowed_release_m3_s": 5.4315899306049635,
+     "release_m3_s": 5.4315899306049635,
+     "released_m3": 9776.861875088935,
+     "storage_required_m3": 12025.54010635939,
+     "capacity_m3": 23100.0,
+     "gap_m3": -11074.45989364061,
+     "ratio": 0.5205861517904499,
+     "drains_to": "outfall",
+     "change_vs_now": 1.236180904522613,
+     "band_capacity": "low"
+    },
+    "OSM_w248955624": {
+     "inflow_m3": 66977.50656293935,
+     "allowed_release_m3_s": 16.48644995501233,
+     "release_m3_s": 16.48644995501233,
+     "released_m3": 29675.609919022194,
+     "storage_required_m3": 37301.896643917156,
+     "capacity_m3": 5600.0,
+     "gap_m3": 31701.896643917156,
+     "ratio": 6.661052972128064,
+     "drains_to": "outfall",
+     "change_vs_now": 1.6293276219277077,
+     "band_capacity": "high"
+    },
+    "OSM_w248955646": {
+     "inflow_m3": 20765.040673743984,
+     "allowed_release_m3_s": 5.316190648679976,
+     "release_m3_s": 5.316190648679976,
+     "released_m3": 9569.143167623957,
+     "storage_required_m3": 11195.897506120027,
+     "capacity_m3": 3500.0,
+     "gap_m3": 7695.897506120027,
+     "ratio": 3.1988278588914363,
+     "drains_to": "outfall",
+     "change_vs_now": 1.0,
+     "band_capacity": "high"
+    },
+    "G34": {
+     "inflow_m3": 106745.7195940374,
+     "allowed_release_m3_s": 25.93745555266562,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 106745.7195940374,
+     "capacity_m3": 632900.0,
+     "gap_m3": -526154.2804059626,
+     "ratio": 0.16866127286149057,
+     "drains_to": "D01",
+     "change_vs_now": 1.3124358617662597,
+     "band_capacity": "low"
+    },
+    "G64": {
+     "inflow_m3": 101410.85186496584,
+     "allowed_release_m3_s": 24.235805124280194,
+     "release_m3_s": 24.235805124280194,
+     "released_m3": 43624.44922370435,
+     "storage_required_m3": 57786.402641261484,
+     "capacity_m3": 136500.0,
+     "gap_m3": -78713.59735873851,
+     "ratio": 0.4233436090934907,
+     "drains_to": "outfall",
+     "change_vs_now": 1.418489107056242,
+     "band_capacity": "low"
+    },
+    "OSM_w1136664710": {
+     "inflow_m3": 89176.17598707783,
+     "allowed_release_m3_s": 22.725834859092213,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 89176.17598707783,
+     "capacity_m3": 11200.0,
+     "gap_m3": 77976.17598707783,
+     "ratio": 7.962158570274807,
+     "drains_to": "D03",
+     "change_vs_now": 1.2918518518518518,
+     "band_capacity": "high"
+    },
+    "OSM_w1144831369": {
+     "inflow_m3": 40230.24632896528,
+     "allowed_release_m3_s": 9.582052239839294,
+     "release_m3_s": 9.582052239839294,
+     "released_m3": 17247.69403171073,
+     "storage_required_m3": 22982.55229725455,
+     "capacity_m3": 8200.0,
+     "gap_m3": 14782.552297254551,
+     "ratio": 2.802750280152994,
+     "drains_to": "outfall",
+     "change_vs_now": 1.3325000000000002,
+     "band_capacity": "high"
+    },
+    "OSM_w1534629883": {
+     "inflow_m3": 0.0,
+     "allowed_release_m3_s": 14.354497119448984,
+     "release_m3_s": 14.354497119448984,
+     "released_m3": 0.0,
+     "storage_required_m3": 0.0,
+     "capacity_m3": 6200.0,
+     "gap_m3": -6200.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": 0.0,
+     "band_capacity": "low"
+    },
+    "OSM_w1534629884": {
+     "inflow_m3": 0,
+     "allowed_release_m3_s": 0.0,
+     "release_m3_s": 0.0,
+     "released_m3": 0,
+     "storage_required_m3": 0,
+     "capacity_m3": 3700.0,
+     "gap_m3": -3700.0,
+     "ratio": 0.0,
+     "drains_to": "outfall",
+     "change_vs_now": null,
+     "band_capacity": "low"
+    },
+    "G53": {
+     "inflow_m3": 63026.47670595177,
+     "allowed_release_m3_s": 15.441988657589555,
+     "release_m3_s": 15.441988657589555,
+     "released_m3": 27795.579583661198,
+     "storage_required_m3": 35230.89712229057,
+     "capacity_m3": 23200.0,
+     "gap_m3": 12030.897122290567,
+     "ratio": 1.5185731518228693,
+     "drains_to": "outfall",
+     "change_vs_now": 1.2999999999999996,
+     "band_capacity": "high"
+    }
+   },
+   "drains": {
+    "D01": {
+     "capacity_m3_s": 37.431690620166606,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 139.53321295436925,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 3.7276759516492337,
+     "outflow_m3_s": 139.53321295436925,
+     "drains_to": "outfall",
+     "change_vs_now": 1.4344970416818819,
+     "band_capacity": "high"
+    },
+    "D02": {
+     "capacity_m3_s": 3.84027232662422,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 68.83996491272723,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 1.0,
+     "ratio": 17.92580292690878,
+     "outflow_m3_s": 68.83996491272723,
+     "drains_to": "outfall",
+     "change_vs_now": 1.2484339902897557,
+     "band_capacity": "high"
+    },
+    "D03": {
+     "capacity_m3_s": 19.594411663249783,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 24.117794689111655,
+     "spare_for_ponds_m3_s": 0.0,
+     "pond_release_share": 0.0,
+     "ratio": 1.2308506682211686,
+     "outflow_m3_s": 24.117794689111655,
+     "drains_to": "outfall",
+     "change_vs_now": 1.1658097686375322,
+     "band_capacity": "high"
+    },
+    "D04": {
+     "capacity_m3_s": 44.50061575040152,
+     "blockage": 0.0,
+     "direct_demand_m3_s": 14.55786879464145,
+     "spare_for_ponds_m3_s": 29.94274695576007,
+     "pond_release_share": 1.0,
+     "ratio": 0.32713859233532283,
+     "outflow_m3_s": 14.55786879464145,
+     "drains_to": "outfall",
+     "change_vs_now": 1.1517857142857142,
+     "band_capacity": "low"
+    }
+   },
+   "what_if_ponds": {
+    "W1": {
+     "inflow_m3": 58200.308570805915,
+     "release_m3_s": 0.0,
+     "released_m3": 0.0,
+     "storage_required_m3": 58200.308570805915,
+     "capacity_m3": 549000.0,
+     "gap_m3": -490799.69142919406,
+     "ratio": 0.1060114910215044
+    }
+   },
+   "label": "Built out, plus a what-if pond",
+   "storage_by_duration": [
+    {
+     "duration_h": 0.5,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 12025.54010635939,
+      "OSM_w248955624": 37301.896643917156,
+      "OSM_w248955646": 11195.897506120027,
+      "G34": 106745.7195940374,
+      "G64": 57786.402641261484,
+      "OSM_w1136664710": 89176.17598707783,
+      "OSM_w1144831369": 22982.55229725455,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 35230.89712229057
+     }
+    },
+    {
+     "duration_h": 1,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 8368.90411574486,
+      "OSM_w248955624": 26427.76876769257,
+      "OSM_w248955646": 7455.779027232198,
+      "G34": 136710.67100958206,
+      "G64": 42629.336097625215,
+      "OSM_w1136664710": 99267.60760151433,
+      "OSM_w1144831369": 17028.026565569744,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 25127.692648088072
+     }
+    },
+    {
+     "duration_h": 2,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 166113.15042984523,
+      "G64": 0.0,
+      "OSM_w1136664710": 65248.365745143674,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 3,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 183274.87924571967,
+      "G64": 0.0,
+      "OSM_w1136664710": 16024.962315510027,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 6,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 12,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    },
+    {
+     "duration_h": 24,
+     "storage_required_m3": {
+      "OSM_w220214423": 0,
+      "OSM_w220214460": 0,
+      "OSM_w220214462": 0.0,
+      "OSM_w248955624": 0.0,
+      "OSM_w248955646": 0.0,
+      "G34": 0.0,
+      "G64": 0.0,
+      "OSM_w1136664710": 0.0,
+      "OSM_w1144831369": 0.0,
+      "OSM_w1534629883": 0.0,
+      "OSM_w1534629884": 0,
+      "G53": 0.0
+     }
+    }
+   ],
+   "crossings": [],
+   "by_side": {
+    "Majlis Perbandaran Selayang": {
+     "storage_required_m3": 372445.0818983184,
+     "capacity_m3": 862200.0,
+     "ponds": 12,
+     "unstated": 0,
+     "gap_m3": -489754.9181016816
+    }
+   }
+  }
+ }
+}

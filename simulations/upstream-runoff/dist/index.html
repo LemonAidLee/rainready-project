@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive upstream development and downstream flood simulation">
+  <title>Runoff Lab — Upstream Development Simulation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Interactive watershed model · 1 km² catchment</p>
+        <h1>When the hill hardens,<br><span>the water arrives all at once.</span></h1>
+      </div>
+      <p class="intro">Change the land above the township. Watch infiltration shrink, runoff accelerate, and the downstream drain reach its limit.</p>
+    </header>
+
+    <section class="story-strip" aria-label="Cause and effect chain">
+      <article><span>01</span><strong>Hard surfaces</strong><small>Less water enters soil</small></article>
+      <div class="arrow">→</div>
+      <article><span>02</span><strong>More runoff</strong><small>More rain stays above ground</small></article>
+      <div class="arrow">→</div>
+      <article><span>03</span><strong>Faster peak</strong><small>Concrete drains compress the flow</small></article>
+      <div class="arrow">→</div>
+      <article><span>04</span><strong>Flooding below</strong><small>Inflow exceeds old drain capacity</small></article>
+    </section>
+
+    <section class="workspace">
+      <aside class="control-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="kicker">Scenario controls</p>
+            <h2>Shape the storm</h2>
+          </div>
+          <button id="resetButton" class="icon-button" type="button" aria-label="Reset simulation">↺</button>
+        </div>
+
+        <div class="presets" role="group" aria-label="Scenario presets">
+          <button class="preset active" data-preset="natural" type="button">Natural hillside</button>
+          <button class="preset" data-preset="developed" type="button">Developed upstream</button>
+          <button class="preset" data-preset="extreme" type="button">Worst case</button>
+        </div>
+
+        <label class="control" for="impervious">
+          <span><strong>Impervious surface</strong><output id="imperviousValue">20%</output></span>
+          <input id="impervious" type="range" min="0" max="100" value="20" step="1">
+          <small>Roofs, roads, parking and concrete</small>
+        </label>
+
+        <label class="control" for="rainfall">
+          <span><strong>Rainfall intensity</strong><output id="rainfallValue">55 mm/h</output></span>
+          <input id="rainfall" type="range" min="10" max="150" value="55" step="1">
+          <small>Average intensity during the storm</small>
+        </label>
+
+        <label class="control" for="duration">
+          <span><strong>Storm duration</strong><output id="durationValue">1.5 h</output></span>
+          <input id="duration" type="range" min="0.5" max="4" value="1.5" step="0.25">
+          <small>Longer storms create more total water</small>
+        </label>
+
+        <label class="control" for="drainSpeed">
+          <span><strong>Upstream drainage speed</strong><output id="drainSpeedValue">Slow</output></span>
+          <input id="drainSpeed" type="range" min="0" max="100" value="20" step="1">
+          <small>Higher = straighter, smoother concrete drains</small>
+        </label>
+
+        <label class="control" for="capacity">
+          <span><strong>Downstream drain capacity</strong><output id="capacityValue">8 m³/s</output></span>
+          <input id="capacity" type="range" min="5" max="35" value="8" step="1">
+          <small>What the lower township can safely carry</small>
+        </label>
+
+        <button id="stormButton" class="storm-button" type="button"><span>▶</span> Run the storm</button>
+      </aside>
+
+      <section class="simulation-panel">
+        <div class="scene-header">
+          <div>
+            <p class="kicker">Live catchment view</p>
+            <h2 id="scenarioTitle">Natural hillside</h2>
+          </div>
+          <div id="riskBadge" class="risk-badge safe"><i></i><span>Within capacity</span></div>
+        </div>
+
+        <div class="scene-wrap">
+          <canvas id="landscape" aria-label="Animated cross-section of rain flowing from an upstream hill to a downstream township"></canvas>
+          <div class="scene-label upstream">UPSTREAM</div>
+          <div class="scene-label downstream">DOWNSTREAM</div>
+          <div class="time-pill">Storm time <strong id="timeReadout">0:00</strong></div>
+        </div>
+
+        <div class="metric-grid" aria-live="polite">
+          <article class="metric">
+            <span class="metric-icon soil">↓</span>
+            <div><small>Water soaking into soil</small><strong id="infiltrationMetric">70%</strong></div>
+          </article>
+          <article class="metric">
+            <span class="metric-icon runoff">≈</span>
+            <div><small>Total surface runoff</small><strong id="runoffMetric">24,750 m³</strong></div>
+          </article>
+          <article class="metric">
+            <span class="metric-icon peak">▲</span>
+            <div><small>Peak arriving downstream</small><strong id="peakMetric">2.4 m³/s</strong></div>
+          </article>
+          <article class="metric flood-metric">
+            <span class="metric-icon flood">!</span>
+            <div><small>Peak water above drain capacity</small><strong id="floodMetric">0 m³</strong></div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="analysis-grid">
+      <article class="chart-card">
+        <div class="card-heading">
+          <div><p class="kicker">Hydrograph</p><h2>How quickly water reaches downstream</h2></div>
+          <div class="legend"><span><i class="line current"></i>Current scenario</span><span><i class="line baseline"></i>Natural baseline</span><span><i class="line capacity"></i>Drain limit</span></div>
+        </div>
+        <canvas id="hydrograph" aria-label="Line chart of downstream discharge over time"></canvas>
+        <p class="chart-note">Flooding begins wherever the blue curve rises above the red capacity line.</p>
+      </article>
+
+      <article class="explain-card">
+        <p class="kicker">Read the result</p>
+        <h2 id="explanationTitle">The landscape is absorbing most of the storm.</h2>
+        <p id="explanationBody">Vegetation and soil hold water back. The downstream flow is spread over more time, so the existing drain can cope.</p>
+        <div class="equation">
+          <span>Rain falling</span><b>−</b><span>infiltration</span><b>=</b><span>runoff</span>
+        </div>
+        <details>
+          <summary>How this simplified model works</summary>
+          <p>A weighted runoff coefficient estimates the share of rain that becomes surface flow: 0.15 for permeable land and 0.90 for impervious land. A conceptual storage reservoir delays that water; faster engineered drainage shortens the delay. Downstream ponding accumulates whenever inflow is greater than drain capacity.</p>
+          <p>This is an educational comparison model, not a site-specific engineering calculation. Real design requires local topography, soil, rainfall curves, drain geometry and calibrated hydrology.</p>
+        </details>
+      </article>
+    </section>
+
+    <footer>
+      <p><strong>Try this:</strong> choose “Natural hillside,” then “Developed upstream.” Keep the same rain and drain capacity. The difference is caused by land cover and drainage speed.</p>
+      <span>Conceptual model · Values rounded</span>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

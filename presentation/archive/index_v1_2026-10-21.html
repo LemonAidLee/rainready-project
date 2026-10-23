@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RainReady · Presentation</title>
+<meta name="description" content="RainReady presentation for the SDP University Hackathon 2026 video. Not the submitted pitch deck." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+/* RainReady presentation. Same visual system as the website (documentation/WEBSITE.md section 6):
+   night-water ground, IBM Plex, cyan for water and data, gold for the brand and for "look here".
+   Keys: → / Space / PageDown next · ← / PageUp back · Home / End · F fullscreen · N presenter notes · number + Enter jump */
+:root {
+  --bg: #060b11; --panel: rgba(9, 16, 23, 0.78); --line: rgba(130, 170, 200, 0.16); --line-2: rgba(130, 170, 200, 0.3);
+  --text: #d6e1eb; --text-2: #9aabbb; --text-3: #627485; --gold: #e3b341; --gold-dim: rgba(227, 179, 65, 0.14);
+  --cyan: #35d0e6; --water: #3aa0ff; --green: #1fbf75; --amber: #f2a516; --red: #ff4a3d;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(.2, .7, .15, 1);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); overflow: hidden; }
+canvas#water { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.veil { position: fixed; inset: 0; background: radial-gradient(1200px 800px at 50% 45%, rgba(6, 11, 17, .25), rgba(6, 11, 17, .78)); pointer-events: none; }
+
+/* 1920 x 1080 stage, scaled to the window */
+.deck { position: fixed; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.slide { position: absolute; inset: 0; padding: 130px 140px 120px; display: flex; flex-direction: column; justify-content: center; opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(26px) scale(.99); filter: blur(6px);
+  transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease), visibility 0s .9s; }
+.slide.active { opacity: 1; visibility: visible; pointer-events: auto; transform: none; filter: none; transition: opacity .8s var(--ease) .15s, transform 1s var(--ease) .1s, filter .8s var(--ease) .1s; }
+.slide.leaving { opacity: 0; transform: translateY(-22px) scale(.985); filter: blur(8px); visibility: visible; }
+
+/* chrome */
+.chrome { position: absolute; inset: 0; pointer-events: none; }
+.brand { position: absolute; left: 140px; top: 52px; display: flex; align-items: center; gap: 14px; color: var(--gold); }
+.brand b { font: 700 22px/1 var(--cond); letter-spacing: .34em; }
+.section { position: absolute; right: 140px; top: 56px; font: 500 15px/1 var(--mono); letter-spacing: .16em; color: var(--text-3); }
+.section em { font-style: normal; color: var(--gold); margin-right: 14px; }
+.foot { position: absolute; left: 140px; right: 140px; bottom: 46px; display: flex; justify-content: space-between; font: 500 14px/1 var(--mono); letter-spacing: .08em; color: var(--text-3); }
+.progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(130, 170, 200, .12); }
+.progress i { display: block; height: 100%; background: var(--gold); transition: width .9s var(--ease); }
+.sweep { position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; }
+.sweep.go { animation: sweep 1.1s var(--ease); }
+@keyframes sweep { 0% { opacity: 0; transform: translateX(-60%); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateX(60%); } }
+
+/* staged entrances: elements with data-a animate in after the slide arrives, in order of --i */
+[data-a] { opacity: 0; }
+.slide.active [data-a] { animation: var(--anim, rise) .9s var(--ease) both; animation-delay: calc(var(--i, 0) * 110ms + 350ms); }
+[data-a="fade"] { --anim: fade; } [data-a="left"] { --anim: fromleft; } [data-a="right"] { --anim: fromright; }
+[data-a="zoom"] { --anim: zoom; } [data-a="wipe"] { --anim: wipe; }
+@keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fromleft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+@keyframes fromright { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes zoom { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes wipe { from { opacity: 1; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+
+/* type */
+h1, h2 { margin: 0; font-family: var(--cond); font-weight: 600; color: #fff; letter-spacing: -.005em; }
+h2 { font-size: 64px; line-height: 1.06; max-width: 1300px; }
+.lede { font-size: 27px; line-height: 1.5; color: var(--text-2); max-width: 1080px; margin: 22px 0 0; }
+.kicker { font: 500 17px/1 var(--mono); letter-spacing: .16em; color: var(--cyan); margin-bottom: 22px; }
+.src { font: 400 14px/1.4 var(--mono); color: var(--text-3); letter-spacing: .02em; }
+.gold { color: var(--gold); } .cyan { color: var(--cyan); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* panels and cards */
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 28px 30px; backdrop-filter: blur(8px); }
+.grid { display: grid; gap: 22px; }
+.shot { border-radius: 8px; border: 1px solid var(--line-2); box-shadow: 0 40px 90px rgba(0, 0, 0, .55); overflow: hidden; background: #000; }
+.shot img { display: block; width: 100%; }
+.split .shot img { max-height: 700px; object-fit: cover; object-position: top center; }
+.shot.phones { justify-self: center; width: 660px; }
+.stat b.word { font: 600 50px/1.12 var(--cond); letter-spacing: 0; }
+
+/* slide 1 */
+.title-wrap { position: absolute; left: 140px; top: 250px; width: 900px; }
+.title-wrap h1 { font-size: 150px; line-height: .92; letter-spacing: .02em; }
+.title-wrap h1 span { color: var(--gold); }
+.title-wrap .pitch { font-size: 34px; line-height: 1.35; color: var(--text); margin: 36px 0 0; max-width: 820px; }
+.title-wrap .tag { font: italic 400 30px/1.3 var(--sans); color: var(--cyan); margin-top: 40px; }
+.hero { position: absolute; right: -120px; top: 190px; width: 1060px; transform: perspective(1800px) rotateY(-16deg) rotateX(6deg); }
+.slide.active .hero { animation: float 12s ease-in-out infinite alternate; }
+@keyframes float { from { translate: 0 0; } to { translate: -14px 10px; } }
+.event { position: absolute; left: 140px; bottom: 110px; font: 500 16px/1.6 var(--mono); letter-spacing: .1em; color: var(--text-3); }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 64px; }
+.stat b { display: block; font: 600 104px/1 var(--mono); color: #fff; letter-spacing: -.03em; }
+.stat b small { font-size: .42em; color: var(--text-2); letter-spacing: 0; margin-left: 8px; }
+.stat p { font-size: 23px; line-height: 1.45; color: var(--text-2); margin: 18px 0 14px; }
+.quote { margin-top: 34px; display: flex; gap: 28px; align-items: flex-start; }
+.quote blockquote { margin: 0; font: italic 400 36px/1.35 var(--sans); color: #fff; max-width: 1200px; }
+.quote .mark { font: 700 120px/.8 var(--cond); color: var(--gold); }
+
+/* programmes */
+.progs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; margin-top: 60px; }
+.prog { min-height: 380px; display: flex; flex-direction: column; }
+.prog .who { font: 600 16px/1.2 var(--mono); letter-spacing: .12em; color: var(--cyan); }
+.prog .what { font: 600 30px/1.2 var(--cond); color: #fff; margin: 18px 0 14px; }
+.prog p { font-size: 19px; line-height: 1.45; color: var(--text-2); margin: 0; flex: 1; }
+.prog .src { margin-top: 18px; }
+.bigline { margin-top: 54px; font: 600 40px/1.25 var(--cond); color: #fff; }
+.bigline span { color: var(--gold); }
+
+/* flow chain */
+.flow-wrap { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; margin-top: 40px; }
+.chain { position: relative; }
+.chain .node { position: relative; display: grid; grid-template-columns: 42px 1fr; gap: 18px; padding: 16px 0; }
+.chain .dot { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--cyan); background: var(--bg); margin: 6px 10px; position: relative; z-index: 1; }
+.chain .node.gold .dot { border-color: var(--gold); box-shadow: 0 0 0 6px var(--gold-dim); }
+.chain .node b { display: block; font: 600 30px/1.2 var(--cond); color: #fff; }
+.chain .node span { display: block; font-size: 19px; color: var(--text-2); margin-top: 6px; line-height: 1.4; }
+.chain .node em { font-style: normal; font: 500 14px/1 var(--mono); letter-spacing: .08em; color: var(--text-3); display: block; margin-top: 8px; }
+.chain svg { position: absolute; left: 20px; top: 40px; height: calc(100% - 80px); width: 4px; overflow: visible; }
+.chain svg line { stroke: var(--cyan); stroke-width: 3; stroke-dasharray: 8 8; }
+.slide.active .chain svg line { animation: flowdash 1.2s linear infinite; }
+@keyframes flowdash { to { stroke-dashoffset: -16; } }
+
+/* two doors */
+.doors { position: relative; height: 640px; margin-top: 40px; }
+.doors svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.doors .arc { fill: none; stroke: var(--line-2); stroke-width: 2.5; stroke-dasharray: 1400; stroke-dashoffset: 1400; }
+.slide.active .doors .arc { animation: draw 1.6s var(--ease) forwards; animation-delay: 1.1s; }
+.doors .arc.loop { stroke: var(--gold); stroke-width: 3; }
+.slide.active .doors .arc.loop { animation-delay: 1.8s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.hub { position: absolute; left: 50%; top: 50%; width: 400px; height: 400px; margin: -200px; border-radius: 50%; border: 1px solid var(--line-2);
+  background: radial-gradient(circle at 50% 40%, rgba(53, 208, 230, .14), rgba(9, 16, 23, .9) 70%); display: grid; place-content: center; text-align: center; padding: 50px; }
+.hub b { font: 600 38px/1.15 var(--cond); color: #fff; }
+.hub span { font-size: 19px; line-height: 1.5; color: var(--text-2); margin-top: 14px; display: block; }
+.door { position: absolute; top: 110px; width: 470px; }
+.door.l { left: 0; } .door.r { right: 0; }
+.door .lbl { font: 600 16px/1 var(--mono); letter-spacing: .16em; color: var(--cyan); }
+.door h3 { font: 600 40px/1.15 var(--cond); color: #fff; margin: 14px 0 12px; }
+.door p { font-size: 21px; line-height: 1.5; color: var(--text-2); margin: 0; }
+.loopnote { position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); font: 500 22px/1 var(--sans); color: var(--gold); white-space: nowrap; }
+
+/* screens with notes */
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: start; margin-top: 46px; }
+.split.rev { grid-template-columns: 1fr 1.1fr; }
+.feat { display: grid; gap: 26px; }
+.feat div { padding-left: 22px; border-left: 2px solid var(--line-2); }
+.feat b { display: block; font: 600 27px/1.2 var(--cond); color: #fff; }
+.feat span { display: block; font-size: 20px; line-height: 1.45; color: var(--text-2); margin-top: 6px; }
+.feat span.src { font-size: 14px; color: var(--text-3); }
+.kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 30px; }
+.kpi { padding: 20px 22px; }
+.kpi b { display: block; font: 600 44px/1 var(--mono); color: #fff; letter-spacing: -.02em; }
+.kpi > span { display: block; font-size: 17px; line-height: 1.4; color: var(--text-2); margin-top: 10px; }
+.kpi b { white-space: nowrap; }
+.kpi.up b { color: var(--amber); } .kpi.down b { color: var(--green); } .kpi.red b { color: var(--red); }
+.caveat { margin-top: 22px; font: 500 15px/1.4 var(--mono); color: var(--text-3); letter-spacing: .04em; }
+.levels { display: flex; gap: 12px; margin-top: 14px; }
+.levels span { padding: 8px 14px; border-radius: 3px; font: 600 15px/1 var(--mono); letter-spacing: .08em; color: #0b0f14; }
+
+/* comparison */
+table.cmp { width: 100%; border-collapse: collapse; margin-top: 48px; font-size: 21px; }
+table.cmp th, table.cmp td { padding: 20px 18px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.cmp th { font: 600 16px/1.3 var(--mono); letter-spacing: .1em; color: var(--text-3); text-transform: uppercase; }
+table.cmp th.us { color: var(--gold); }
+table.cmp td:first-child { color: #fff; font-weight: 500; width: 30%; }
+table.cmp td { color: var(--text-2); }
+table.cmp td.us { color: #fff; background: rgba(227, 179, 65, .07); border-left: 1px solid rgba(227, 179, 65, .35); border-right: 1px solid rgba(227, 179, 65, .35); }
+table.cmp .y { color: var(--green); font-weight: 600; } table.cmp .n { color: var(--text-3); }
+
+/* two columns */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 50px; }
+.cols h3 { font: 600 16px/1 var(--mono); letter-spacing: .16em; color: var(--cyan); margin: 0 0 22px; }
+.cols h3.gold { color: var(--gold); }
+.items { display: grid; gap: 20px; }
+.item b { display: block; font: 600 27px/1.25 var(--cond); color: #fff; }
+.item span { display: block; font-size: 19px; line-height: 1.45; color: var(--text-2); margin-top: 6px; }
+
+/* timeline */
+.phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 54px; position: relative; }
+.phase .when { font: 600 16px/1 var(--mono); letter-spacing: .14em; color: var(--gold); }
+.phase h3 { font: 600 34px/1.15 var(--cond); color: #fff; margin: 16px 0 14px; }
+.phase ul { margin: 0; padding-left: 22px; } .phase li { font-size: 20px; line-height: 1.5; color: var(--text-2); margin: 6px 0; }
+.track { height: 3px; background: var(--line); margin-top: 50px; position: relative; overflow: hidden; border-radius: 2px; }
+.track i { position: absolute; inset: 0; background: linear-gradient(90deg, var(--cyan), var(--gold)); transform-origin: left; transform: scaleX(0); }
+.slide.active .track i { animation: grow 2.2s var(--ease) .6s forwards; }
+@keyframes grow { to { transform: scaleX(1); } }
+.ask { margin-top: 40px; display: flex; gap: 28px; align-items: center; }
+.ask .pill { font: 600 16px/1 var(--mono); letter-spacing: .14em; color: var(--bg); background: var(--gold); padding: 10px 14px; border-radius: 3px; }
+.ask p { margin: 0; font-size: 26px; color: #fff; }
+
+/* close */
+.close { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 200px; }
+.close h1 { font-size: 104px; line-height: 1.04; }
+.close h1 span { color: var(--gold); }
+.close p { font-size: 30px; line-height: 1.5; color: var(--text-2); margin: 40px auto 0; max-width: 1200px; }
+.close .link { margin-top: 50px; font: 600 28px/1 var(--mono); color: var(--cyan); letter-spacing: .04em; }
+
+
+/* photo slides */
+.bleed { position: absolute; inset: 0; overflow: hidden; }
+.bleed img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+.slide.active .bleed img { animation: kenburns 18s ease-out forwards; }
+@keyframes kenburns { from { transform: scale(1.12) translate(1%, 1%); } to { transform: scale(1.0) translate(0, 0); } }
+.bleed-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 11, 17, .97) 0%, rgba(6, 11, 17, .9) 38%, rgba(6, 11, 17, .35) 64%, rgba(6, 11, 17, .15) 100%),
+  linear-gradient(0deg, rgba(6, 11, 17, .85), transparent 30%); }
+.photo-copy { position: relative; width: 880px; }
+.rain { margin-top: 36px; padding: 26px 30px 22px; }
+.rain-title { font: 600 15px/1 var(--mono); letter-spacing: .12em; color: var(--text-3); margin-bottom: 18px; text-transform: uppercase; }
+.rbar { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 16px; margin: 12px 0; font-size: 20px; color: var(--text-2); }
+.rbar i { display: block; height: 18px; border-radius: 2px; background: linear-gradient(90deg, #1e6fb8, var(--water)); width: calc(var(--w) / 400 * 100%); transform-origin: left; transform: scaleX(0); }
+.slide.active .rbar i { animation: grow 1.4s var(--ease) forwards; animation-delay: .9s; }
+.rbar b { font: 600 26px/1 var(--mono); color: #fff; text-align: right; }
+.avg { position: relative; height: 0; margin: 0 96px 0 146px; }
+.avg::before { content: ""; position: absolute; left: calc(var(--w) / 400 * 100%); top: -200px; height: 206px; border-left: 2px dashed var(--gold); }
+.avg em { position: absolute; left: calc(var(--w) / 400 * 100% + 10px); top: -4px; font: italic 400 17px/1 var(--sans); color: var(--gold); white-space: nowrap; }
+.loss { display: flex; gap: 40px; margin-top: 34px; }
+.loss b { display: block; font: 600 46px/1 var(--mono); color: #fff; }
+.loss > div > span { display: block; font-size: 18px; color: var(--text-2); margin-top: 8px; }
+.credit { position: absolute; right: 140px; bottom: 82px; font: 500 13px/1 var(--mono); color: rgba(220, 230, 240, .75); letter-spacing: .04em; text-shadow: 0 1px 4px #000; }
+/* timeline slide */
+.tl-wrap { display: grid; grid-template-columns: 1fr 500px; gap: 70px; align-items: center; }
+.tl-wrap .lede { margin-top: 18px; }
+.tl { position: relative; margin-top: 26px; }
+.tl svg { position: absolute; left: 7px; top: 14px; height: calc(100% - 30px); width: 4px; overflow: visible; }
+.tl-line { stroke: var(--line-2); stroke-width: 3; stroke-dasharray: 100; stroke-dashoffset: 100; vector-effect: non-scaling-stroke; }
+.slide.active .tl-line { animation: drawline 1.6s var(--ease) .5s forwards; }
+@keyframes drawline { to { stroke-dashoffset: 0; } }
+.ev { position: relative; display: grid; grid-template-columns: 18px 160px 1fr; gap: 20px; align-items: baseline; padding: 9px 0; }
+.ev i { width: 18px; height: 18px; border-radius: 50%; background: var(--bg); border: 3px solid var(--water); position: relative; top: 2px; z-index: 1; }
+.ev.gov i { border-color: var(--cyan); } .ev.key i { border-color: var(--gold); box-shadow: 0 0 0 6px var(--gold-dim); }
+.ev time { font: 600 18px/1.3 var(--mono); letter-spacing: .08em; color: var(--cyan); }
+.ev.key time { color: var(--gold); }
+.ev b { display: block; font: 500 22px/1.35 var(--sans); color: #fff; }
+.ev .src { display: block; margin-top: 4px; }
+.portrait { margin: 0; }
+.portrait img { display: block; width: 100%; height: 680px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line-2); box-shadow: 0 40px 90px rgba(0, 0, 0, .55); }
+.portrait figcaption { margin-top: 14px; font: 500 14px/1.5 var(--mono); color: var(--text-3); }
+
+/* presenter notes */
+.notes { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: min(1100px, calc(100% - 40px)); z-index: 10;
+  background: rgba(6, 11, 17, .94); border: 1px solid var(--line-2); border-top: 2px solid var(--gold); border-radius: 6px; padding: 18px 22px;
+  font-size: 18px; line-height: 1.6; color: var(--text); display: none; }
+.notes.on { display: block; }
+.notes b { font: 600 13px/1 var(--mono); letter-spacing: .16em; color: var(--gold); display: block; margin-bottom: 8px; }
+.hint { position: fixed; right: 18px; bottom: 14px; z-index: 9; font: 500 12px/1 var(--mono); letter-spacing: .08em; color: var(--text-3); opacity: .7; }
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slide.active { transition: opacity .3s; transform: none !important; filter: none !important; }
+  .slide.active [data-a] { animation: fade .4s both; animation-delay: 0s; }
+  .slide.active .hero, .slide.active .chain svg line { animation: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="water" aria-hidden="true"></canvas>
+<div class="veil"></div>
+
+<main class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide" data-section="RAINREADY" data-notes="Property lines stop at the fence. Water doesn't. We are RainReady: one shared picture of how water moves across council and developer boundaries. Our reference site is Bandar Bukit Raja in Klang, Sime Darby Property's own township, with Setia Alam upstream in Shah Alam.">
+  <div class="title-wrap">
+    <h1 data-a style="--i:0">Rain<span>Ready</span></h1>
+    <p class="pitch" data-a style="--i:2">One shared picture of how water moves across council and developer boundaries, so planners see where storage falls short and residents act in time.</p>
+    <p class="tag" data-a style="--i:4">Property lines stop at the fence. Water doesn't.</p>
+  </div>
+  <div class="hero"><div class="shot" data-a="right" style="--i:3"><img src="assets/planner.jpg" alt="RainReady planner view: the simulated township on dark water, with zones coloured by the upstream scenario" /></div></div>
+  <div class="event" data-a="fade" style="--i:6">SIME DARBY PROPERTY UNIVERSITY HACKATHON 2026 · TOWNSHIP OF TOMORROW · PLANET</div>
+</section>
+
+<!-- 2 -->
+<section class="slide photo" data-section="THE PROBLEM" data-notes="December 2021. In the Klang Valley, one month's rain fell in a single day: 363 millimetres in 24 hours at Sentul, when an average month in Kuala Lumpur brings about 200. The environment and water ministry called it a once-in-a-century event. Across Malaysia, the floods cost 6.1 billion ringgit, 1.6 billion of it in people's homes. This is Klang, three days later.">
+  <div class="bleed"><img src="assets/photos/klang_aerial_2021.jpg" alt="Aerial view of a flooded neighbourhood in Klang, December 2021" /></div>
+  <div class="bleed-shade"></div>
+  <div class="photo-copy">
+    <div class="kicker" data-a style="--i:0">17–18 DECEMBER 2021 · KLANG VALLEY</div>
+    <h2 data-a style="--i:1">One month's rain in a single day</h2>
+    <div class="rain card" data-a style="--i:3">
+      <div class="rain-title">24-hour rainfall, 17–18 Dec 2021 (mm)</div>
+      <div class="rbar"><span>Sentul</span><i style="--w:363"></i><b class="num"><span class="count" data-to="363">0</span></b></div>
+      <div class="rbar"><span>Sg. Bonus</span><i style="--w:273"></i><b class="num"><span class="count" data-to="273">0</span></b></div>
+      <div class="rbar"><span>Jinjang</span><i style="--w:258"></i><b class="num"><span class="count" data-to="258">0</span></b></div>
+      <div class="rbar"><span>Gombak</span><i style="--w:247"></i><b class="num"><span class="count" data-to="247">0</span></b></div>
+      <div class="avg" style="--w:200"><em>an average month in KL &asymp; 200 mm</em></div>
+      <div class="src" style="margin-top:40px">Environment and Water Ministry, via FMT, 19 Dec 2021 (KL annual rainfall 2,400 mm &divide; 12)</div>
+    </div>
+    <div class="loss" data-a style="--i:5">
+      <div><b class="num">RM<span class="count" data-to="6.1" data-dec="1">0</span>bn</b><span>flood losses across Malaysia in 2021</span></div>
+      <div><b class="num">RM<span class="count" data-to="1.6" data-dec="1">0</span>bn</b><span>of it in people's homes</span></div>
+      <div><b class="num">RM<span class="count" data-to="1.0" data-dec="1">0</span>bn</b><span>in vehicles</span></div>
+    </div>
+    <div class="src" data-a="fade" style="--i:6; margin-top:14px">Department of Statistics Malaysia, Special Report on Impact of Floods 2021, 28 Jan 2022</div>
+  </div>
+  <div class="credit" data-a="fade" style="--i:7">Klang, 21 Dec 2021 · photo AiMediaMY, CC BY 3.0, via Wikimedia Commons</div>
+</section>
+
+<!-- 2b -->
+<section class="slide" data-section="THE PROBLEM" data-notes="In Bandar Bukit Raja it keeps happening. Residents say the worst flood, in December 2021, reached three metres. In June 2023, two hours of rain left phase 1, and especially Jalan Makyong, badly hit. JPS Selangor logged ponding there in 2023 and again in 2024. The latest flash flood residents cite was on 24 April 2024. A month later, 583 residents from 48 associations petitioned the Menteri Besar: the four shallow ponds are not enough, and water comes from Setia Alam, under another council. Sime Darby Property's managing director has called it quite urgent and a top priority.">
+  <div class="tl-wrap">
+    <div>
+      <div class="kicker" data-a style="--i:0">BANDAR BUKIT RAJA, KLANG</div>
+      <h2 data-a style="--i:1">In Bandar Bukit Raja, it keeps happening</h2>
+      <p class="lede" data-a style="--i:2">Residents say Jalan Makyong floods <b class="gold">at least three times a year</b>, ever since December 2021.</p>
+      <div class="tl">
+        <svg viewBox="0 0 4 100" preserveAspectRatio="none"><line class="tl-line" x1="2" y1="0" x2="2" y2="100" /></svg>
+        <div class="ev" data-a="left" style="--i:3"><i></i><time>DEC 2021</time><div><b>The worst flood: water reached 3 m, residents say</b><span class="src">FMT, 24 May 2024</span></div></div>
+        <div class="ev" data-a="left" style="--i:4"><i></i><time>5 JUN 2023</time><div><b>Over two hours of rain; phase 1, especially Jalan Makyong, &ldquo;badly hit&rdquo;</b><span class="src">The Star, 5 Jun 2023</span></div></div>
+        <div class="ev gov" data-a="left" style="--i:5"><i></i><time>2023 · 2024</time><div><b>JPS Selangor logs ponding at Bandar Bukit Raja, both years</b><span class="src">JPS Selangor GIS flood records</span></div></div>
+        <div class="ev" data-a="left" style="--i:6"><i></i><time>24 APR 2024</time><div><b>The latest flash flood residents cite, about a foot of water</b><span class="src">FMT, 24 May 2024</span></div></div>
+        <div class="ev key" data-a="left" style="--i:7"><i></i><time>MAY 2024</time><div><b>583 residents, 48 associations petition the Menteri Besar: the &ldquo;four shallow ponds&rdquo; are not enough, and water flows in &ldquo;from Setia Alam&rdquo;, under another council</b><span class="src">FMT, 24 May 2024 · Sinar Harian, 25 May 2024</span></div></div>
+        <div class="ev" data-a="left" style="--i:8"><i></i><time>21 NOV 2024</time><div><b>SDP's managing director: &ldquo;It is quite urgent, and this is a top priority for us&rdquo;</b><span class="src">The Edge, 21 Nov 2024</span></div></div>
+      </div>
+    </div>
+    <figure class="portrait" data-a="zoom" style="--i:3">
+      <img src="assets/photos/shahalam_s24_street_2021.jpg" alt="A man wades through knee-deep water between parked cars in Shah Alam Section 24, December 2021" />
+      <figcaption>Shah Alam, Section 24, 19 Dec 2021: the same storm, in the neighbouring council area. Not BBR.<br/>Photo Muhammad Zaim, CC BY-SA 4.0, via Wikimedia Commons</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-section="THE GAP" data-notes="This is not a story of nobody doing anything. Shah Alam has a 150 million ringgit plan for Setia Alam. Klang has 17 urgent projects across 13 hotspots. Selangor is taking over retention ponds that have no owner. Sime Darby Property is building a 60-acre wetland park. A new pond at Taman Mutiara was delayed. Every one of these is real effort. But they are separate programmes, run by separate bodies, with separate records. There is no shared picture.">
+  <div class="kicker" data-a style="--i:0">WHAT EXISTS TODAY</div>
+  <h2 data-a style="--i:1">Effort is not what's missing. A shared picture is.</h2>
+  <div class="progs">
+    <div class="prog card" data-a style="--i:3"><div class="who">SHAH ALAM · MBSA</div><div class="what">RM150m flood plan</div><p>For Setia Alam, on Sungai Binjai and Sungai Puloh, upstream of BBR</p><div class="src">FMT, 5 Feb 2025</div></div>
+    <div class="prog card" data-a style="--i:4"><div class="who">KLANG · MBDK</div><div class="what">17 urgent projects</div><p>Across 13 flood hotspots in the Klang council area</p><div class="src">Bernama, 5 May 2025</div></div>
+    <div class="prog card" data-a style="--i:5"><div class="who">SELANGOR · JPS</div><div class="what">300+ unowned ponds</div><p>Identified across the state; about 55 taken over so far</p><div class="src">Sinar Harian, 5 May 2025</div></div>
+    <div class="prog card" data-a style="--i:6"><div class="who">BBR · SDP</div><div class="what">60-acre wetland park</div><p>Wetland Townpark, adding over 50,000 m³ of stormwater storage</p><div class="src">The Edge, 2025 · SDP</div></div>
+    <div class="prog card" data-a style="--i:7"><div class="who">TAMAN MUTIARA · JPS</div><div class="what">A delayed pond</div><p>25 % built in Nov 2024; completion moved to March 2025, not reported since</p><div class="src">Utusan, 13 Nov 2024</div></div>
+  </div>
+  <div class="bigline" data-a style="--i:9">Separate programmes. Separate councils. Separate records. <span>No one picture of the water.</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-section="THE INSIGHT" data-notes="Here is why it matters. On the map, the council boundary between Shah Alam and Klang is a line. To water, it is nothing. One mapped drain crosses that line at the council corner and joins a shared trunk drain. That drain carries water west, past retention ponds A and B, to the main ditch. Two councils, a developer, and JPS each hold one piece of the same system.">
+  <div class="kicker" data-a style="--i:0">ONE DRAINAGE SYSTEM, FOUR HOLDERS</div>
+  <h2 data-a style="--i:1">Property lines stop at the fence. Water doesn't.</h2>
+  <div class="flow-wrap">
+    <div class="shot" data-a="zoom" style="--i:2"><img src="assets/boundary.jpg" alt="The council boundary drawn as a light curtain, with the one drain that crosses it highlighted" /></div>
+    <div class="chain">
+      <svg viewBox="0 0 4 100" preserveAspectRatio="none"><line x1="2" y1="0" x2="2" y2="100" /></svg>
+      <div class="node" data-a="left" style="--i:4"><i class="dot"></i><div><b>Setia Alam, upstream</b><span>Shah Alam council side (MBSA)</span><em>SECTION U13 · OSM</em></div></div>
+      <div class="node gold" data-a="left" style="--i:5"><i class="dot"></i><div><b>One drain crosses the council line</b><span>At the council corner, 3.0929 N 101.4443 E</span><em>MAPPED · OSM</em></div></div>
+      <div class="node" data-a="left" style="--i:6"><i class="dot"></i><div><b>A shared trunk drain</b><span>Klang side; size not public, so it is a slider</span><em>ASSUMED HOLDER: MBDK</em></div></div>
+      <div class="node" data-a="left" style="--i:7"><i class="dot"></i><div><b>Retention ponds A and B</b><span>On JPS Selangor's own pond list (K02, K03)</span><em>JPS SELANGOR GIS</em></div></div>
+      <div class="node" data-a="left" style="--i:8"><i class="dot"></i><div><b>Main ditch, towards Sungai Puloh</b><span>Drains that run to rivers are JPS's (Selangor rule)</span><em>ASSUMED HOLDER: JPS</em></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-section="THE SOLUTION" data-notes="RainReady is one shared picture with two doors. Through the planner door, developers, councils and JPS see where storage falls short, today and under what-if scenarios. Through the resident door, households and residents' associations act in time on official warnings, and report what they see. And those reports come back into the same picture, so they shape the next plan.">
+  <div class="kicker" data-a style="--i:0">RAINREADY</div>
+  <h2 data-a style="--i:1">One shared picture. Two doors.</h2>
+  <div class="doors">
+    <svg viewBox="0 0 1640 620" preserveAspectRatio="none">
+      <path class="arc" d="M 470 230 C 560 230 570 290 620 300" />
+      <path class="arc" d="M 1170 230 C 1080 230 1070 290 1020 300" />
+      <path class="arc loop" d="M 1180 470 C 1060 600 580 600 460 470" />
+    </svg>
+    <div class="door l" data-a="left" style="--i:3"><div class="lbl">PLANNER DOOR</div><h3>See where storage falls short</h3><p>Developers, councils and JPS test upstream change, a new pond or a drain size, and print one Shared Capacity Brief.</p></div>
+    <div class="hub" data-a="zoom" style="--i:2"><b>One shared picture</b><span>Zones, ponds, drains and the council line, with the storage each pond must hold</span></div>
+    <div class="door r" data-a="right" style="--i:4"><div class="lbl">RESIDENT DOOR</div><h3>Act in time, and be heard</h3><p>Households get a move-now plan on official warnings; associations verify reports and route them to the right agency.</p></div>
+    <div class="loopnote" data-a="fade" style="--i:9">Residents' reports shape the next plan</div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-section="PLANNER DOOR" data-notes="This is the planner door, running live in the browser. It uses Malaysia's own stormwater manual, MSMA second edition, for a 100-year design storm. Today, pond A must hold about 151 thousand cubic metres and the shared trunk drain is already full. If the land upstream is built out without full peak control, the shared drain carries 10 percent more. Add a 25 thousand cubic metre pond on vacant land, and pond A's need falls by 17 percent. These are screening estimates and scenario differences, not forecasts and not blame.">
+  <div class="kicker" data-a style="--i:0">WORKING PROTOTYPE · rainready-wheat.vercel.app</div>
+  <h2 data-a style="--i:1">Test a scenario before anyone builds it</h2>
+  <div class="split">
+    <div class="shot" data-a="zoom" style="--i:2"><img src="assets/planner.jpg" alt="Planner view with scenario control, results panel and coloured zones" /></div>
+    <div>
+      <div class="feat">
+        <div data-a="right" style="--i:3"><b>Presets and five levers</b><span>Upstream development, what-if pond, drain size, design storm, pond capacity</span></div>
+        <div data-a="right" style="--i:4"><b>Every change shows in the model</b><span>Blocks rise upstream, the pond grows, the drain changes colour with its load</span></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi card" data-a style="--i:5"><b class="num"><span class="count" data-to="151100" data-sep>0</span></b><span>m³ pond A must hold today, 100-year storm</span></div>
+        <div class="kpi card red" data-a style="--i:6"><b class="num"><span class="count" data-to="101">0</span>%</b><span>Shared trunk drain load today (assumed size)</span></div>
+        <div class="kpi card up" data-a style="--i:7"><b class="num">+<span class="count" data-to="10">0</span>%</b><span>Drain load with Area A built out</span></div>
+        <div class="kpi card down" data-a style="--i:8"><b class="num">−<span class="count" data-to="17">0</span>%</b><span>Pond A's need with a 25,000 m³ what-if pond</span></div>
+      </div>
+      <div class="caveat" data-a="fade" style="--i:9">SCREENING ESTIMATE · MSMA 2ND EDITION (DID 2012) · NOT A DESIGN, NOT A FORECAST · NO DEPTHS</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-section="SHARED CAPACITY BRIEF" data-notes="Everything on screen turns into one printable page: the Shared Capacity Brief. It shows the storage each pond needs with and without the upstream change, a responsibility record of who maintains each pond and drain under Selangor's own published rules, and every assumption with its source and a confidence label. The record shows the gap plainly: even ponds A and B have no settled maintainer on public record, because whether they have been handed over is not public, and no line is confirmed by its party yet. It is built for the one meeting where the developer, both councils and JPS sit at the same table.">
+  <div class="kicker" data-a style="--i:0">ONE PAGE FOR EVERY PARTY</div>
+  <h2 data-a style="--i:1">The Shared Capacity Brief</h2>
+  <div class="split rev">
+    <div class="feat" style="margin-top:10px">
+      <div data-a="left" style="--i:3"><b>Storage by scenario</b><span>Today, upstream built out, and with a what-if pond, for each pond and the shared drain</span></div>
+      <div data-a="left" style="--i:4"><b>A responsibility record</b><span>Seven assets, each tied to Selangor's published rule. Even ponds A and B have no settled maintainer on public record; no line is confirmed by its party yet</span></div>
+      <div data-a="left" style="--i:5"><b>Every assumption, sourced</b><span>Value, source and confidence (H, M, L) for every input; the drain size is flagged as the biggest unknown</span></div>
+      <div data-a="left" style="--i:6"><b>Differences, never blame</b><span>Scenario differences are stated as differences, not as attributions of cause</span></div>
+    </div>
+    <div class="shot" data-a="zoom" style="--i:2"><img src="assets/brief_record.jpg" alt="The Brief's responsibility record: seven assets, the rule for each, none confirmed by its party yet" /></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-section="RESIDENT DOOR" data-notes="The resident door uses the messaging residents already have. No app to install. A resident reports a blocked drain with a photo and a location. Their association checks it and forwards it to the official channel for that asset, and the report appears as a pin in the planner view. When an official warning is issued, the household gets a short move-now plan for their street that links back to that warning. RainReady never issues its own forecast.">
+  <div class="kicker" data-a style="--i:0">CLICKABLE MOCK-UP · EXAMPLE DATA</div>
+  <h2 data-a style="--i:1">Residents act in time, and their reports count</h2>
+  <div class="split">
+    <div class="shot phones" data-a="zoom" style="--i:2"><img src="assets/resident_phones.jpg" alt="Two phone mock-ups: reporting a blocked drain, and a move-now plan" /></div>
+    <div class="feat">
+      <div data-a="right" style="--i:3"><b>Report through existing messaging</b><span>Photo and location; no app to install</span></div>
+      <div data-a="right" style="--i:4"><b>Associations verify, then route</b><span>To the existing official channel for that drain or pond, with a link; RainReady does not replace it</span></div>
+      <div data-a="right" style="--i:5"><b>A move-now plan on official warnings</b><span>Car to higher ground, valuables up, mains off, check on neighbours. It builds on the warning and links back to it</span>
+        <div class="levels"><span style="background:#f5d547">WASPADA</span><span style="background:#f2a516">BURUK</span><span style="background:#ff4a3d">BAHAYA</span></div>
+        <span class="src" style="margin-top:10px">MetMalaysia continuous-rain warning levels · Public Infobanjir (JPS)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-section="INNOVATION" data-notes="None of these parts is new on its own. Official warnings exist. Engineering models compute storage, but they need specialists and run one project at a time. Resident reporting works in Chatham County, in Chennai and in Jakarta. What we did not find is all of it in one picture, across a developer and two councils, at township scale. That combination is our claim.">
+  <div class="kicker" data-a style="--i:0">WHAT IS NEW</div>
+  <h2 data-a style="--i:1">We claim the combination, not each part</h2>
+  <table class="cmp" data-a="fade" style="--i:2">
+    <thead><tr><th></th><th>Official warnings<br/><span style="font-weight:400">Public Infobanjir, MetMalaysia</span></th><th>Engineering models<br/><span style="font-weight:400">e.g. HEC-RAS, InfoWorks</span></th><th>Resident reporting<br/><span style="font-weight:400">Chatham County, Riskmap, PetaBencana</span></th><th class="us">RainReady</th></tr></thead>
+    <tbody>
+      <tr><td>Storage each pond must hold</td><td class="n">—</td><td class="y">Design-grade, specialists</td><td class="n">—</td><td class="us"><span class="y">Screening,</span> in a browser</td></tr>
+      <tr><td>Both councils and the developer in one view</td><td class="n">—</td><td>Per project</td><td class="n">—</td><td class="us"><span class="y">Yes</span>, with the council line</td></tr>
+      <tr><td>Residents' reports in the same picture</td><td class="n">—</td><td class="n">—</td><td class="y">Yes</td><td class="us"><span class="y">Yes</span> (mock-up)</td></tr>
+      <tr><td>Builds on official warnings</td><td class="y">Is the source</td><td class="n">—</td><td>Partly</td><td class="us"><span class="y">Yes</span>, links back</td></tr>
+      <tr><td>Every assumption sourced, with confidence</td><td class="n">—</td><td>In each study</td><td class="n">—</td><td class="us"><span class="y">Yes</span>, on screen</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-section="EVIDENCE AND LIMITS" data-notes="We checked our picture against independent sources. The only official JPS flood record inside our model falls in the zone that drains to pond A. An independent hydrodynamic model, FastFlood, pools water in the same two ponds and along the same drain corridor. And JPS lists both ponds on its own register. We are also clear about limits. We show risk bands, never flood depths, because terrain error here is about one metre. The drain's size is not public, so it is a slider. Pond capacities are not public, so they are a planner input. This is decision support under uncertainty, not prediction.">
+  <div class="kicker" data-a style="--i:0">DECISION SUPPORT UNDER UNCERTAINTY</div>
+  <h2 data-a style="--i:1">Grounded in public data, and honest about what it can't know</h2>
+  <div class="cols">
+    <div class="card" data-a="left" style="--i:2"><h3>CROSS-CHECKS</h3><div class="items">
+      <div class="item"><b>Official records agree</b><span>JPS's 2023 and 2024 flood record at BBR falls in zone Z03, which drains to pond A</span></div>
+      <div class="item"><b>An independent model agrees</b><span>FastFlood (global data, 100-year storm) pools water in ponds A and B and along the trunk-drain corridor</span></div>
+      <div class="item"><b>The assets are real</b><span>Ponds A and B match JPS Selangor's pond list to within 20 m; drains and the council line are mapped (OSM)</span></div>
+    </div></div>
+    <div class="card" data-a="right" style="--i:3"><h3 class="gold">STATED LIMITS</h3><div class="items">
+      <div class="item"><b>Risk bands, never depths</b><span>Terrain error here is about 1 m, the size of a flood depth</span></div>
+      <div class="item"><b>Unknowns are levers, not hidden</b><span>The trunk drain's size and the ponds' capacities are not public, so planners set them and watch the result move</span></div>
+      <div class="item"><b>Screening, not design</b><span>MSMA 2's Rational Method; the town fabric is a simulated layout loosely based on BBR</span></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-section="PILOT" data-notes="We propose a 12-month pilot in Bandar Bukit Raja. In the first three months, we replace our biggest assumptions with real data: the trunk drain's cross-section, the ponds' stated capacities and whether they have been handed over, and we get the drainage zones signed off. From month three, the planner door is used by Sime Darby Property, both councils and JPS, and the resident door runs with the residents' associations. By month twelve, the Shared Capacity Brief goes to one joint meeting, every line of the responsibility record is confirmed by its party, and we measure what changed. Our ask: access to drain and pond records, and a pilot in Bandar Bukit Raja.">
+  <div class="kicker" data-a style="--i:0">12-MONTH PILOT IN BANDAR BUKIT RAJA</div>
+  <h2 data-a style="--i:1">From screening to a shared plan in a year</h2>
+  <div class="track" data-a="fade" style="--i:1"><i></i></div>
+  <div class="phases">
+    <div class="phase card" data-a style="--i:3"><div class="when">MONTHS 0–3 · DATA</div><h3>Replace the biggest assumptions</h3><ul><li>Trunk drain cross-section</li><li>Stated capacities and handover status of ponds A and B</li><li>Hydrology sign-off of the nine zones</li></ul></div>
+    <div class="phase card" data-a style="--i:4"><div class="when">MONTHS 3–9 · PILOT</div><h3>Both doors open</h3><ul><li>Planner door for SDP, MBDK, MBSA and JPS</li><li>Resident door with the residents' associations</li><li>Reports routed to existing channels</li></ul></div>
+    <div class="phase card" data-a style="--i:5"><div class="when">MONTHS 9–12 · DECIDE</div><h3>One joint meeting, one brief</h3><ul><li>Responsibility record: 0 of 7 lines confirmed today, 7 of 7 by month 12</li><li>Storage gap against stated capacities</li><li>Reports verified, routed and closed</li></ul></div>
+  </div>
+  <div class="ask" data-a style="--i:7"><span class="pill">OUR ASK</span><p>Access to drain and pond records, and a pilot in Bandar Bukit Raja.</p></div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-section="VALUE AND SCALE" data-notes="For Sime Darby Property, this answers a problem its own managing director called a top priority, in one of its flagship townships. It turns the developer's blue-green assets, like the wetland park, into measured storage in a picture everyone shares. And it travels: the method needs only mapped drains, ponds and land cover, so the same tool can screen any of Sime Darby Property's 28 townships in Malaysia.">
+  <div class="kicker" data-a style="--i:0">FOR SIME DARBY PROPERTY</div>
+  <h2 data-a style="--i:1">Built for one township. Ready for twenty-eight.</h2>
+  <div class="stats" style="grid-template-columns: 1.1fr 1fr 1fr">
+    <div class="stat card" data-a style="--i:3"><b><span class="count" data-to="28">0</span><small>townships</small></b><p>in Malaysia, plus 2 overseas developments; the same method needs only mapped drains, ponds and land cover</p><div class="src">SDP hackathon briefing, 2026</div></div>
+    <div class="stat card" data-a style="--i:4"><b class="word">A top priority, answered</b><p>A shared, sourced picture for the flooding SDP's managing director called "quite urgent"</p><div class="src">The Edge, 21 Nov 2024</div></div>
+    <div class="stat card" data-a style="--i:5"><b class="word">Blue-green assets, measured</b><p>Ponds and the wetland park become storage everyone can see, with and without upstream change</p><div class="src">Model: SDP funds the pilot; per-township licence later (assumption)</div></div>
+  </div>
+  <div class="bigline" data-a style="--i:7; font-size:30px">Team: architecture (3D township) · hydrology and physics · frontend and AI · team lead</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-section="RAINREADY" data-notes="Planners see where storage falls short. Residents act in time. And their reports shape the next plan. RainReady. Property lines stop at the fence. Water doesn't. Let's look at it running.">
+  <div class="close">
+    <h1 data-a style="--i:0">Property lines stop at the fence.<br/><span>Water doesn't.</span></h1>
+    <p data-a style="--i:2">Planners see where storage falls short. Residents act in time. Their reports shape the next plan.</p>
+    <div class="link" data-a="fade" style="--i:4">rainready-wheat.vercel.app</div>
+  </div>
+</section>
+
+<div class="chrome">
+  <div class="brand"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5 28 9.25v13.5L16 29.5 4 22.75V9.25z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M16 8c3.4 4.6 6 7.6 6 10.8a6 6 0 0 1-12 0C10 15.6 12.6 12.6 16 8z" fill="currentColor"/></svg><b>RAINREADY</b></div>
+  <div class="section" id="section"></div>
+  <div class="foot"><span>SCREENING ESTIMATES · MSMA 2 · NOT A FORECAST</span><span id="count"></span></div>
+  <div class="sweep" id="sweep"></div>
+  <div class="progress"><i id="bar"></i></div>
+</div>
+</main>
+
+<div class="notes" id="notes"><b>PRESENTER NOTES</b><span id="notetext"></span></div>
+<div class="hint">← → navigate · F fullscreen · N notes</div>
+
+<script>
+// ---- deck: scale the 1920x1080 stage to the window; navigate with keys, click, swipe or #n in the address
+const deck = document.getElementById("deck");
+const slides = [...document.querySelectorAll(".slide")];
+let cur = -1;
+function fit() {
+  const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+  deck.style.transform = `scale(${k}) translate(-50%, -50%)`;
+}
+addEventListener("resize", fit); fit();
+
+function countUp(el) {
+  const to = +el.dataset.to, sep = el.hasAttribute("data-sep"), dec = +(el.dataset.dec || 0), t0 = performance.now(), dur = 1400;
+  const fmt = (v) => dec ? v.toFixed(dec) : sep ? Math.round(v).toLocaleString("en-GB") : String(Math.round(v));
+  const step = (now) => {
+    const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(to * e);
+    if (p < 1) requestAnimationFrame(step);
+  };
+  el.textContent = fmt(0);
+  setTimeout(() => requestAnimationFrame(step), 650);
+}
+
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  if (i === cur) return;
+  const prev = slides[cur];
+  if (prev) { prev.classList.remove("active"); prev.classList.add("leaving"); setTimeout(() => prev.classList.remove("leaving"), 900); }
+  const s = slides[i];
+  // restart the staged entrances on every visit
+  s.querySelectorAll("[data-a]").forEach((el) => { el.style.animation = "none"; void el.offsetWidth; el.style.animation = ""; });
+  s.classList.add("active");
+  s.querySelectorAll(".count").forEach(countUp);
+  cur = i;
+  document.getElementById("section").innerHTML = `<em>${String(i + 1).padStart(2, "0")}</em>${s.dataset.section}`;
+  document.getElementById("count").textContent = `${String(i + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+  document.getElementById("bar").style.width = `${((i + 1) / slides.length) * 100}%`;
+  document.getElementById("notetext").textContent = s.dataset.notes || "";
+  const sw = document.getElementById("sweep"); sw.classList.remove("go"); void sw.offsetWidth; sw.classList.add("go");
+  history.replaceState(null, "", `#${i + 1}`);
+}
+
+let typed = "";
+addEventListener("keydown", (e) => {
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  else if (e.key === "Home") go(0);
+  else if (e.key === "End") go(slides.length - 1);
+  else if (e.key.toLowerCase() === "f") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  else if (e.key.toLowerCase() === "n") document.getElementById("notes").classList.toggle("on");
+  else if (/^[0-9]$/.test(e.key)) typed += e.key;
+  else if (e.key === "Enter" && typed) { go(+typed - 1); typed = ""; }
+});
+addEventListener("click", (e) => { if (e.target.closest("a, .notes")) return; go(e.clientX < innerWidth * 0.25 ? cur - 1 : cur + 1); });
+let tx = null;
+addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; }, { passive: true });
+addEventListener("touchend", (e) => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); tx = null; });
+go((parseInt(location.hash.slice(1), 10) || 1) - 1);
+
+// ---- moving black water behind the slides: the same shader as the website (website/src/scene/WaterBackdrop.tsx)
+(function water() {
+  const canvas = document.getElementById("water");
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+  if (!gl) return;
+  const frag = `precision highp float;
+uniform vec2 uRes; uniform float uTime;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }
+float height(vec2 p, float t){
+  float h = sin(p.x * 0.55 + t * 0.32 + sin(p.y * 0.30 + t * 0.12) * 1.6) * 0.55;
+  h += sin(p.y * 0.85 - t * 0.27 + p.x * 0.35) * 0.40;
+  h += sin((p.x * 0.7 + p.y) * 1.9 + t * 0.55) * 0.10;
+  h += (noise(p * 1.3 + vec2(t * 0.11, -t * 0.08)) - 0.5) * 0.55;
+  h += (noise(p * 3.7 - vec2(t * 0.20, t * 0.16)) - 0.5) * 0.16;
+  return h;
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes;
+  float aspect = uRes.x / uRes.y;
+  float d = 1.0 / (1.22 - uv.y);
+  vec2 p = vec2((uv.x - 0.5) * aspect * d * 2.6, d * 3.2);
+  float e = 0.03 * d;
+  float h = height(p, uTime);
+  float hx = height(p + vec2(e, 0.0), uTime) - h, hy = height(p + vec2(0.0, e), uTime) - h;
+  vec3 n = normalize(vec3(-hx / e * 0.42, 1.0, -hy / e * 0.42));
+  vec3 v = normalize(vec3((uv.x - 0.5) * 0.4, 0.42, 1.0));
+  vec3 l = normalize(vec3(-0.35, 0.55, -0.9));
+  float spec = pow(max(dot(reflect(-l, n), v), 0.0), 26.0);
+  float swell = 0.5 + 0.5 * sin(p.y * 0.18 - uTime * 0.22 + sin(p.x * 0.12) * 1.5);
+  spec *= 0.55 + 0.75 * swell;
+  float sheen = pow(1.0 - max(dot(n, v), 0.0), 3.0);
+  float far = smoothstep(0.15, 0.95, uv.y);
+  vec3 base = mix(vec3(0.012, 0.022, 0.034), vec3(0.030, 0.050, 0.072), far);
+  vec3 col = base + vec3(0.42, 0.58, 0.72) * spec * (0.30 + 0.36 * far) + vec3(0.08, 0.12, 0.16) * sheen * 0.55;
+  col = mix(col, vec3(0.035, 0.055, 0.078), smoothstep(0.82, 1.0, uv.y) * 0.7);
+  vec2 q = uv - 0.5; col *= 1.0 - dot(q, q) * 0.9;
+  gl_FragColor = vec4(col, 1.0);
+}`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }"));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(prog, "uRes"), uTime = gl.getUniformLocation(prog, "uTime");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches, t0 = performance.now();
+  let last = 0;
+  (function frame(now) {
+    if (!still) requestAnimationFrame(frame);
+    if (now - last < 33) return; last = now;
+    const w = Math.round(canvas.clientWidth * 0.5), h = Math.round(canvas.clientHeight * 0.5);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+    gl.uniform2f(uRes, w, h); gl.uniform1f(uTime, still ? 12 : (now - t0) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  })(performance.now() + 100);
+})();
+</script>
+</body>
+</html>

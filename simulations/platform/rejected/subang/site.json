@@ -1,0 +1,125 @@
+{
+ "id": "subang",
+ "name": "Subang – Kampung Melayu Subang",
+ "kind": "generated",
+ "view": "2d",
+ "state": "Selangor",
+ "centre": [
+  3.152,
+  101.536
+ ],
+ "bbox": [
+  3.134,
+  101.518,
+  3.17,
+  101.554
+ ],
+ "councils": [
+  "Petaling Jaya",
+  "Shah Alam"
+ ],
+ "confidence": "L",
+ "label": "SCREENING · GENERATED FROM OPEN DATA · LOWER CONFIDENCE",
+ "summary": "26 zones, 3 drains, 5 ponds (2 on JPS's list), 2 councils",
+ "tests": [
+  {
+   "test": "JPS flood records inside the area",
+   "passed": true,
+   "detail": "9 records, 2018-2024"
+  },
+  {
+   "test": "Drainage crosses a council line",
+   "passed": false,
+   "detail": "0 crossing links between Petaling Jaya, Shah Alam"
+  },
+  {
+   "test": "Public pond or drain register",
+   "passed": true,
+   "detail": "2 ponds on JPS Selangor's pond list"
+  }
+ ],
+ "evidence": {
+  "flood_records": [
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Jalan Jati dan Subang Perantau, Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Jalan Resak dan Jalan Merbau, Kg Melayu Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Jalan Resak,Jalan Jati dan Jalan Merbau, Kg Melayu Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Jambatan Jalan Resak dan Jalan Jati Kg.Melayu Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Kampung Melayu Subang (Sungai Pelumut & Sungai Pelempas) - Jalan Jati",
+    "district": "Petaling"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Kampung Melayu Subang (Taman Setia Warisan & Kampung Subang Perantau)",
+    "district": "Petaling"
+   },
+   {
+    "year": 2023,
+    "type": "Monsoon flood",
+    "place": "Kampung Melayu Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Kampung Baru Subang",
+    "district": "Petaling"
+   },
+   {
+    "year": 2024,
+    "type": "Monsoon flood",
+    "place": "Kg. Melayu Subang",
+    "district": "Petaling"
+   }
+  ],
+  "flash_2017": []
+ },
+ "storm": {
+  "station": "2913001 Pusat Kwln. JPS T Gong",
+  "distance_km": 25.5
+ },
+ "sources": [
+  "OpenStreetMap contributors (ODbL), via Overpass, 22 Oct 2026",
+  "Copernicus DEM GLO-30 (ESA / EU), AWS open data mirror",
+  "JPS Selangor pond list (Kolam_Fasa_JPS), jpsselgis.selangor.gov.my",
+  "JPS Selangor flood records 2017-2024 and JPS flash-flood list 2017 (website/public/data/national.json)",
+  "MSMA 2nd Edition (DID Malaysia, 2012), Chapter 2, Tables 2.3, 2.5, 2.B1"
+ ],
+ "limits": [
+  "Zones follow mapped roads and drains, not surveyed catchments; outlets are assumed",
+  "Drain sizes are typical values by OSM type, not measured; this is the weakest input",
+  "Pond capacities are assumed from water area x 1.5 m; enter stated capacities to replace them",
+  "OSM misses buildings and drains; terrain is a surface model with ~1 m error or more",
+  "Flash floods and ponding only; rivers are treated as where water leaves"
+ ],
+ "build": {
+  "script": "simulations/platform/build_site.py",
+  "date": "2026-10-22",
+  "fetch_s": 130.7,
+  "build_s": 6.5,
+  "refreshed": true
+ }
+}

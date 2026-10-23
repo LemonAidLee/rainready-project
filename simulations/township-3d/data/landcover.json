@@ -1,0 +1,150 @@
+{
+ "note": "Runoff coefficient per draft zone. MSMA 2nd Ed. (DID 2012) Table 2.5, Major System column (> 10 yr ARI), area-weighted by Eq. 2.4; land cover from the simulated model town (landcover.py)",
+ "c_major": {
+  "terrace": 0.9,
+  "commercial": 0.95,
+  "park": 0.4,
+  "bare": 0.6,
+  "grass": 0.5,
+  "road": 0.95,
+  "water": 0.95
+ },
+ "built_share": 0.15,
+ "zones": {
+  "Z01": {
+   "area_ha": 23.14,
+   "c_now": 0.648,
+   "c_upstream": 0.717,
+   "cover_ha": {
+    "terrace": 0.0,
+    "commercial": 1.26,
+    "park": 0.0,
+    "bare": 0.0,
+    "grass": 15.53,
+    "road": 4.36,
+    "water": 1.99
+   },
+   "upstream_paved_ha": 3.56
+  },
+  "Z02": {
+   "area_ha": 66.16,
+   "c_now": 0.628,
+   "c_upstream": 0.628,
+   "cover_ha": {
+    "terrace": 5.99,
+    "commercial": 0.0,
+    "park": 3.59,
+    "bare": 0.0,
+    "grass": 42.28,
+    "road": 14.31,
+    "water": 0.0
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z03": {
+   "area_ha": 63.68,
+   "c_now": 0.782,
+   "c_upstream": 0.782,
+   "cover_ha": {
+    "terrace": 15.98,
+    "commercial": 10.32,
+    "park": 4.85,
+    "bare": 0.0,
+    "grass": 16.08,
+    "road": 16.46,
+    "water": 0.0
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z04": {
+   "area_ha": 35.25,
+   "c_now": 0.71,
+   "c_upstream": 0.71,
+   "cover_ha": {
+    "terrace": 6.19,
+    "commercial": 0.0,
+    "park": 1.32,
+    "bare": 0.0,
+    "grass": 16.53,
+    "road": 5.65,
+    "water": 5.56
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z05": {
+   "area_ha": 36.81,
+   "c_now": 0.72,
+   "c_upstream": 0.72,
+   "cover_ha": {
+    "terrace": 8.84,
+    "commercial": 0.0,
+    "park": 1.32,
+    "bare": 0.0,
+    "grass": 16.25,
+    "road": 10.41,
+    "water": 0.0
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z06": {
+   "area_ha": 40.12,
+   "c_now": 0.664,
+   "c_upstream": 0.664,
+   "cover_ha": {
+    "terrace": 2.14,
+    "commercial": 2.58,
+    "park": 4.21,
+    "bare": 6.64,
+    "grass": 14.97,
+    "road": 9.57,
+    "water": 0.01
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z07": {
+   "area_ha": 77.24,
+   "c_now": 0.727,
+   "c_upstream": 0.727,
+   "cover_ha": {
+    "terrace": 11.3,
+    "commercial": 3.7,
+    "park": 0.65,
+    "bare": 7.37,
+    "grass": 30.54,
+    "road": 17.82,
+    "water": 5.86
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z08": {
+   "area_ha": 38.21,
+   "c_now": 0.699,
+   "c_upstream": 0.699,
+   "cover_ha": {
+    "terrace": 0.9,
+    "commercial": 2.82,
+    "park": 0.0,
+    "bare": 0.0,
+    "grass": 21.19,
+    "road": 8.38,
+    "water": 4.92
+   },
+   "upstream_paved_ha": 0.0
+  },
+  "Z09": {
+   "area_ha": 39.57,
+   "c_now": 0.763,
+   "c_upstream": 0.763,
+   "cover_ha": {
+    "terrace": 15.26,
+    "commercial": 0.0,
+    "park": 0.0,
+    "bare": 0.0,
+    "grass": 15.64,
+    "road": 9.09,
+    "water": 0.0
+   },
+   "upstream_paved_ha": 0.0
+  }
+ }
+}

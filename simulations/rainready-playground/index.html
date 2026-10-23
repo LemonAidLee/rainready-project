@@ -1,0 +1,1015 @@
+<title>RainReady Playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  /* Layout: a drainage drawing sheet. Map plate on the left, control rail on the right, title block across the top. */
+  --bg: #e7ecea; --surface: #f7f9f8; --sunk: #edf1ef; --ink: #13222a; --muted: #536770; --line: #c2cdcb;
+  --accent: #0b7469; --on-accent: #ffffff; --water: #1d6aa3;
+  --risk-1: #d6b43c; --risk-2: #de7a26; --risk-3: #c0392b; --on-risk: #13222a; --on-risk-3: #ffffff;
+  --conf-h: #2e8656;
+  --m-green: #b5cd95; --m-park: #98c287; --m-built: #d8d1c4; --m-dev: #cbbca5; --m-river: #5b9bcb; --m-pond: #4a86b8;
+  --m-street: #fdfcf7; --m-contour: #4f5d4c; --m-boundary: #7b2d6c; --m-label: #13222a; --m-pill: #f7f9f8; --relief: 0.22;
+  --f-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1518; --surface: #142026; --sunk: #101a1f; --ink: #e1eaec; --muted: #8fa2a9; --line: #273840;
+    --accent: #3cbfae; --on-accent: #062420; --water: #5aaee6;
+    --risk-1: #e2c450; --risk-2: #ef8d3d; --risk-3: #ec5a46; --on-risk: #0d1518; --on-risk-3: #0d1518;
+    --conf-h: #5cc28a;
+    --m-green: #34502f; --m-park: #2e5a35; --m-built: #3c3a35; --m-dev: #4a4237; --m-river: #2b6a99; --m-pond: #24608f;
+    --m-street: #7f898c; --m-contour: #a5b6a0; --m-boundary: #d07cbe; --m-label: #e1eaec; --m-pill: #142026; --relief: 0.10;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1518; --surface: #142026; --sunk: #101a1f; --ink: #e1eaec; --muted: #8fa2a9; --line: #273840;
+  --accent: #3cbfae; --on-accent: #062420; --water: #5aaee6;
+  --risk-1: #e2c450; --risk-2: #ef8d3d; --risk-3: #ec5a46; --on-risk: #0d1518; --on-risk-3: #0d1518;
+  --conf-h: #5cc28a;
+  --m-green: #34502f; --m-park: #2e5a35; --m-built: #3c3a35; --m-dev: #4a4237; --m-river: #2b6a99; --m-pond: #24608f;
+  --m-street: #7f898c; --m-contour: #a5b6a0; --m-boundary: #d07cbe; --m-label: #e1eaec; --m-pill: #142026; --relief: 0.10;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.app { max-width: 1380px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 36px; display: grid; gap: 16px; }
+
+/* title block */
+.masthead { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px 24px; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+.title h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2rem, 4vw, 2.7rem); line-height: 1; letter-spacing: .01em; text-transform: uppercase; margin: 0; text-wrap: balance; }
+.title h1 span { font-weight: 500; color: var(--muted); }
+.title p { margin: 8px 0 0; max-width: 62ch; color: var(--muted); font-size: .92rem; }
+.modes { display: flex; flex-wrap: wrap; }
+.modes button { font-family: var(--f-display); font-weight: 600; font-size: 1.02rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); background: var(--surface); border: 1px solid var(--line); margin: 0 -1px -1px 0; padding: .5rem .85rem; cursor: pointer; display: flex; gap: .5rem; align-items: baseline; }
+.modes button b { font-family: var(--f-mono); font-weight: 600; font-size: .8rem; color: var(--accent); }
+.modes button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); position: relative; z-index: 1; }
+.modes button[aria-selected="true"] b { color: var(--bg); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 16px; align-items: start; }
+@media (max-width: 1000px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* map plate */
+.plate { background: var(--surface); border: 1px solid var(--line); display: grid; min-width: 0; }
+.mapwrap { position: relative; aspect-ratio: 64 / 40; max-width: 100%; background: var(--sunk); touch-action: manipulation; }
+.mapwrap canvas { display: block; width: 100%; height: 100%; }
+.mapwrap.pick canvas { cursor: crosshair; }
+.mapwrap.point canvas { cursor: pointer; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .78rem; line-height: 1.4; padding: 6px 8px; max-width: 250px; z-index: 2; }
+.tip b { font-weight: 600; }
+.plate-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: center; }
+.clock { font-family: var(--f-mono); font-size: .82rem; font-variant-numeric: tabular-nums; }
+.clock .live { color: var(--water); font-weight: 600; }
+.legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .78rem; color: var(--muted); }
+.legend li { display: flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; display: inline-block; }
+.sw.r1 { background: var(--risk-1); } .sw.r2 { background: var(--risk-2); } .sw.r3 { background: var(--risk-3); } .sw.wt { background: var(--m-river); }
+.ln { width: 18px; height: 0; border-top: 2px dashed var(--m-boundary); display: inline-block; }
+.pinmark { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--risk-3); background: var(--m-pill); display: inline-block; }
+
+.readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--line); }
+.readouts > div { padding: 10px 14px; border-right: 1px solid var(--line); min-width: 0; }
+.readouts > div:last-child { border-right: 0; }
+.readouts dt { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); line-height: 1.3; }
+.readouts dd { margin: 4px 0 0; font-family: var(--f-mono); font-size: 1.1rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .readouts > div:nth-child(2) { border-right: 0; } .readouts > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+.origin { padding: 10px 14px 14px; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+.origin-label { font-size: .82rem; color: var(--muted); }
+.origin-label b { color: var(--ink); font-weight: 600; }
+.origin-bar { display: flex; height: 10px; background: var(--sunk); }
+.origin-bar span { display: block; height: 100%; transition: width .3s; }
+#o-up { background: var(--m-boundary); } #o-down { background: var(--water); }
+@media (prefers-reduced-motion: reduce) { .origin-bar span { transition: none; } }
+
+/* control rail */
+.rail { background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.rail > section { padding: 16px; border-bottom: 1px solid var(--line); display: grid; gap: 12px; }
+.rail > section:last-child { border-bottom: 0; }
+.rail h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; letter-spacing: .03em; text-transform: uppercase; margin: 0; line-height: 1.1; }
+.rail p { margin: 0; font-size: .9rem; }
+.field { display: grid; gap: 4px; font-size: .86rem; }
+.field > span { display: flex; justify-content: space-between; gap: 8px; }
+.field output { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 600 .9rem var(--f-body); padding: .55rem 1rem; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); min-width: 9.5rem; }
+.btn:hover { filter: brightness(1.06); }
+.hint { color: var(--muted); font-size: .82rem !important; }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .86rem; }
+.checks label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.checks input { accent-color: var(--accent); }
+.k { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.backtest { display: grid; gap: 2px; padding: 10px 12px; background: var(--sunk); font-size: .88rem; }
+.try { margin: 0; padding-left: 1.2rem; font-size: .86rem; color: var(--muted); display: grid; gap: 4px; }
+.try b { color: var(--ink); font-weight: 600; }
+
+.gap { display: grid; gap: 8px; padding: 12px; background: var(--sunk); }
+.gap-row { display: flex; justify-content: space-between; gap: 8px; font-size: .86rem; }
+.gap-row b { font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.bar { height: 10px; background: var(--bg); }
+.bar span { display: block; height: 100%; transition: width .25s; }
+.bar .need { background: var(--risk-2); } .bar .have { background: var(--water); }
+@media (prefers-reduced-motion: reduce) { .bar span { transition: none; } }
+.verdict { font-weight: 600; font-size: .9rem; }
+.verdict.short { color: var(--risk-3); } .verdict.ok { color: var(--conf-h); }
+.seg { display: flex; gap: 0; }
+.seg label { position: relative; flex: 1; text-align: center; font-size: .84rem; border: 1px solid var(--line); margin-right: -1px; padding: .35rem .5rem; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label:has(input:checked) { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 1px; }
+.tablewrap { overflow-x: auto; }
+table.ponds { width: 100%; border-collapse: collapse; font-size: .82rem; }
+table.ponds th { text-align: left; font-weight: 500; color: var(--muted); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--line); padding: 4px 6px 4px 0; }
+table.ponds td { padding: 5px 6px 5px 0; border-bottom: 1px solid var(--line); vertical-align: middle; }
+table.ponds td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+table.ponds th.num { text-align: right; }
+.xbtn { font: 500 .75rem var(--f-body); border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 2px 6px; cursor: pointer; }
+
+.assets { display: grid; gap: 4px; }
+.asset { display: flex; justify-content: space-between; align-items: center; gap: 8px; text-align: left; font: 500 .86rem var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line); padding: .4rem .6rem; cursor: pointer; }
+.asset[aria-pressed="true"] { border-color: var(--ink); background: var(--sunk); box-shadow: inset 3px 0 0 var(--ink); }
+.conf { font-family: var(--f-mono); font-size: .7rem; font-weight: 600; padding: 1px 6px; color: var(--on-risk); white-space: nowrap; }
+.conf.H { background: var(--conf-h); color: var(--on-accent); } .conf.M { background: var(--risk-1); } .conf.L { background: var(--risk-3); color: var(--on-risk-3); }
+.card { background: var(--sunk); padding: 12px; display: grid; gap: 8px; }
+.card h3 { margin: 0; font-family: var(--f-display); font-size: 1.2rem; font-weight: 600; letter-spacing: .02em; }
+.card dl { margin: 0; display: grid; grid-template-columns: 8.2em minmax(0, 1fr); gap: 6px 10px; font-size: .86rem; }
+.card dt { color: var(--muted); }
+.card dd { margin: 0; }
+.context { font-size: .8rem !important; color: var(--muted); }
+
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.tier { display: grid; gap: 2px; justify-items: start; text-align: left; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: .5rem .6rem; cursor: pointer; font-family: var(--f-body); }
+.tier b { font-family: var(--f-display); font-size: 1.1rem; letter-spacing: .03em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+.tier b i { width: 10px; height: 10px; display: inline-block; }
+.tier small { font-size: .74rem; color: var(--muted); }
+.tier[aria-pressed="true"] { border-color: var(--ink); background: var(--sunk); }
+.t-waspada i { background: var(--risk-1); } .t-buruk i { background: var(--risk-2); } .t-bahaya i { background: var(--risk-3); }
+.advisory { border: 1px solid var(--ink); display: grid; }
+.adv-head { padding: 10px 12px; display: grid; gap: 2px; }
+.adv-head.waspada { background: var(--risk-1); color: var(--on-risk); }
+.adv-head.buruk { background: var(--risk-2); color: var(--on-risk); }
+.adv-head.bahaya { background: var(--risk-3); color: var(--on-risk-3); }
+.adv-head .k { color: inherit; opacity: .85; }
+.adv-head strong { font-family: var(--f-display); font-size: 1.25rem; letter-spacing: .02em; text-transform: uppercase; }
+.adv-head span { font-size: .8rem; }
+.adv-body { padding: 10px 12px; display: grid; gap: 8px; }
+.streets { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.streets li { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 2px 10px; font-size: .85rem; }
+.streets li .chip { grid-row: span 2; align-self: start; }
+.streets li b { font-weight: 600; }
+.streets li span.act { color: var(--muted); }
+.chip { font-family: var(--f-mono); font-size: .7rem; font-weight: 600; padding: 2px 6px; text-align: center; text-transform: uppercase; letter-spacing: .04em; }
+.chip.b0 { background: var(--line); color: var(--ink); } .chip.b1 { background: var(--risk-1); color: var(--on-risk); }
+.chip.b2 { background: var(--risk-2); color: var(--on-risk); } .chip.b3 { background: var(--risk-3); color: var(--on-risk-3); }
+.fine { font-size: .78rem !important; color: var(--muted); }
+
+.foot { display: grid; gap: 8px; font-size: .82rem; color: var(--muted); max-width: 90ch; }
+.foot summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+.foot table { border-collapse: collapse; margin-top: 8px; font-size: .8rem; }
+.foot td { padding: 3px 14px 3px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.foot td:first-child { color: var(--ink); white-space: nowrap; }
+</style>
+
+<div class="app">
+  <header class="masthead">
+    <div class="title">
+      <h1>RainReady <span>Playground</span></h1>
+      <p>A teaching model for the team. The terrain, ponds, streets and owners are invented and the numbers are illustrative. It shows risk bands, never flood depths, and it is not a forecast.</p>
+    </div>
+    <nav class="modes" role="tablist" aria-label="RainReady features">
+      <button role="tab" id="tab-catchment" data-mode="catchment" aria-selected="true" aria-controls="panel-catchment"><b>1</b>Catchment view</button>
+      <button role="tab" id="tab-ponds" data-mode="ponds" aria-selected="false" aria-controls="panel-ponds"><b>2</b>Pond what-if</button>
+      <button role="tab" id="tab-owners" data-mode="owners" aria-selected="false" aria-controls="panel-owners"><b>3</b>Who maintains what</button>
+      <button role="tab" id="tab-advisory" data-mode="advisory" aria-selected="false" aria-controls="panel-advisory"><b>4</b>Street advisory</button>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="plate" aria-label="Map">
+      <div class="mapwrap" id="mapwrap">
+        <canvas id="map" role="img" aria-label="Map of an invented catchment: an upstream council area on the left, a downstream council area on the right, a river between, ponds, streets and a low-lying zone."></canvas>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+      <div class="plate-foot">
+        <div class="clock" id="clock">Ready. Press Start storm.</div>
+        <ul class="legend">
+          <li><i class="sw r1"></i>Low</li>
+          <li><i class="sw r2"></i>Medium</li>
+          <li><i class="sw r3"></i>High risk</li>
+          <li><i class="sw wt"></i>River and ponds</li>
+          <li><i class="ln"></i>Council boundary</li>
+          <li><i class="pinmark"></i>Reported flood spot</li>
+        </ul>
+      </div>
+      <dl class="readouts">
+        <div><dt>Runoff so far</dt><dd id="r-runoff">0 m³</dd></div>
+        <div><dt>Crossed the council boundary</dt><dd id="r-cross">0 m³</dd></div>
+        <div><dt>Held in ponds</dt><dd id="r-ponds">0 m³</dd></div>
+        <div><dt>Downstream land at medium or high risk</dt><dd id="r-area">0 ha</dd></div>
+      </dl>
+      <div class="origin">
+        <div class="origin-label" id="o-text">Where the water in the low-lying zone fell: run a storm to see.</div>
+        <div class="origin-bar" aria-hidden="true"><span id="o-up" style="width:0"></span><span id="o-down" style="width:0"></span></div>
+      </div>
+    </section>
+
+    <aside class="rail">
+      <section aria-labelledby="storm-h">
+        <h2 id="storm-h">Storm</h2>
+        <label class="field" for="rain"><span>Rainfall <output id="rain-o">60 mm/h</output></span><input type="range" id="rain" min="20" max="120" step="5" value="60"></label>
+        <label class="field" for="dur"><span>Duration <output id="dur-o">90 min</output></span><input type="range" id="dur" min="30" max="180" step="15" value="90"></label>
+        <label class="field" for="speed"><span>Playback speed <output id="speed-o">6 min per second</output></span><input type="range" id="speed" min="1" max="4" step="1" value="2"></label>
+        <div class="btns"><button class="btn primary" id="run" type="button">Start storm</button><button class="btn" id="clear" type="button">Clear water</button></div>
+      </section>
+
+      <section id="panel-catchment" role="tabpanel" aria-labelledby="tab-catchment" data-panel="catchment">
+        <h2>Catchment view</h2>
+        <p>Water does not stop at council lines. The dashed line splits an upstream council area from a downstream one. Blue lines show where water runs on the ground.</p>
+        <label class="field" for="dev"><span>Upstream development <output id="dev-o">50%</output></span><input type="range" id="dev" min="0" max="100" step="10" value="50"></label>
+        <p class="hint">Turns green land upstream into roofs and roads. Hard surfaces send more rain downstream.</p>
+        <div class="checks">
+          <label><input type="checkbox" id="flow" checked> Flow lines</label>
+          <label><input type="checkbox" id="low" checked> Low-lying zone</label>
+          <label><input type="checkbox" id="peakview" checked> Peak risk after a storm</label>
+        </div>
+        <div class="backtest"><span class="k">Back-test</span><span id="bt">Run a storm, then check whether the three reported flood spots are flagged.</span></div>
+        <ol class="try">
+          <li>Press <b>Start storm</b> and watch water cross the dashed line.</li>
+          <li>Set upstream development to <b>100%</b> and run again. Compare "Crossed the council boundary".</li>
+        </ol>
+      </section>
+
+      <section id="panel-ponds" role="tabpanel" aria-labelledby="tab-ponds" data-panel="ponds" hidden>
+        <h2>Pond what-if</h2>
+        <p>How much storage does this storm need, and does another pond close the gap? Simple volume balance: runoff in, minus what the outlet can carry.</p>
+        <div class="gap">
+          <div class="gap-row"><span>Storage needed</span><b id="g-need">0 m³</b></div>
+          <div class="bar"><span class="need" id="gb-need"></span></div>
+          <div class="gap-row"><span>Pond storage available</span><b id="g-have">0 m³</b></div>
+          <div class="bar"><span class="have" id="gb-have"></span></div>
+          <div class="verdict" id="g-verdict"></div>
+          <div class="hint" id="g-up"></div>
+        </div>
+        <label class="field" for="outq"><span>Outlet capacity (assumed) <output id="q-o">15 m³/s</output></span><input type="range" id="outq" min="5" max="40" step="5" value="15"></label>
+        <div class="field">
+          <span class="k">New pond size</span>
+          <div class="seg" role="radiogroup" aria-label="New pond size">
+            <label><input type="radio" name="psize" value="2"> 2 × 2 cells (1 ha)</label>
+            <label><input type="radio" name="psize" value="3" checked> 3 × 3 cells (2.25 ha)</label>
+          </div>
+        </div>
+        <label class="field" for="pdepth"><span>New pond depth <output id="pd-o">3.0 m</output></span><input type="range" id="pdepth" min="1" max="4" step="0.5" value="3"></label>
+        <p class="hint" id="pond-msg">Click the map to add a pond. Click a proposed pond to remove it.</p>
+        <div class="tablewrap">
+          <table class="ponds">
+            <thead><tr><th>Pond</th><th>Status</th><th class="num">Depth</th><th class="num">Holds</th><th aria-label="Remove"></th></tr></thead>
+            <tbody id="pond-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-owners" role="tabpanel" aria-labelledby="tab-owners" data-panel="owners" hidden>
+        <h2>Who maintains what</h2>
+        <p>Click a pond, drain, culvert or river reach on the map, or pick one here. Each answer carries a confidence label.</p>
+        <div class="assets" id="asset-list"></div>
+        <div class="card" id="asset-card"></div>
+        <p class="context">Ownership gaps are real. Bernama (5 May 2025) reported more than 300 unmanned ponds identified, with about 55 taken over by the drainage department so far.</p>
+      </section>
+
+      <section id="panel-advisory" role="tabpanel" aria-labelledby="tab-advisory" data-panel="advisory" hidden>
+        <h2>Street advisory</h2>
+        <p>When an official heavy-rain warning comes out, RainReady says what it means for each street, before the rain arrives. Pick a sample warning level.</p>
+        <div class="tiers">
+          <button type="button" class="tier t-waspada" data-tier="waspada" aria-pressed="false"><b><i></i>Waspada</b><small>Alert</small></button>
+          <button type="button" class="tier t-buruk" data-tier="buruk" aria-pressed="false"><b><i></i>Buruk</b><small>Severe</small></button>
+          <button type="button" class="tier t-bahaya" data-tier="bahaya" aria-pressed="false"><b><i></i>Bahaya</b><small>Danger</small></button>
+        </div>
+        <article class="advisory" id="adv" hidden></article>
+        <p class="fine">Sample only. The three levels follow MET Malaysia's heavy-rain warning tiers. The real tool shows an advisory only after an official warning is issued, and always links to it.</p>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <details>
+      <summary>Assumptions in this playground</summary>
+      <table>
+        <tr><td>Map</td><td>64 × 40 cells, each 50 m × 50 m (0.25 ha). Terrain is invented: high upstream, a meandering river, a flat low-lying zone downstream.</td></tr>
+        <tr><td>Runoff share</td><td>Roofs and roads 85% of rain, green land 30%, wetland park 25%, river and ponds 100%. Illustrative values.</td></tr>
+        <tr><td>Water movement</td><td>Each simulated minute, water moves towards the lowest neighbouring cell. The outlet at the right edge carries a set amount per second. Drain D-07 cannot empty while the river is higher than the low-lying zone.</td></tr>
+        <tr><td>Risk bands</td><td>Bands come from how much water sits on a cell in this model. In the real tool, terrain error is about 1 m in built-up areas, so it shows bands and never a depth.</td></tr>
+        <tr><td>Storage need</td><td>Volume balance for the whole storm: rain × runoff share × area, minus outlet capacity × duration. The real tool uses MSMA 2 design rainfall.</td></tr>
+        <tr><td>Owners</td><td>Invented for teaching. The real tool records sources and confirms owners with councils and the drainage department.</td></tr>
+      </table>
+    </details>
+    <p>Teaching playground for the RainReady team, Sime Darby Property University Hackathon 2026. The real prototype uses FABDEM terrain, MSMA 2 rainfall and official warning feeds.</p>
+  </footer>
+</div>
+
+<script id="core">
+"use strict";
+/* RainReady playground: simulation core (no DOM). Invented terrain, illustrative numbers. */
+const W = 64, H = 40, N = W * H, AREA = 2500 /* m2 per 50 m cell */, BX = 30 /* council boundary column */;
+const T = { GREEN: 0, BUILT: 1, RIVER: 2, POND: 3, PARK: 4, DEV: 5 };
+const C_RUN = [0.30, 0.85, 1.0, 1.0, 0.25, 0.85]; // share of rain that becomes runoff, by land type
+const NB = [[1,0,1],[-1,0,1],[0,1,1],[0,-1,1],[1,1,Math.SQRT1_2],[1,-1,Math.SQRT1_2],[-1,1,Math.SQRT1_2],[-1,-1,Math.SQRT1_2]];
+const idx = (x, y) => y * W + x;
+
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function riverY(x) { return Math.round(20 + 5 * Math.sin(x / 8) + 1.2 * Math.sin(x / 3.7)); }
+function bankZ(x) { return x < 44 ? 5.5 + 22.5 * Math.pow((44 - x) / 44, 1.5) : 5.5 - 0.03 * (x - 44); }
+function bedZ(x) { return x < 44 ? bankZ(x) - 1.2 : 4.3 - 0.06 * (x - 44); }
+function dip(x, y, cx, cy, rx, ry, d) { const q = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2; return q < 1 ? d * (1 - q) : 0; }
+
+const EXISTING_PONDS = [
+  { label: "P1", name: "Wetland park pond", x: 35, y: 24, s: 3, depth: 2.0 },
+  { label: "P2", name: "Pond P2", x: 57, y: 10, s: 2, depth: 1.5 },
+  { label: "P3", name: "Upstream pond P3", x: 14, y: 33, s: 2, depth: 2.5 },
+];
+
+function createWorld() {
+  const rnd = mulberry32(11);
+  const GX = 9, GY = 6, g = Array.from({ length: GX * GY }, () => rnd() * 2 - 1);
+  const noise = (x, y) => {
+    const fx = x / (W - 1) * (GX - 1), fy = y / (H - 1) * (GY - 1);
+    const x0 = Math.floor(fx), y0 = Math.floor(fy), x1 = Math.min(x0 + 1, GX - 1), y1 = Math.min(y0 + 1, GY - 1);
+    const tx = fx - x0, ty = fy - y0;
+    const a = g[y0 * GX + x0], b = g[y0 * GX + x1], c = g[y1 * GX + x0], d = g[y1 * GX + x1];
+    return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty;
+  };
+  const isRiver = new Uint8Array(N);
+  for (let x = 0; x < W; x++) {
+    const a = riverY(x), b = x < W - 1 ? riverY(x + 1) : a;
+    for (let y = Math.min(a, b); y <= Math.max(a, b) + 1; y++) if (y >= 0 && y < H) isRiver[idx(x, y)] = 1;
+  }
+  const z0 = new Float32Array(N), base = new Uint8Array(N), devRank = new Float32Array(N).fill(2), region = new Uint8Array(N);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const i = idx(x, y);
+    region[i] = x < BX ? 0 : 1;
+    if (isRiver[i]) { z0[i] = bedZ(x); base[i] = T.RIVER; continue; }
+    let d = 99; for (let yy = 0; yy < H; yy++) if (isRiver[idx(x, yy)]) d = Math.min(d, Math.abs(yy - y));
+    let z = bankZ(x) + (x < BX ? 0.10 : 0.05) * d + 0.22 * noise(x, y);
+    z -= 0.45 * Math.exp(-(((y - 31) / 3.5) ** 2)) * Math.min(1, Math.max(0, (56 - x) / 6)); // old stream valley
+    z -= dip(x, y, 50, 31, 7, 3.5, 0.8) + dip(x, y, 56, 14, 3.5, 2.2, 0.5);                  // low-lying pockets
+    if (x >= 59) z += (x - 58) * 0.5;
+    z0[i] = z;
+    if (x < BX) { base[i] = T.GREEN; if (x >= 3 && d > 1) devRank[i] = rnd(); }
+    else if (x >= 33 && x <= 39 && y >= 22 && y <= 29) base[i] = T.PARK;
+    else base[i] = T.BUILT;
+  }
+  let rb = 0; for (let y = 0; y < H; y++) if (isRiver[idx(50, y)] && y < 31) rb = Math.max(rb, y);
+  const wd = {
+    z0, base, devRank, region, isRiver,
+    z: new Float32Array(N), type: new Uint8Array(N), pondOf: new Int16Array(N).fill(-1),
+    w: new Float32Array(N), wA: new Float32Array(N), peak: new Uint8Array(N),
+    dw: new Float32Array(N), dA: new Float32Array(N),
+    recv: new Int32Array(N), acc: new Float32Array(N),
+    ponds: [], dev: 0.5, nextId: 1,
+    drainFrom: idx(50, 31), drainTo: idx(50, rb), drainCells: [],
+    t: 0, stats: { runoff: 0, cross: 0, out: 0 },
+  };
+  for (let y = rb + 1; y <= 31; y++) wd.drainCells.push(idx(50, y));
+  for (const p of EXISTING_PONDS) wd.ponds.push({ id: wd.nextId++, kind: "existing", ...p });
+  rebuild(wd);
+  return wd;
+}
+
+function rebuild(wd) {
+  const { z0, base, devRank, z, type, pondOf } = wd;
+  for (let i = 0; i < N; i++) {
+    z[i] = z0[i];
+    type[i] = base[i] === T.GREEN && devRank[i] < wd.dev ? T.DEV : base[i];
+    pondOf[i] = -1;
+  }
+  wd.ponds.forEach((p, k) => {
+    for (let dy = 0; dy < p.s; dy++) for (let dx = 0; dx < p.s; dx++) {
+      const i = idx(p.x + dx, p.y + dy);
+      z[i] = z0[i] - p.depth; type[i] = T.POND; pondOf[i] = k;
+    }
+  });
+  computeFlow(wd);
+}
+
+function canPlace(wd, x, y, s) {
+  if (x < 0 || y < 0 || x + s > W || y + s > H) return false;
+  for (let dy = 0; dy < s; dy++) for (let dx = 0; dx < s; dx++) {
+    const i = idx(x + dx, y + dy);
+    if (wd.base[i] === T.RIVER || wd.pondOf[i] >= 0) return false;
+  }
+  return true;
+}
+function addPond(wd, x, y, s, depth) {
+  if (!canPlace(wd, x, y, s)) return null;
+  const n = wd.ponds.filter(p => p.kind === "proposed").length + 1;
+  const p = { id: wd.nextId++, kind: "proposed", label: "N" + n, name: "Proposed pond N" + n, x, y, s, depth };
+  wd.ponds.push(p); rebuild(wd); return p;
+}
+function removePond(wd, id) {
+  wd.ponds = wd.ponds.filter(p => p.id !== id);
+  let n = 0; for (const p of wd.ponds) if (p.kind === "proposed") { n++; p.label = "N" + n; p.name = "Proposed pond N" + n; }
+  rebuild(wd);
+}
+function pondCapacity(p) { return p.s * p.s * AREA * p.depth; }
+
+function computeFlow(wd) {
+  const { z, recv, acc } = wd;
+  const order = [];
+  for (let i = 0; i < N; i++) {
+    const x = i % W, y = (i / W) | 0; let best = -1, bs = 0;
+    for (const [dx, dy, f] of NB) {
+      const nx = x + dx, ny = y + dy; if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+      const j = idx(nx, ny), s = (z[i] - z[j]) * f; if (s > bs) { bs = s; best = j; }
+    }
+    recv[i] = best; acc[i] = 1; order.push(i);
+  }
+  order.sort((a, b) => z[b] - z[a]);
+  for (const i of order) if (recv[i] >= 0) acc[recv[i]] += acc[i];
+}
+
+function setDev(wd, frac) { wd.dev = frac; rebuild(wd); }
+function resetWater(wd) {
+  wd.w.fill(0); wd.wA.fill(0); wd.peak.fill(0); wd.t = 0;
+  wd.stats = { runoff: 0, cross: 0, out: 0 };
+}
+function band(w) { return w < 0.03 ? 0 : w < 0.12 ? 1 : w < 0.30 ? 2 : 3; }
+
+/* One simulated minute. P = { rain: mm/h, raining: bool, outletQ: m3/s, drainQ: m3/s } */
+function step(wd, P) {
+  const { w, wA, z, type, region, dw, dA, peak, stats } = wd;
+  if (P.raining) {
+    const r = P.rain / 1000 / 60;
+    for (let i = 0; i < N; i++) {
+      const add = r * C_RUN[type[i]];
+      w[i] += add; if (region[i] === 0) wA[i] += add; stats.runoff += add * AREA;
+    }
+  }
+  dw.fill(0); dA.fill(0);
+  for (let i = 0; i < N; i++) {
+    const wi = w[i]; if (wi < 1e-6) continue;
+    const x = i % W, y = (i / W) | 0, h = z[i] + wi;
+    let best = -1, bs = 0, bdh = 0;
+    for (const [dx, dy, f] of NB) {
+      const nx = x + dx, ny = y + dy; if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+      const j = idx(nx, ny), dh = h - z[j] - w[j], s = dh * f;
+      if (s > bs) { bs = s; best = j; bdh = dh; }
+    }
+    if (best < 0) continue;
+    const k = type[i] === T.RIVER && type[best] === T.RIVER ? 0.9 : 0.45;
+    const m = Math.min(wi, bdh * 0.5) * k, frac = wA[i] / wi;
+    dw[i] -= m; dw[best] += m; dA[i] -= m * frac; dA[best] += m * frac;
+    if (region[i] === 0 && region[best] === 1) stats.cross += m * AREA;
+  }
+  for (let i = 0; i < N; i++) { w[i] = Math.max(0, w[i] + dw[i]); wA[i] = Math.min(w[i], Math.max(0, wA[i] + dA[i])); }
+  // outlet at the downstream edge of the river
+  let cap = P.outletQ * 60 / AREA;
+  for (let y = 0; y < H && cap > 0; y++) {
+    const i = idx(W - 1, y); if (type[i] !== T.RIVER || w[i] <= 0) continue;
+    const m = Math.min(w[i], cap), frac = wA[i] / w[i];
+    w[i] -= m; wA[i] -= m * frac; cap -= m; stats.out += m * AREA;
+  }
+  // drain D-07: low-lying pocket to river, blocked when the river is higher
+  const b = wd.drainFrom, r = wd.drainTo, hb = z[b] + w[b], hr = z[r] + w[r];
+  if (hb > hr && w[b] > 0) {
+    const m = Math.min(w[b], (hb - hr) / 2, P.drainQ * 60 / AREA), frac = wA[b] / w[b];
+    w[b] -= m; wA[b] -= m * frac; w[r] += m; wA[r] += m * frac;
+  }
+  for (let i = 0; i < N; i++) {
+    if (type[i] === T.RIVER || type[i] === T.POND) continue;
+    const bd = band(w[i]); if (bd > peak[i]) peak[i] = bd;
+  }
+  wd.t++;
+}
+
+/* Storage needed for a design storm by simple volume balance: runoff in minus what the outlet can carry. */
+function storageBalance(wd, rain, dur, outletQ) {
+  let runoff = 0, upstream = 0;
+  for (let i = 0; i < N; i++) {
+    const v = C_RUN[wd.type[i]] * rain / 1000 * dur / 60 * AREA;
+    runoff += v; if (wd.region[i] === 0) upstream += v;
+  }
+  const outlet = outletQ * dur * 60;
+  const need = Math.max(0, runoff - outlet);
+  const avail = wd.ponds.reduce((s, p) => s + pondCapacity(p), 0);
+  return { runoff, upstream, outlet, need, avail, gap: need - avail };
+}
+
+/* Run a storm without drawing; returns peak bands. Used by the advisory. */
+function forecastPeaks(wd, P, dur, after) {
+  const save = { w: wd.w.slice(), wA: wd.wA.slice(), peak: wd.peak.slice(), t: wd.t, stats: { ...wd.stats } };
+  resetWater(wd);
+  for (let m = 0; m < dur + after; m++) step(wd, { ...P, raining: m < dur });
+  const peaks = wd.peak.slice(), stats = { ...wd.stats };
+  wd.w.set(save.w); wd.wA.set(save.wA); wd.peak.set(save.peak); wd.t = save.t; wd.stats = save.stats;
+  return { peaks, stats };
+}
+
+
+
+</script>
+<script>
+"use strict";
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const canvas = $("map"), ctx = canvas.getContext("2d"), wrap = $("mapwrap"), tip = $("tip");
+  const base = document.createElement("canvas");
+  const world = createWorld();
+
+  const PINS = [{ x: 47, y: 30, label: "A" }, { x: 53, y: 31, label: "B" }, { x: 56, y: 14, label: "C" }];
+  const STREETS = [
+    { name: "Jalan Hilir 1", a: [41, 30], b: [58, 30] },
+    { name: "Jalan Hilir 2", a: [41, 35], b: [60, 35] },
+    { name: "Jalan Taman", a: [41, 26], b: [41, 38] },
+    { name: "Jalan Kolam", a: [49, 14], b: [62, 14] },
+    { name: "Jalan Sungai", a: [33, 8], b: [48, 8] },
+    { name: "Jalan Bukit", a: [52, 4], b: [62, 4] },
+  ].map((s) => ({ ...s, cells: lineCells(s.a, s.b) }));
+  const CULVERT = []; for (let y = 29; y <= 33; y++) CULVERT.push(idx(BX - 1, y), idx(BX, y));
+  const LOW = new Uint8Array(N);
+  for (let i = 0; i < N; i++) {
+    const x = i % W;
+    const bank = x < 44 ? 5.5 + 22.5 * Math.pow((44 - x) / 44, 1.5) : 5.5 - 0.03 * (x - 44);
+    LOW[i] = world.region[i] === 1 && !world.isRiver[i] && world.z0[i] < bank - 0.05 ? 1 : 0;
+  }
+
+  const POND_OWNERS = {
+    P1: { owner: "Developer. Handover to the council is pending.", conf: "M", contact: "Developer's township management office", why: "Part of the wetland park. Catches water arriving from upstream before it reaches the housing." },
+    P2: { owner: "No owner on record.", conf: "L", contact: "Unknown. Needs confirming with the downstream council and the drainage department.", why: "Shallow pond next to the north low spot. Nobody is confirmed to desilt it." },
+    P3: { owner: "Drainage department (taken over).", conf: "H", contact: "State drainage department, district office", why: "Upstream pond in the old stream valley. Holds water before it crosses the boundary." },
+  };
+  const FIXED_ASSETS = [
+    { id: "R1", kind: "River reach", name: "River reach R-1, upstream", owner: "Drainage department.", conf: "H", contact: "State drainage department, district office", why: "Carries upstream water towards the boundary." },
+    { id: "R2", kind: "River reach", name: "River reach R-2, downstream", owner: "Drainage department.", conf: "H", contact: "State drainage department, district office", why: "Takes water from both council areas. When it runs high, drain D-07 cannot empty." },
+    { id: "C01", kind: "Culvert", name: "Boundary culvert C-01", owner: "Not confirmed. It sits on the line between the two councils.", conf: "L", contact: "Unknown. Needs confirming with both councils.", why: "Most overland water from upstream crosses the boundary here." },
+    { id: "D07", kind: "Drain", name: "Drain D-07", owner: "Downstream council.", conf: "M", contact: "Downstream council, drainage unit", why: "Empties the low-lying zone into the river. Backwater blocks it when the river is high." },
+  ];
+  const CONF_TEXT = { H: "High: confirmed in public records", M: "Medium: likely, not yet confirmed", L: "Low: unknown or not confirmed" };
+  const TIERS = {
+    waspada: { name: "Waspada", en: "Alert", rain: 40, dur: 120 },
+    buruk: { name: "Buruk", en: "Severe", rain: 65, dur: 120 },
+    bahaya: { name: "Bahaya", en: "Danger", rain: 95, dur: 120 },
+  };
+  const ACTIONS = [
+    "No extra action beyond the official warning.",
+    "Some water may pond on the road. Follow the official warning.",
+    "Expect water on the road. Keep the drain outside your house clear and check on neighbours.",
+    "Move vehicles to higher ground before the rain peaks. Avoid driving through this street.",
+  ];
+  const BAND_NAME = ["Minimal", "Low", "Medium", "High"];
+  const SPEEDS = [0, 3, 6, 12, 24];
+
+  const state = {
+    mode: "catchment", running: false, accum: 0, last: performance.now(), dirty: true,
+    rain: 60, dur: 90, speed: 2, outletQ: 15, psize: 3, pdepth: 3,
+    flow: true, low: true, peakview: true, hover: -1, asset: "C01", tier: null, streetBands: null,
+  };
+  let colors = {};
+
+  function lineCells(a, b) {
+    const out = []; const dx = Math.sign(b[0] - a[0]), dy = Math.sign(b[1] - a[1]);
+    let x = a[0], y = a[1];
+    for (;;) { out.push(idx(x, y)); if (x === b[0] && y === b[1]) break; x += dx; y += dy; }
+    return out;
+  }
+
+  /* ---------- colours ---------- */
+  function parseColor(s) {
+    s = s.trim();
+    if (s[0] === "#") { if (s.length === 4) s = "#" + s[1] + s[1] + s[2] + s[2] + s[3] + s[3]; return [1, 3, 5].map((k) => parseInt(s.slice(k, k + 2), 16)); }
+    const m = s.match(/[\d.]+/g); return m ? m.slice(0, 3).map(Number) : [128, 128, 128];
+  }
+  function readColors() {
+    const cs = getComputedStyle(document.documentElement);
+    const names = ["m-green", "m-park", "m-built", "m-dev", "m-river", "m-pond", "m-street", "m-contour", "m-boundary", "m-label", "m-pill", "risk-1", "risk-2", "risk-3", "water", "ink", "accent", "conf-h", "surface"];
+    colors = {}; for (const n of names) colors[n] = parseColor(cs.getPropertyValue("--" + n));
+    colors.relief = parseFloat(cs.getPropertyValue("--relief")) || 0.15;
+  }
+  const rgba = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const mix = (c, d, t) => [c[0] + (d[0] - c[0]) * t, c[1] + (d[1] - c[1]) * t, c[2] + (d[2] - c[2]) * t];
+
+  /* ---------- geometry ---------- */
+  let dpr = 1, cw = 1, ch = 1;
+  const px = (x) => Math.round(x * cw), py = (y) => Math.round(y * ch);
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = wrap.getBoundingClientRect();
+    canvas.width = Math.max(64, Math.round(r.width * dpr)); canvas.height = Math.max(40, Math.round(r.width * dpr * H / W));
+    cw = canvas.width / W; ch = canvas.height / H;
+    buildBase(); state.dirty = true;
+  }
+
+  function buildBase() {
+    base.width = canvas.width; base.height = canvas.height;
+    const g = base.getContext("2d");
+    let zmin = Infinity, zmax = -Infinity;
+    for (let i = 0; i < N; i++) if (!world.isRiver[i]) { zmin = Math.min(zmin, world.z0[i]); zmax = Math.max(zmax, world.z0[i]); }
+    const white = [255, 255, 255];
+    const typeCol = [colors["m-green"], colors["m-built"], colors["m-river"], colors["m-pond"], colors["m-park"], colors["m-dev"]];
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = idx(x, y), t = world.type[i];
+      let c = typeCol[t];
+      if (t !== T.RIVER && t !== T.POND) c = mix(c, white, Math.sqrt((world.z0[i] - zmin) / (zmax - zmin)) * colors.relief);
+      if (t === T.POND) c = mix(c, colors.ink, 0.12);
+      g.fillStyle = rgba(c); g.fillRect(px(x), py(y), px(x + 1) - px(x), py(y + 1) - py(y));
+      if (t === T.BUILT || t === T.DEV) {
+        g.fillStyle = rgba(mix(c, colors.ink, 0.10));
+        const ix = px(x) + (px(x + 1) - px(x)) * 0.2, iy = py(y) + (py(y + 1) - py(y)) * 0.2;
+        g.fillRect(ix, iy, (px(x + 1) - px(x)) * 0.6, (py(y + 1) - py(y)) * 0.6);
+      }
+    }
+    // 1 m contours
+    g.strokeStyle = rgba(colors["m-contour"], 0.28); g.lineWidth = Math.max(1, dpr * 0.8); g.beginPath();
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = idx(x, y); if (world.isRiver[i]) continue;
+      const lv = Math.floor(world.z0[i]);
+      if (x < W - 1) { const j = idx(x + 1, y); if (!world.isRiver[j] && Math.floor(world.z0[j]) !== lv) { g.moveTo(px(x + 1), py(y)); g.lineTo(px(x + 1), py(y + 1)); } }
+      if (y < H - 1) { const j = idx(x, y + 1); if (!world.isRiver[j] && Math.floor(world.z0[j]) !== lv) { g.moveTo(px(x), py(y + 1)); g.lineTo(px(x + 1), py(y + 1)); } }
+    }
+    g.stroke();
+  }
+
+  /* ---------- drawing ---------- */
+  function font(size, weight = 500) { return `${weight} ${Math.round(size * dpr)}px "IBM Plex Mono", ui-monospace, monospace`; }
+  function pill(text, x, y, opts = {}) {
+    const size = opts.size || 11; ctx.font = font(size, opts.weight || 500);
+    const padX = 4 * dpr, h = Math.round(size * 1.5 * dpr), w = ctx.measureText(text).width + padX * 2;
+    let left = x; if (opts.align === "right") left = x - w; if (opts.align === "center") left = x - w / 2;
+    left = Math.max(2, Math.min(canvas.width - w - 2, left));
+    ctx.fillStyle = rgba(opts.bg || colors["m-pill"], opts.alpha ?? 0.9); ctx.fillRect(left, y, w, h);
+    ctx.fillStyle = rgba(opts.fg || colors["m-label"]); ctx.textBaseline = "middle"; ctx.fillText(text, left + padX, y + h / 2 + dpr * 0.5);
+    return h;
+  }
+  function cellRect(i) { const x = i % W, y = (i / W) | 0; return [px(x), py(y), px(x + 1) - px(x), py(y + 1) - py(y)]; }
+  function centre(i) { const x = i % W, y = (i / W) | 0; return [(x + 0.5) * cw, (y + 0.5) * ch]; }
+  const riskCol = () => [null, colors["risk-1"], colors["risk-2"], colors["risk-3"]];
+
+  function render() {
+    ctx.drawImage(base, 0, 0);
+    const rc = riskCol(), showPeak = !state.running && state.peakview && world.t > 0;
+    // water and risk
+    for (let i = 0; i < N; i++) {
+      const t = world.type[i], w = world.w[i];
+      const [x0, y0, ww, hh] = cellRect(i);
+      if (t === T.RIVER) { if (w > 0.004) { ctx.fillStyle = rgba(colors.water, Math.min(0.85, 0.2 + w * 0.9)); ctx.fillRect(x0, y0, ww, hh); } continue; }
+      if (t === T.POND) {
+        const p = world.ponds[world.pondOf[i]]; const f = Math.min(1, w / p.depth);
+        if (f > 0.01) { ctx.fillStyle = rgba(colors.water, 0.25 + 0.6 * f); ctx.fillRect(x0, y0, ww, hh); }
+        continue;
+      }
+      const b = showPeak ? Math.max(world.peak[i], band(w)) : band(w);
+      if (b > 0) { ctx.fillStyle = rgba(rc[b], showPeak && band(w) < b ? 0.5 : [0, 0.5, 0.62, 0.78][b]); ctx.fillRect(x0, y0, ww, hh); }
+      else if (w > 0.006) { ctx.fillStyle = rgba(colors.water, Math.min(0.35, w * 8)); ctx.fillRect(x0, y0, ww, hh); }
+    }
+    if (state.low && (state.mode === "catchment" || state.mode === "ponds")) drawLow();
+    if (state.flow && state.mode === "catchment") drawFlow();
+    drawStreets();
+    drawPonds();
+    if (state.mode === "owners") drawAssets();
+    drawBoundary();
+    drawPins();
+    drawHover();
+  }
+
+  function drawLow() {
+    ctx.save(); ctx.strokeStyle = rgba(colors.ink, 0.45); ctx.lineWidth = Math.max(1, dpr); ctx.beginPath();
+    for (let i = 0; i < N; i++) if (LOW[i]) { const [x0, y0, w, h] = cellRect(i); ctx.moveTo(x0, y0 + h); ctx.lineTo(x0 + w, y0); }
+    ctx.stroke();
+    ctx.strokeStyle = rgba(colors.ink, 0.8); ctx.setLineDash([3 * dpr, 2 * dpr]); ctx.beginPath();
+    for (let i = 0; i < N; i++) if (LOW[i]) {
+      const x = i % W, y = (i / W) | 0;
+      if (!LOW[idx(x, Math.max(0, y - 1))] || y === 0) { ctx.moveTo(px(x), py(y)); ctx.lineTo(px(x + 1), py(y)); }
+      if (y === H - 1 || !LOW[idx(x, y + 1)]) { ctx.moveTo(px(x), py(y + 1)); ctx.lineTo(px(x + 1), py(y + 1)); }
+      if (x === 0 || !LOW[idx(x - 1, y)]) { ctx.moveTo(px(x), py(y)); ctx.lineTo(px(x), py(y + 1)); }
+      if (x === W - 1 || !LOW[idx(x + 1, y)]) { ctx.moveTo(px(x + 1), py(y)); ctx.lineTo(px(x + 1), py(y + 1)); }
+    }
+    ctx.stroke(); ctx.restore();
+    if (cw * W / dpr > 520) pill("Low-lying zone, below river-bank level", px(44), py(36.4), { size: 10 });
+  }
+
+  function drawFlow() {
+    ctx.save(); ctx.lineCap = "round";
+    for (let i = 0; i < N; i++) {
+      const a = world.acc[i], r = world.recv[i];
+      if (a < 28 || r < 0 || world.type[i] === T.RIVER || world.type[i] === T.POND) continue;
+      const [x1, y1] = centre(i), [x2, y2] = centre(r);
+      ctx.strokeStyle = rgba(colors.water, Math.min(0.9, 0.3 + Math.log2(a) / 12));
+      ctx.lineWidth = Math.min(3.6, 0.4 + Math.log2(a) / 2.6) * dpr;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawStreets() {
+    const adv = state.mode === "advisory", rc = riskCol();
+    ctx.save(); ctx.lineCap = "round";
+    for (const s of STREETS) {
+      const [x1, y1] = centre(s.cells[0]), [x2, y2] = centre(s.cells[s.cells.length - 1]);
+      const sb = state.streetBands && state.streetBands[s.name];
+      ctx.strokeStyle = rgba(colors.ink, adv ? 0.7 : 0.25); ctx.lineWidth = (adv ? 5 : 3.5) * dpr;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+      ctx.strokeStyle = adv && sb !== undefined && sb > 0 ? rgba(rc[sb]) : rgba(colors["m-street"], adv ? 1 : 0.85);
+      ctx.lineWidth = (adv ? 3 : 2) * dpr;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+      if (adv) {
+        const vertical = s.a[0] === s.b[0];
+        pill(s.name, vertical ? x1 + 6 * dpr : x1, vertical ? y2 - 18 * dpr : y1 - 20 * dpr, { size: 10, weight: 600 });
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawPonds() {
+    ctx.save();
+    for (const p of world.ponds) {
+      const x0 = px(p.x), y0 = py(p.y), w = px(p.x + p.s) - x0, h = py(p.y + p.s) - y0;
+      ctx.strokeStyle = rgba(colors.ink, 0.85); ctx.lineWidth = 1.5 * dpr;
+      ctx.setLineDash(p.kind === "proposed" ? [4 * dpr, 3 * dpr] : []);
+      ctx.strokeRect(x0 + 0.5, y0 + 0.5, w - 1, h - 1);
+      pill(p.label, x0, y0 - 17 * dpr, { size: 10, weight: 600 });
+    }
+    ctx.restore();
+  }
+
+  function drawBoundary() {
+    const x = px(BX);
+    ctx.save(); ctx.strokeStyle = rgba(colors["m-boundary"]); ctx.lineWidth = 2.2 * dpr; ctx.setLineDash([7 * dpr, 5 * dpr]);
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); ctx.restore();
+    const wide = canvas.width / dpr > 620;
+    pill(wide ? "Upstream council area · e.g. Setia Alam" : "Upstream", x - 6 * dpr, 6 * dpr, { align: "right", size: 11, weight: 600, fg: colors["m-boundary"] });
+    pill(wide ? "Downstream council area · e.g. Bandar Bukit Raja" : "Downstream", x + 6 * dpr, 6 * dpr, { size: 11, weight: 600, fg: colors["m-boundary"] });
+  }
+
+  function drawPins() {
+    const rad = Math.max(4.5 * dpr, cw * 0.42);
+    for (const p of PINS) {
+      const [cx, cy] = centre(idx(p.x, p.y));
+      ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(colors["m-pill"]); ctx.fill();
+      ctx.lineWidth = 2.2 * dpr; ctx.strokeStyle = rgba(colors["risk-3"]); ctx.stroke();
+      ctx.font = font(9, 600); ctx.fillStyle = rgba(colors["m-label"]); ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(p.label, cx, cy + dpr * 0.5); ctx.textAlign = "start";
+    }
+  }
+
+  function assetCells(id) {
+    if (id === "R1" || id === "R2") { const out = []; for (let i = 0; i < N; i++) if (world.isRiver[i] && (id === "R1" ? world.region[i] === 0 : world.region[i] === 1)) out.push(i); return out; }
+    if (id === "C01") return CULVERT;
+    if (id === "D07") return world.drainCells;
+    const p = world.ponds.find((q) => q.label === id); if (!p) return [];
+    const out = []; for (let dy = 0; dy < p.s; dy++) for (let dx = 0; dx < p.s; dx++) out.push(idx(p.x + dx, p.y + dy)); return out;
+  }
+  function drawAssets() {
+    ctx.save();
+    // drain D-07 and culvert C-01 drawn as structures
+    const d = world.drainCells, [dx1, dy1] = centre(d[d.length - 1]), [dx2, dy2] = centre(world.drainTo);
+    ctx.strokeStyle = rgba(colors.water); ctx.lineWidth = 3 * dpr; ctx.setLineDash([5 * dpr, 3 * dpr]);
+    ctx.beginPath(); ctx.moveTo(dx1, dy1); ctx.lineTo(dx2, dy2); ctx.stroke(); ctx.setLineDash([]);
+    pill("D-07", dx1 + 6 * dpr, (dy1 + dy2) / 2, { size: 10, weight: 600 });
+    ctx.fillStyle = rgba(colors.ink, 0.85); ctx.fillRect(px(BX - 1) + cw * 0.3, py(29), cw * 1.4, py(34) - py(29));
+    pill("C-01", px(BX) + cw * 1.1, py(34) + 2 * dpr, { size: 10, weight: 600 });
+    pill("R-1", px(8), py(world.ry0 ?? 27) , { size: 10, weight: 600 });
+    // selected asset
+    const sel = assetCells(state.asset);
+    ctx.strokeStyle = rgba(colors.accent); ctx.lineWidth = 2.5 * dpr;
+    for (const i of sel) { const [x0, y0, w, h] = cellRect(i); ctx.strokeRect(x0 + 1, y0 + 1, w - 2, h - 2); }
+    ctx.restore();
+  }
+
+  function drawHover() {
+    if (state.hover < 0) return;
+    if (state.mode === "ponds") {
+      const s = state.psize, hx = (state.hover % W) - Math.floor(s / 2), hy = ((state.hover / W) | 0) - Math.floor(s / 2);
+      const own = world.pondOf[state.hover] >= 0 ? world.ponds[world.pondOf[state.hover]] : null;
+      if (own) { ctx.strokeStyle = rgba(own.kind === "proposed" ? colors["risk-3"] : colors.ink); ctx.lineWidth = 3 * dpr; ctx.strokeRect(px(own.x), py(own.y), px(own.x + own.s) - px(own.x), py(own.y + own.s) - py(own.y)); return; }
+      const ok = canPlace(world, hx, hy, s);
+      ctx.fillStyle = rgba(ok ? colors.water : colors["risk-3"], 0.35); ctx.strokeStyle = rgba(ok ? colors.water : colors["risk-3"]); ctx.lineWidth = 2 * dpr;
+      const x0 = px(Math.max(0, hx)), y0 = py(Math.max(0, hy)), x1 = px(Math.min(W, hx + s)), y1 = py(Math.min(H, hy + s));
+      ctx.fillRect(x0, y0, x1 - x0, y1 - y0); ctx.strokeRect(x0, y0, x1 - x0, y1 - y0); return;
+    }
+    const [x0, y0, w, h] = cellRect(state.hover);
+    ctx.strokeStyle = rgba(colors.ink); ctx.lineWidth = 1.5 * dpr; ctx.strokeRect(x0 + 0.5, y0 + 0.5, w - 1, h - 1);
+  }
+
+  /* ---------- readouts ---------- */
+  const fmt = (v) => (v < 500 ? "0" : "≈ " + (Math.round(v / 1000) * 1000).toLocaleString("en-GB")) + " m³";
+  function updateReadouts() {
+    $("r-runoff").textContent = fmt(world.stats.runoff);
+    $("r-cross").textContent = fmt(world.stats.cross);
+    let held = 0, cap = 0;
+    for (let i = 0; i < N; i++) if (world.type[i] === T.POND) { const p = world.ponds[world.pondOf[i]]; held += Math.min(world.w[i], p.depth) * AREA; }
+    for (const p of world.ponds) cap += pondCapacity(p);
+    $("r-ponds").textContent = fmt(held) + (held > 500 ? ` (${Math.round(held / cap * 100)}%)` : "");
+    let cells = 0; for (let i = 0; i < N; i++) if (world.region[i] === 1 && world.type[i] !== T.RIVER && world.type[i] !== T.POND && Math.max(world.peak[i], band(world.w[i])) >= 2) cells++;
+    $("r-area").textContent = (cells * AREA / 10000).toLocaleString("en-GB", { maximumFractionDigits: 1 }) + " ha";
+    let sw = 0, sa = 0; for (let i = 0; i < N; i++) if (LOW[i]) { sw += world.w[i]; sa += world.wA[i]; }
+    if (sw * AREA > 300) {
+      const up = Math.round(sa / sw * 100);
+      $("o-text").innerHTML = `Water now in the low-lying zone fell <b>${up}% upstream</b> and <b>${100 - up}% downstream</b>.`;
+      $("o-up").style.width = up + "%"; $("o-down").style.width = (100 - up) + "%";
+    } else if (world.t === 0) {
+      $("o-text").textContent = "Where the water in the low-lying zone fell: run a storm to see."; $("o-up").style.width = "0"; $("o-down").style.width = "0";
+    }
+    const c = $("clock");
+    if (world.t === 0) c.textContent = "Ready. Press Start storm.";
+    else if (world.t < state.dur) c.innerHTML = `Minute ${world.t} of ${state.dur} · <span class="live">raining ${state.rain} mm/h</span>`;
+    else if (state.running) c.textContent = `Rain stopped · minute ${world.t} · water draining`;
+    else c.textContent = world.t >= state.dur + 90 ? `Storm over at minute ${world.t}. Map shows peak risk.` : `Paused at minute ${world.t}`;
+    updateBacktest();
+  }
+  function updateBacktest() {
+    if (world.t === 0) { $("bt").textContent = "Run a storm, then check whether the three reported flood spots are flagged."; return; }
+    const hit = PINS.filter((p) => world.peak[idx(p.x, p.y)] >= 2);
+    $("bt").textContent = `${hit.length} of ${PINS.length} reported flood spots flagged medium or high${hit.length ? " (" + hit.map((p) => p.label).join(", ") + ")" : ""}. The real tool reports this as its hit rate.`;
+  }
+
+  function updateGap() {
+    const b = storageBalance(world, state.rain, state.dur, state.outletQ);
+    const scale = Math.max(b.need, b.avail, 1) * 1.02;
+    $("g-need").textContent = fmt(b.need); $("g-have").textContent = fmt(b.avail);
+    $("gb-need").style.width = (b.need / scale * 100) + "%"; $("gb-have").style.width = (b.avail / scale * 100) + "%";
+    const v = $("g-verdict");
+    if (b.gap > 0) { v.textContent = `Short by ${fmt(b.gap)}. Add pond storage or outlet capacity.`; v.className = "verdict short"; }
+    else { v.textContent = `Covered, with ${fmt(-b.gap)} to spare.`; v.className = "verdict ok"; }
+    $("g-up").textContent = `Of ${fmt(b.runoff)} runoff, ${fmt(b.upstream)} falls in the upstream council area.`;
+  }
+
+  function renderPondList() {
+    const rows = world.ponds.map((p) => `<tr><td><b>${p.label}</b></td><td>${p.kind === "existing" ? "Existing" : "Proposed"}</td><td class="num">${p.depth.toFixed(1)} m</td><td class="num">${(pondCapacity(p) / 1000).toFixed(1)}k m³</td><td>${p.kind === "proposed" ? `<button type="button" class="xbtn" data-remove="${p.id}" aria-label="Remove ${p.label}">Remove</button>` : ""}</td></tr>`);
+    $("pond-list").innerHTML = rows.join("");
+  }
+
+  /* ---------- owners ---------- */
+  function allAssets() {
+    const ponds = world.ponds.map((p) => {
+      const o = POND_OWNERS[p.label] || { owner: "Proposed. Owner to be agreed before it is built.", conf: "L", contact: "To be agreed between the developer, the council and the drainage department", why: "Added in the pond what-if." };
+      return { id: p.label, kind: p.kind === "existing" ? "Pond" : "Proposed pond", name: p.name, ...o, cap: pondCapacity(p), depth: p.depth };
+    });
+    return [...FIXED_ASSETS, ...ponds];
+  }
+  function renderAssets() {
+    const list = allAssets();
+    if (!list.find((a) => a.id === state.asset)) state.asset = "C01";
+    $("asset-list").innerHTML = list.map((a) => `<button type="button" class="asset" data-asset="${a.id}" aria-pressed="${a.id === state.asset}"><span>${a.name}</span><span class="conf ${a.conf}">${a.conf}</span></button>`).join("");
+    const a = list.find((q) => q.id === state.asset);
+    $("asset-card").innerHTML = `<span class="k">${a.kind}</span><h3>${a.name}</h3><dl>
+      <dt>Maintained by</dt><dd>${a.owner}</dd>
+      <dt>Confidence</dt><dd><span class="conf ${a.conf}">${a.conf}</span> ${CONF_TEXT[a.conf]}</dd>
+      <dt>Who to contact</dt><dd>${a.contact}</dd>
+      <dt>Why it matters</dt><dd>${a.why}</dd>
+      ${a.cap ? `<dt>Storage</dt><dd>${fmt(a.cap)} at ${a.depth.toFixed(1)} m deep</dd>` : ""}
+    </dl>`;
+  }
+  function assetAt(i) {
+    if (world.pondOf[i] >= 0) return world.ponds[world.pondOf[i]].label;
+    if (CULVERT.includes(i)) return "C01";
+    if (world.drainCells.includes(i)) return "D07";
+    if (world.isRiver[i]) return world.region[i] === 0 ? "R1" : "R2";
+    return null;
+  }
+
+  /* ---------- advisory ---------- */
+  function issueWarning(key) {
+    const t = TIERS[key]; state.tier = key;
+    document.querySelectorAll(".tier").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tier === key)));
+    setStorm(t.rain, t.dur);
+    const { peaks } = forecastPeaks(world, { rain: t.rain, outletQ: state.outletQ, drainQ: 1.5 }, t.dur, 60);
+    const bands = {}; for (const s of STREETS) bands[s.name] = Math.max(...s.cells.map((i) => world.isRiver[i] ? 0 : peaks[i]));
+    state.streetBands = bands;
+    const sorted = [...STREETS].sort((a, b) => bands[b.name] - bands[a.name]);
+    const adv = $("adv"); adv.hidden = false;
+    adv.innerHTML = `<div class="adv-head ${key}"><span class="k">Sample official warning</span><strong>Hujan lebat · Tahap ${t.name}</strong><span>Heavy rain, ${t.en.toLowerCase()} level. The playground assumes ${t.rain} mm/h for ${t.dur} minutes.</span></div>
+      <div class="adv-body"><span class="k">What it means for your street</span><ul class="streets">${sorted.map((s) => `<li><span class="chip b${bands[s.name]}">${BAND_NAME[bands[s.name]]}</span><b>${s.name}</b><span class="act">${ACTIONS[bands[s.name]]}</span></li>`).join("")}</ul>
+      <p class="fine">Blocked drain or overflowing pond? Open "Who maintains what" for the right contact. RainReady never replaces the official warning.</p></div>`;
+    resetWater(world); state.running = true; state.accum = 0; syncRunButton(); state.dirty = true;
+  }
+
+  /* ---------- controls ---------- */
+  function setStorm(rain, dur) {
+    state.rain = rain; state.dur = dur; $("rain").value = rain; $("dur").value = dur;
+    $("rain-o").textContent = rain + " mm/h"; $("dur-o").textContent = dur + " min"; updateGap();
+  }
+  function syncRunButton() {
+    const b = $("run");
+    if (state.running) b.textContent = "Pause";
+    else if (world.t === 0) b.textContent = "Start storm";
+    else if (world.t >= state.dur + 90) b.textContent = "Run again";
+    else b.textContent = "Resume";
+  }
+  function setMode(m) {
+    state.mode = m;
+    document.querySelectorAll(".modes button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.mode === m)));
+    document.querySelectorAll("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== m; });
+    wrap.classList.toggle("pick", m === "ponds"); wrap.classList.toggle("point", m === "owners");
+    if (m === "owners") renderAssets();
+    if (m === "ponds") { updateGap(); renderPondList(); }
+    try { localStorage.setItem("rr-mode", m); } catch (e) { /* storage unavailable */ }
+    state.dirty = true;
+  }
+
+  $("run").addEventListener("click", () => {
+    if (state.running) state.running = false;
+    else { if (world.t === 0 || world.t >= state.dur + 90) resetWater(world); state.running = true; state.accum = 0; state.last = performance.now(); }
+    syncRunButton(); state.dirty = true;
+  });
+  $("clear").addEventListener("click", () => { state.running = false; resetWater(world); syncRunButton(); state.dirty = true; });
+  $("rain").addEventListener("input", (e) => { state.rain = +e.target.value; $("rain-o").textContent = state.rain + " mm/h"; updateGap(); });
+  $("dur").addEventListener("input", (e) => { state.dur = +e.target.value; $("dur-o").textContent = state.dur + " min"; updateGap(); state.dirty = true; });
+  $("speed").addEventListener("input", (e) => { state.speed = +e.target.value; $("speed-o").textContent = SPEEDS[state.speed] + " min per second"; });
+  $("dev").addEventListener("input", (e) => { $("dev-o").textContent = e.target.value + "%"; setDev(world, +e.target.value / 100); buildBase(); updateGap(); state.dirty = true; });
+  $("outq").addEventListener("input", (e) => { state.outletQ = +e.target.value; $("q-o").textContent = state.outletQ + " m³/s"; updateGap(); });
+  $("pdepth").addEventListener("input", (e) => { state.pdepth = +e.target.value; $("pd-o").textContent = state.pdepth.toFixed(1) + " m"; });
+  document.querySelectorAll('input[name="psize"]').forEach((r) => r.addEventListener("change", (e) => { state.psize = +e.target.value; state.dirty = true; }));
+  for (const id of ["flow", "low", "peakview"]) $(id).addEventListener("change", (e) => { state[id] = e.target.checked; state.dirty = true; });
+  document.querySelectorAll(".modes button").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+  $("pond-list").addEventListener("click", (e) => { const b = e.target.closest("[data-remove]"); if (!b) return; removePond(world, +b.dataset.remove); afterPondChange("Pond removed."); });
+  $("asset-list").addEventListener("click", (e) => { const b = e.target.closest("[data-asset]"); if (!b) return; state.asset = b.dataset.asset; renderAssets(); state.dirty = true; });
+  document.querySelectorAll(".tier").forEach((b) => b.addEventListener("click", () => issueWarning(b.dataset.tier)));
+
+  function afterPondChange(msg) { buildBase(); updateGap(); renderPondList(); $("pond-msg").textContent = msg; state.dirty = true; }
+
+  function cellFromEvent(e) {
+    const r = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - r.left) / r.width * W), y = Math.floor((e.clientY - r.top) / r.height * H);
+    return x >= 0 && y >= 0 && x < W && y < H ? idx(x, y) : -1;
+  }
+  canvas.addEventListener("pointermove", (e) => {
+    const i = cellFromEvent(e); if (i !== state.hover) { state.hover = i; state.dirty = true; }
+    if (i < 0 || e.pointerType === "touch") { tip.hidden = true; return; }
+    tip.innerHTML = tipText(i); tip.hidden = false;
+    const r = wrap.getBoundingClientRect(); let lx = e.clientX - r.left + 14, ly = e.clientY - r.top + 14;
+    if (lx + 250 > r.width) lx = e.clientX - r.left - 260; if (ly + 80 > r.height) ly = e.clientY - r.top - 80;
+    tip.style.left = Math.max(4, lx) + "px"; tip.style.top = Math.max(4, ly) + "px";
+  });
+  canvas.addEventListener("pointerleave", () => { state.hover = -1; tip.hidden = true; state.dirty = true; });
+  canvas.addEventListener("click", (e) => {
+    const i = cellFromEvent(e); if (i < 0) return;
+    if (state.mode === "ponds") {
+      const own = world.pondOf[i] >= 0 ? world.ponds[world.pondOf[i]] : null;
+      if (own) {
+        if (own.kind === "proposed") { removePond(world, own.id); afterPondChange(`Removed ${own.label}.`); }
+        else $("pond-msg").textContent = `${own.label} is an existing pond. Only proposed ponds can be removed.`;
+        return;
+      }
+      const s = state.psize, hx = (i % W) - Math.floor(s / 2), hy = ((i / W) | 0) - Math.floor(s / 2);
+      const p = addPond(world, hx, hy, s, state.pdepth);
+      if (p) afterPondChange(`Added ${p.label}: holds ${fmt(pondCapacity(p))}. Press Start storm to test it.`);
+      else $("pond-msg").textContent = "A pond cannot go on the river, on another pond or over the map edge. Try a spot nearby.";
+    } else if (state.mode === "owners") {
+      const a = assetAt(i); if (a) { state.asset = a; renderAssets(); state.dirty = true; }
+    }
+  });
+  function tipText(i) {
+    const x = i % W, y = (i / W) | 0, t = world.type[i];
+    const land = ["Green land", "Housing", "River", "Pond", "Wetland park", "New development"][t];
+    const area = world.region[i] === 0 ? "Upstream council area" : "Downstream council area";
+    if (state.mode === "owners") { const a = assetAt(i); if (a) { const o = allAssets().find((q) => q.id === a); return `<b>${o.name}</b><br>${o.owner}<br>Confidence ${o.conf}. Click for details.`; } }
+    if (state.mode === "advisory") { const s = STREETS.find((q) => q.cells.includes(i)); if (s) return `<b>${s.name}</b>` + (state.streetBands ? `<br>${BAND_NAME[state.streetBands[s.name]]} risk under the sample warning` : "<br>Issue a sample warning to see its risk"); }
+    if (t === T.POND) { const p = world.ponds[world.pondOf[i]]; return `<b>${p.name}</b><br>Holds ${fmt(pondCapacity(p))}<br>${Math.round(Math.min(1, world.w[i] / p.depth) * 100)}% full now`; }
+    const pin = PINS.find((p) => p.x === x && p.y === y);
+    const now = band(world.w[i]), pk = world.peak[i];
+    return `<b>${pin ? "Reported flood spot " + pin.label : land}</b><br>${area}<br>Ground ${world.z0[i].toFixed(1)} m (invented)` +
+      (t === T.RIVER ? "" : `<br>Risk now: ${BAND_NAME[now]}${pk ? " · peak: " + BAND_NAME[pk] : ""}`) + (LOW[i] ? "<br>Below river-bank level" : "");
+  }
+
+  /* ---------- loop ---------- */
+  function frame(now) {
+    const dt = Math.min(0.1, (now - state.last) / 1000); state.last = now;
+    if (state.running) {
+      state.accum += dt * SPEEDS[state.speed];
+      let n = Math.floor(state.accum); state.accum -= n;
+      while (n-- > 0 && state.running) {
+        step(world, { rain: state.rain, raining: world.t < state.dur, outletQ: state.outletQ, drainQ: 1.5 });
+        if (world.t >= state.dur + 90) { state.running = false; syncRunButton(); }
+      }
+      state.dirty = true;
+    }
+    if (state.dirty) { render(); updateReadouts(); state.dirty = false; }
+    requestAnimationFrame(frame);
+  }
+
+  function retheme() { readColors(); buildBase(); state.dirty = true; }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class"] });
+  new ResizeObserver(resize).observe(wrap);
+
+  // R-1 label row: first upstream river cell near x = 8
+  for (let y = 0; y < H; y++) if (world.isRiver[idx(8, y)]) { world.ry0 = y + 2; break; }
+
+  readColors(); resize(); updateGap(); renderPondList(); renderAssets();
+  let saved = null; try { saved = localStorage.getItem("rr-mode"); } catch (e) { /* storage unavailable */ }
+  setMode(["catchment", "ponds", "owners", "advisory"].includes(saved) ? saved : "catchment");
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { state.dirty = true; });
+
+  // Open in a working state: a finished sample storm, so the first view already shows the peak risk.
+  for (let m = 0; m < state.dur + 90; m++) step(world, { rain: state.rain, raining: m < state.dur, outletQ: state.outletQ, drainQ: 1.5 });
+  syncRunButton(); state.dirty = true;
+  requestAnimationFrame(frame);
+})();
+</script>

@@ -1,0 +1,232 @@
+{
+ "id": "saujana",
+ "name": "Klang South – Taman Sri Andalas",
+ "kind": "generated",
+ "view": "2d",
+ "state": "Selangor",
+ "centre": [
+  3.016,
+  101.464
+ ],
+ "bbox": [
+  2.998,
+  101.446,
+  3.034,
+  101.482
+ ],
+ "councils": [
+  "Shah Alam",
+  "Bandaraya Klang"
+ ],
+ "confidence": "L",
+ "label": "SCREENING · GENERATED FROM OPEN DATA · LOWER CONFIDENCE",
+ "summary": "25 zones, 8 drains, 3 ponds (1 on JPS's list), 2 councils",
+ "tests": [
+  {
+   "test": "JPS flood records inside the area",
+   "passed": true,
+   "detail": "25 records, 2017-2024"
+  },
+  {
+   "test": "Drainage crosses a council line",
+   "passed": false,
+   "detail": "0 crossing links between Bandaraya Klang, Shah Alam"
+  },
+  {
+   "test": "Public pond or drain register",
+   "passed": true,
+   "detail": "1 ponds on JPS Selangor's pond list"
+  }
+ ],
+ "evidence": {
+  "flood_records": [
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Taman MAZNAH Daerah Klang",
+    "district": "Klang"
+   },
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Taman MAZNAH Daerah Klang",
+    "district": "Klang"
+   },
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Taman MAZNAH Daerah Klang",
+    "district": "Klang"
+   },
+   {
+    "year": 2017,
+    "type": "Not stated",
+    "place": "Taman Sentosa, bandar sentosa dan sekitarnya",
+    "district": "Klang"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "IWK Taman Sejati",
+    "district": "Klang"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "JALAN DATOK YUSOF SHAHBUDIN 3",
+    "district": "Klang"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Jalan Mohd Tahir 1",
+    "district": "Klang"
+   },
+   {
+    "year": 2018,
+    "type": "Not stated",
+    "place": "Sekitar Kg Bt. 1-2 Kg Jawa",
+    "district": "Klang"
+   },
+   {
+    "year": 2020,
+    "type": "Not stated",
+    "place": "Kawasan Din Tom Yam Kampung Jawa",
+    "district": "Klang"
+   },
+   {
+    "year": 2020,
+    "type": "Not stated",
+    "place": "Taman Sentosa dan sekitarnya",
+    "district": "Klang"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Kampung Bukit Naga Seksyen 34, Jalan Batu 6 dan Jalan Bukit Naga, Taman Maznah, Kg. Sungai",
+    "district": "Klang"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Sentosa, Bandar Puteri, Taman Saujana, Jln. Raja Nong, Jln. Sg. Jati, Jln. Kebun Nenas, Kg",
+    "district": "Klang"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Taman Maznah",
+    "district": "Klang"
+   },
+   {
+    "year": 2022,
+    "type": "Not stated",
+    "place": "Taman Maznah (Lorong Songket 1, Lorong Songket 3, Jalan Sutera)",
+    "district": "Klang"
+   },
+   {
+    "year": 2023,
+    "type": "Flash flood",
+    "place": "Jalan Kota Raja, Taman Sri Mewah",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Bandar Puteri, Klang",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Jalan Hulubalang",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Jalan Kota Raja, Taman Sri Mewah",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Jalan Raja Nong",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Monsoon flood",
+    "place": "Kg. Jawa",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Ponding",
+    "place": "Taman Maznah, Klang",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Monsoon flood",
+    "place": "Taman Saujana",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Flash flood",
+    "place": "Taman Saujana",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Monsoon flood",
+    "place": "Taman Sentosa",
+    "district": "Klang"
+   },
+   {
+    "year": 2024,
+    "type": "Ponding",
+    "place": "Taman Seri Wangi, Kapar",
+    "district": "Klang"
+   }
+  ],
+  "flash_2017": [
+   {
+    "town": "Klang",
+    "places": [
+     "Kg Budiman",
+     "Taman Klang Utama",
+     "Pulau Indah - Kg Sg Pinang",
+     "Teluk Nipah",
+     "Taman Rashna"
+    ]
+   }
+  ]
+ },
+ "storm": {
+  "station": "2913001 Pusat Kwln. JPS T Gong",
+  "distance_km": 10.9
+ },
+ "sources": [
+  "OpenStreetMap contributors (ODbL), via Overpass, 22 Oct 2026",
+  "Copernicus DEM GLO-30 (ESA / EU), AWS open data mirror",
+  "JPS Selangor pond list (Kolam_Fasa_JPS), jpsselgis.selangor.gov.my",
+  "JPS Selangor flood records 2017-2024 and JPS flash-flood list 2017 (website/public/data/national.json)",
+  "MSMA 2nd Edition (DID Malaysia, 2012), Chapter 2, Tables 2.3, 2.5, 2.B1"
+ ],
+ "limits": [
+  "Zones follow mapped roads and drains, not surveyed catchments; outlets are assumed",
+  "Drain sizes are typical values by OSM type, not measured; this is the weakest input",
+  "Pond capacities are assumed from water area x 1.5 m; enter stated capacities to replace them",
+  "OSM misses buildings and drains; terrain is a surface model with ~1 m error or more",
+  "Flash floods and ponding only; rivers are treated as where water leaves"
+ ],
+ "build": {
+  "script": "simulations/platform/build_site.py",
+  "date": "2026-10-22",
+  "fetch_s": 618.1,
+  "build_s": 17.4,
+  "refreshed": true
+ }
+}

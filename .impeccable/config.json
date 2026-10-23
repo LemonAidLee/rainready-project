@@ -1,0 +1,89 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:06:01.984Z",
+        "reason": "Claude: glow marks moving water drops and the water line in the story animations (literal, domain-appropriate)"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:06:02.236Z",
+        "reason": "Claude: portrait frame and browser mock-up intentionally crop their own artwork; no popovers inside"
+      },
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:11:40.084Z",
+        "reason": "Claude: one-shot story animations recorded to video (rising floodwater, gauge, browser hand-off zoom, URL typing); single elements, not interactive UI"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:11:40.381Z",
+        "reason": "Claude: display headlines at 70-380px on a 1920x1080 slide; body text keeps 1.4+"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:11:40.680Z",
+        "reason": "Claude: portrait is an SVG illustration frame (caption inset 24px); browser bar/url is a mock-up with vertically centred text"
+      },
+      {
+        "rule": "oversized-h1",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:11:40.995Z",
+        "reason": "Claude: closing slide's tagline is the slide's only content, by design"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:11:41.311Z",
+        "reason": "Claude: looping wave on the floodwater surface is literal water motion, not scrolling content"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:42:59.553Z",
+        "reason": "Claude: the 4px top border is the waterline on the rising flood overlay (slide 1), not a card accent"
+      },
+      {
+        "rule": "organic-clip-path",
+        "value": "*",
+        "files": [
+          "presentation/index.html"
+        ],
+        "createdAt": "2026-10-22T15:42:59.832Z",
+        "reason": "Claude: torn-edge newspaper clippings are part of the paper-collage (Vox) style the team leader asked for; no raster source exists"
+      }
+    ]
+  }
+}
