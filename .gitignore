@@ -10,3 +10,18 @@ SDP slides/
 FastFlood Simulation Progress/
 .playwright-mcp/
 .claude/settings.local.json
+
+# internal working files, not for the public repo
+CLAUDE.md
+.claude/
+.impeccable/
+.mcp.json
+documentation/archive/
+research/archive/
+documentation/PROJECT_STATUS.md
+documentation/VIDEO_GUIDE.md
+documentation/VIDEO_SCRIPT.md
+documentation/README.md
+documentation/supporting/FLOOD_PITCH_DECK.md
+simulations/platform/rejected/
+simulations/upstream-runoff/
