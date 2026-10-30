@@ -2,6 +2,10 @@
 
 **Property lines stop at the fence. Water doesn't.**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live prototype](https://img.shields.io/badge/live-prototype-2ea44f)](https://rainready-wheat.vercel.app)
+![Status](https://img.shields.io/badge/status-hackathon%20prototype-lightgrey)
+
 RainReady is one shared picture of how water moves across council and developer boundaries. It has two doors:
 **planners** see where storage falls short, and **residents** act in time, with their reports shaping the next plan.
 
@@ -10,7 +14,7 @@ Sime Darby Property University Hackathon 2026 · *Township of Tomorrow* · Theme
 | | |
 |---|---|
 | **Live prototype** | https://rainready-wheat.vercel.app |
-| **Website source** | https://github.com/LemonAidLee/rainready-website |
+| **Website source** | [LemonAidLee/rainready-website](https://github.com/LemonAidLee/rainready-website) |
 | **Reference site** | Bandar Bukit Raja (BBR), Klang, with Setia Alam upstream in Shah Alam |
 
 ![RainReady planner view: a simulated township with pond and drain results](docs/images/planner-township.png)
@@ -65,7 +69,7 @@ where storage runs short. Sources are in [documentation/supporting/BBR_PUBLIC_DO
 - **Honest about limits.** Assumed values are marked as assumed, and confidence is labelled H, M or L.
 - Developer booklet figures are design values, not as-built.
 
-## Repository guide
+## Repository layout
 
 | Folder | What is in it |
 |---|---|
@@ -81,16 +85,25 @@ where storage runs short. Sources are in [documentation/supporting/BBR_PUBLIC_DO
 | [simulations/rainready-playground/](simulations/rainready-playground/) | A 2D teaching model with invented terrain and illustrative numbers |
 | [presentation/](presentation/README.md) | Animated HTML presentation used for the video |
 
-## Run the simulator
+## Getting started
+
+Run the screening simulator (Python 3, no Blender needed):
 
 ```
 cd simulations/township-3d
 python screening.py
 ```
 
-The website is in its own repository: `npm install`, then `npm run dev`.
+The website is in its own repository, [rainready-website](https://github.com/LemonAidLee/rainready-website): `npm install`, then `npm run dev`.
 
-## Data and licences
+## Status
+
+A working prototype built for the Sime Darby Property University Hackathon 2026. The 3D township is simulated, the numbers
+are screening estimates, and several inputs are stated assumptions (marked as such in `research/`).
+
+## Licence and data
+
+Code and documentation are released under the [MIT licence](LICENSE). Third-party data keeps its own licences:
 
 Map data © OpenStreetMap contributors (ODbL). Terrain: Copernicus DEM GLO-30 © DLR e.V. 2010–2014 and © Airbus Defence
 and Space GmbH, provided under COPERNICUS by the European Union and ESA. Flood records from JPS Selangor GIS, data.gov.my
